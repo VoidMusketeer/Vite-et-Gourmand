@@ -6,6 +6,8 @@
     "watch:css": "sass --watch --no-source-map assets/styles/app.scss:assets/styles/app.css"
   },
   "devDependencies": {
+    "@prettier/plugin-php": "^0.26.0",
+    "prettier": "^3.10.1",
     "sass": "^1.105.1"
   },
   "dependencies": {

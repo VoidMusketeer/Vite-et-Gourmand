@@ -1,14 +1,18 @@
 <?php
+
 namespace App\Security;
+
 use App\Entity\User;
 use Symfony\Component\Security\Core\Exception\DisabledException;
-use Symfony\Component\Security\Core\User\{UserCheckerInterface,UserInterface};
+use Symfony\Component\Security\Core\User\{UserCheckerInterface, UserInterface};
 
 final class ActiveUserChecker implements UserCheckerInterface
 {
     public function checkPreAuth(UserInterface $user): void
     {
-        if ($user instanceof User && !$user->getIsActive()) throw new DisabledException();
+        if ($user instanceof User && !$user->getIsActive()) {
+            throw new DisabledException();
+        }
     }
     public function checkPostAuth(UserInterface $user): void {}
 }

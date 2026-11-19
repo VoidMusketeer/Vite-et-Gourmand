@@ -7,52 +7,62 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity]
-#[ORM\Table(name: 'reviews')]
+#[ORM\Table(name: "reviews")]
 class Review
 {
     #[ORM\Id]
-    #[ORM\GeneratedValue(strategy: 'CUSTOM')]
+    #[ORM\GeneratedValue(strategy: "CUSTOM")]
     #[ORM\CustomIdGenerator(class: \App\Doctrine\UuidGenerator::class)]
-    #[ORM\Column(type: 'guid')]
+    #[ORM\Column(type: "guid")]
     private ?string $id = null;
 
     #[ORM\OneToOne]
-    #[ORM\JoinColumn(name: 'order_id', nullable: false, onDelete: 'CASCADE')]
+    #[ORM\JoinColumn(name: "order_id", nullable: false, onDelete: "CASCADE")]
     private Order $order;
 
-    #[ORM\Column(type: 'smallint')]
+    #[ORM\Column(type: "smallint")]
     private int $rating;
 
-    #[ORM\Column(type: 'text')]
+    #[ORM\Column(type: "text")]
     private string $comment;
 
-    #[ORM\Column(type: 'string', length: 20)]
-    private string $moderationStatus = 'pending';
+    #[ORM\Column(type: "string", length: 20)]
+    private string $moderationStatus = "pending";
 
-    #[ORM\Column(type: 'boolean')]
+    #[ORM\Column(type: "boolean")]
     private bool $homepageSelected = false;
 
     #[ORM\ManyToOne]
-    #[ORM\JoinColumn(name: 'moderated_by', nullable: true, onDelete: 'SET NULL')]
+    #[ORM\JoinColumn(
+        name: "moderated_by",
+        nullable: true,
+        onDelete: "SET NULL",
+    )]
     private ?User $moderatedBy = null;
 
-    #[ORM\Column(type: 'datetimetz_immutable', nullable: true)]
+    #[ORM\Column(type: "datetimetz_immutable", nullable: true)]
     private ?\DateTimeImmutable $moderatedAt = null;
 
-    #[ORM\Column(type: 'text', nullable: true)]
+    #[ORM\Column(type: "text", nullable: true)]
     private ?string $rejectionReason = null;
 
-    #[ORM\Column(type: 'datetimetz_immutable', insertable: false, updatable: false, generated: 'INSERT')]
+    #[ORM\Column(
+        type: "datetimetz_immutable",
+        insertable: false,
+        updatable: false,
+        generated: "INSERT",
+    )]
     private ?\DateTimeImmutable $createdAt = null;
 
-    #[ORM\Column(type: 'datetimetz_immutable', insertable: false, updatable: false, generated: 'ALWAYS')]
+    #[ORM\Column(
+        type: "datetimetz_immutable",
+        insertable: false,
+        updatable: false,
+        generated: "ALWAYS",
+    )]
     private ?\DateTimeImmutable $updatedAt = null;
 
-    public function __construct(
-        Order $order,
-        int $rating,
-        string $comment,
-    )
+    public function __construct(Order $order, int $rating, string $comment)
     {
         $this->order = $order;
         $this->rating = $rating;

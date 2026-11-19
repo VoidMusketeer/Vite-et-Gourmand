@@ -9,39 +9,49 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity]
-#[ORM\Table(name: 'dishes')]
+#[ORM\Table(name: "dishes")]
 class Dish
 {
     #[ORM\Id]
-    #[ORM\GeneratedValue(strategy: 'CUSTOM')]
+    #[ORM\GeneratedValue(strategy: "CUSTOM")]
     #[ORM\CustomIdGenerator(class: \App\Doctrine\UuidGenerator::class)]
-    #[ORM\Column(type: 'guid')]
+    #[ORM\Column(type: "guid")]
     private ?string $id = null;
 
     #[ORM\ManyToOne]
-    #[ORM\JoinColumn(name: 'dish_type_id', nullable: false)]
+    #[ORM\JoinColumn(name: "dish_type_id", nullable: false)]
     private DishType $dishType;
 
-    #[ORM\Column(type: 'string', length: 160)]
+    #[ORM\Column(type: "string", length: 160)]
     private string $name;
 
-    #[ORM\Column(type: 'text', nullable: true)]
+    #[ORM\Column(type: "text", nullable: true)]
     private ?string $description = null;
 
-    #[ORM\Column(type: 'boolean')]
+    #[ORM\Column(type: "boolean")]
     private bool $isActive = true;
 
-    #[ORM\Column(type: 'datetimetz_immutable', insertable: false, updatable: false, generated: 'INSERT')]
+    #[ORM\Column(
+        type: "datetimetz_immutable",
+        insertable: false,
+        updatable: false,
+        generated: "INSERT",
+    )]
     private ?\DateTimeImmutable $createdAt = null;
 
-    #[ORM\Column(type: 'datetimetz_immutable', insertable: false, updatable: false, generated: 'ALWAYS')]
+    #[ORM\Column(
+        type: "datetimetz_immutable",
+        insertable: false,
+        updatable: false,
+        generated: "ALWAYS",
+    )]
     private ?\DateTimeImmutable $updatedAt = null;
 
     /** @var Collection<int, Allergen> */
     #[ORM\ManyToMany(targetEntity: Allergen::class)]
-    #[ORM\JoinTable(name: 'dish_allergens')]
-    #[ORM\JoinColumn(name: 'dish_id', onDelete: 'CASCADE')]
-    #[ORM\InverseJoinColumn(name: 'allergen_id', onDelete: 'RESTRICT')]
+    #[ORM\JoinTable(name: "dish_allergens")]
+    #[ORM\JoinColumn(name: "dish_id", onDelete: "CASCADE")]
+    #[ORM\InverseJoinColumn(name: "allergen_id", onDelete: "RESTRICT")]
     private Collection $allergens;
 
     public function __construct(DishType $dishType, string $name)

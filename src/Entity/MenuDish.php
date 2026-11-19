@@ -7,27 +7,27 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity]
-#[ORM\Table(name: 'menu_dishes')]
+#[ORM\Table(name: "menu_dishes")]
 class MenuDish
 {
     #[ORM\Id]
-    #[ORM\ManyToOne(inversedBy: 'menuDishes')]
-    #[ORM\JoinColumn(name: 'menu_id', nullable: false, onDelete: 'CASCADE')]
+    #[ORM\ManyToOne(inversedBy: "menuDishes")]
+    #[ORM\JoinColumn(name: "menu_id", nullable: false, onDelete: "CASCADE")]
     private Menu $menu;
 
     #[ORM\Id]
     #[ORM\ManyToOne]
-    #[ORM\JoinColumn(name: 'dish_id', nullable: false, onDelete: 'RESTRICT')]
+    #[ORM\JoinColumn(name: "dish_id", nullable: false, onDelete: "RESTRICT")]
     private Dish $dish;
 
-    #[ORM\Column(type: 'smallint')]
+    #[ORM\Column(type: "smallint")]
     private int $displayOrder = 0;
 
-    #[ORM\Column(type: 'boolean')]
+    #[ORM\Column(type: "boolean")]
     private bool $isOptional = false;
 
-    #[ORM\Column(type: 'decimal', precision: 10, scale: 2)]
-    private string $additionalPrice = '0';
+    #[ORM\Column(type: "decimal", precision: 10, scale: 2)]
+    private string $additionalPrice = "0";
 
     public function __construct(Menu $menu, Dish $dish)
     {

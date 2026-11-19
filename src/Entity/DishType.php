@@ -7,21 +7,21 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity]
-#[ORM\Table(name: 'dish_types')]
+#[ORM\Table(name: "dish_types")]
 class DishType
 {
     #[ORM\Id]
-    #[ORM\GeneratedValue(strategy: 'IDENTITY')]
-    #[ORM\Column(type: 'smallint')]
+    #[ORM\GeneratedValue(strategy: "IDENTITY")]
+    #[ORM\Column(type: "smallint")]
     private ?int $id = null;
 
-    #[ORM\Column(type: 'string', length: 30, unique: true)]
+    #[ORM\Column(type: "string", length: 30, unique: true)]
     private string $code;
 
-    #[ORM\Column(type: 'string', length: 80)]
+    #[ORM\Column(type: "string", length: 80)]
     private string $label;
 
-    #[ORM\Column(type: 'smallint')]
+    #[ORM\Column(type: "smallint")]
     private int $displayOrder = 0;
 
     public function __construct(string $code, string $label)

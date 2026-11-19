@@ -7,33 +7,66 @@ use Symfony\Component\Process\Process;
 
 final class AdminStatistics
 {
-    public function __construct(private Connection $db,
-        #[Autowire('%kernel.project_dir%')] private string $project,
-        #[Autowire('%env(MONGODB_URI)%')] private string $uri,
-        #[Autowire('%env(MONGODB_DATABASE)%')] private string $database,
-        #[Autowire('%env(NODE_BINARY)%')] private string $node) {}
+    public function __construct(
+        private Connection $db,
+        #[Autowire("%kernel.project_dir%")] private string $project,
+        #[Autowire("%env(MONGODB_URI)%")] private string $uri,
+        #[Autowire("%env(MONGODB_DATABASE)%")] private string $database,
+        #[Autowire("%env(NODE_BINARY)%")] private string $node,
+    ) {}
 
-    public function report(string $menu,string $from,string $until): array
+    public function report(string $menu, string $from, string $until): array
     {
         // Each request writes its own immutable snapshot, avoiding mixed results during concurrent refreshes.
         $orders = $this->filteredOrders($menu, $from, $until);
-        $process=new Process([$this->node,$this->project.'/bin/admin-statistics.mjs'],$this->project,
-            ['MONGODB_URI'=>$this->uri,'MONGODB_DATABASE'=>$this->database]);
-        $process->setInput(json_encode(compact('orders','menu','from','until'),JSON_THROW_ON_ERROR));
+        $process = new Process(
+            [$this->node, $this->project . "/bin/admin-statistics.mjs"],
+            $this->project,
+            [
+                "MONGODB_URI" => $this->uri,
+                "MONGODB_DATABASE" => $this->database,
+            ],
+        );
+        $process->setInput(
+            json_encode(
+                compact("orders", "menu", "from", "until"),
+                JSON_THROW_ON_ERROR,
+            ),
+        );
         $process->setTimeout(30);
         $process->run();
-        if (!$process->isSuccessful()) throw new \RuntimeException('Statistiques temporairement indisponibles. Vérifiez le service MongoDB.');
-        return json_decode($process->getOutput(),true,flags:JSON_THROW_ON_ERROR);
+        if (!$process->isSuccessful()) {
+            throw new \RuntimeException(
+                "Statistiques temporairement indisponibles. Vérifiez le service MongoDB.",
+            );
+        }
+        return json_decode(
+            $process->getOutput(),
+            true,
+            flags: JSON_THROW_ON_ERROR,
+        );
     }
-    private function filteredOrders(string $menu, string $from, string $until): array
-    {
-        $sql="SELECT o.id AS order_id,i.menu_id,o.service_date,s.code AS status,
+    private function filteredOrders(
+        string $menu,
+        string $from,
+        string $until,
+    ): array {
+        $sql = "SELECT o.id AS order_id,i.menu_id,o.service_date,s.code AS status,
             round(GREATEST(0,i.line_total-o.discount_amount)*100)::bigint AS revenue_cents
             FROM orders o JOIN order_items i ON i.order_id=o.id JOIN order_statuses s ON s.id=o.current_status_id WHERE s.code <> 'cancelled'";
         $params = [];
-        if ($menu !== '') { $sql .= ' AND i.menu_id = ?'; $params[] = $menu; }
-        if ($from !== '') { $sql .= ' AND o.service_date >= ?'; $params[] = $from; }
-        if ($until !== '') { $sql .= ' AND o.service_date <= ?'; $params[] = $until; }
+        if ($menu !== "") {
+            $sql .= " AND i.menu_id = ?";
+            $params[] = $menu;
+        }
+        if ($from !== "") {
+            $sql .= " AND o.service_date >= ?";
+            $params[] = $from;
+        }
+        if ($until !== "") {
+            $sql .= " AND o.service_date <= ?";
+            $params[] = $until;
+        }
         return $this->db->fetchAllAssociative($sql, $params);
     }
 }

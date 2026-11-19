@@ -7,39 +7,40 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity]
-#[ORM\Table(name: 'menu_images')]
+#[ORM\Table(name: "menu_images")]
 class MenuImage
 {
     #[ORM\Id]
-    #[ORM\GeneratedValue(strategy: 'CUSTOM')]
+    #[ORM\GeneratedValue(strategy: "CUSTOM")]
     #[ORM\CustomIdGenerator(class: \App\Doctrine\UuidGenerator::class)]
-    #[ORM\Column(type: 'guid')]
+    #[ORM\Column(type: "guid")]
     private ?string $id = null;
 
     #[ORM\ManyToOne]
-    #[ORM\JoinColumn(name: 'menu_id', nullable: false, onDelete: 'CASCADE')]
+    #[ORM\JoinColumn(name: "menu_id", nullable: false, onDelete: "CASCADE")]
     private Menu $menu;
 
-    #[ORM\Column(type: 'text')]
+    #[ORM\Column(type: "text")]
     private string $url;
 
-    #[ORM\Column(type: 'string', length: 255)]
+    #[ORM\Column(type: "string", length: 255)]
     private string $altText;
 
-    #[ORM\Column(type: 'smallint')]
+    #[ORM\Column(type: "smallint")]
     private int $displayOrder = 0;
 
-    #[ORM\Column(type: 'boolean')]
+    #[ORM\Column(type: "boolean")]
     private bool $isCover = false;
 
-    #[ORM\Column(type: 'datetimetz_immutable', insertable: false, updatable: false, generated: 'INSERT')]
+    #[ORM\Column(
+        type: "datetimetz_immutable",
+        insertable: false,
+        updatable: false,
+        generated: "INSERT",
+    )]
     private ?\DateTimeImmutable $createdAt = null;
 
-    public function __construct(
-        Menu $menu,
-        string $url,
-        string $altText,
-    )
+    public function __construct(Menu $menu, string $url, string $altText)
     {
         $this->menu = $menu;
         $this->url = $url;

@@ -51,8 +51,6 @@
 }
 .login-card details { margin-top: 1rem; }
 .login-card summary { display: inline-block; text-decoration: underline; }
-.login-page details p, .login-result:not(:empty) { margin: .8rem 0 0; }
-.login-result:empty { margin: 0; }
 .login-password { position: relative; margin: .3rem 0 1rem; }
 .login-password input { margin: 0; padding-right: 3rem; }
 .login-password-toggle {
@@ -75,7 +73,6 @@
 .login-registration h2 { font-family: inherit; font-size: 1rem; font-weight: 400; color: inherit; margin: 0 0 .25rem; }
 .login-registration p { font-size: .875rem; margin: 0 0 .25rem; }
 .login-registration #create-account-info { margin-top: 1rem; }
-.login-demo { margin-top: .75rem; font-size: .875rem; }
 .login-button:hover { background: #681d32; }
 .login-button:focus-visible { outline: 2px solid #501526; outline-offset: 3px; }
 @media (max-width: 480px) {

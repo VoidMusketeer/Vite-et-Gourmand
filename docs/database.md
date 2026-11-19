@@ -55,7 +55,7 @@ lack a year, so no orders or delivery assignments are invented by this import.
 | Component | Tables | Purpose |
 | --- | --- | --- |
 | Accounts | `roles`, `users`, `password_reset_tokens` | Customers, employees, administrators and password recovery |
-| Menu catalogue | `menus`, `themes`, `diets`, `menu_diets`, `menu_images` | Prices, minimum guests, stock, publication, filters and gallery |
+| Menu catalogue | `menus`, `themes`, `diets`, `menu_images` | Prices, minimum guests, stock, publication, filters and gallery |
 | Dishes | `dish_types`, `dishes`, `menu_dishes`, `allergens`, `dish_allergens` | Reusable dishes and allergen information |
 | Orders | `orders`, `order_items`, `order_statuses`, `order_status_history` | Delivery address, price snapshots and progress history |
 | Payments | `payments`, `payment_events` | Provider references, payment attempts, refund totals and webhook deduplication |
@@ -187,3 +187,20 @@ En dÃ©veloppement, .env.dev.local configure SMTP sur 127.0.0.1:1025. La boÃ®te M
 Pour Gmail en production, complÃ©ter et dÃ©commenter les deux lignes dans .env.prod.local. Utiliser lâ€™adresse Gmail comme identifiant SMTP (avec @ encodÃ© en %40), un mot de passe dâ€™application Google sans espaces et smtp.gmail.com sur le port 465 avec smtps. MAIL_FROM_ADDRESS doit correspondre au compte Gmail choisi. Le mot de passe dâ€™application nÃ©cessite la validation en deux Ã©tapes du compte Google. Les fichiers .env.*.local sont exclus de Git. La production doit fonctionner avec APP_ENV=prod pour sÃ©lectionner cette configuration.
 
 Un test local peut Ãªtre envoyÃ© avec php bin/console mailer:test test@example.invalid --from=VOTRE_ADRESSE@gmail.com. Les notifications dÃ©jÃ  capturÃ©es par Mailpit sont considÃ©rÃ©es comme envoyÃ©es et ne seront pas renvoyÃ©es automatiquement par Gmail.
+
+## Thèmes et régimes relationnels (19 novembre 2026)
+
+La migration `Version20261119020000` remplace les classifications JSON par
+`menus.theme_id` et `menus.diet_id`, deux clés étrangères obligatoires.
+Les libellés existants sont importés sans modification. Les menus sans
+classification et les associations de régimes ambiguës bloquent la migration
+transactionnelle au lieu de recevoir une valeur arbitraire.
+
+Le formulaire administrateur sélectionne les identifiants des tables de référence.
+Le catalogue, la recherche et les options de filtrage lisent les libellés par
+jointure. Les paramètres publics des filtres restent des libellés pour préserver
+les liens existants. Les clés JSON `theme` et `tag` et la table `menu_diets` sont
+supprimées après transfert ; les autres métadonnées JSON sont conservées.
+
+Validation : `php tests/catalog_relations_smoke.php` et
+`php tests/optimization_smoke.php` (écritures de test annulées).

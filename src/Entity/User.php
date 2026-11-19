@@ -9,59 +9,59 @@ use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity]
-#[ORM\Table(name: 'users')]
+#[ORM\Table(name: "users")]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
-    #[ORM\GeneratedValue(strategy: 'CUSTOM')]
+    #[ORM\GeneratedValue(strategy: "CUSTOM")]
     #[ORM\CustomIdGenerator(class: \App\Doctrine\UuidGenerator::class)]
-    #[ORM\Column(type: 'guid')]
+    #[ORM\Column(type: "guid")]
     private ?string $id = null;
 
     #[ORM\ManyToOne]
-    #[ORM\JoinColumn(name: 'role_id', nullable: false)]
+    #[ORM\JoinColumn(name: "role_id", nullable: false)]
     private Role $role;
 
-    #[ORM\Column(type: 'string', unique: true, columnDefinition: 'CITEXT')]
+    #[ORM\Column(type: "string", unique: true, columnDefinition: "CITEXT")]
     private string $email;
 
-    #[ORM\Column(type: 'text')]
+    #[ORM\Column(type: "text")]
     private string $passwordHash;
 
-    #[ORM\Column(type: 'string', length: 100)]
+    #[ORM\Column(type: "string", length: 100)]
     private string $firstName;
 
-    #[ORM\Column(type: 'string', length: 100)]
+    #[ORM\Column(type: "string", length: 100)]
     private string $lastName;
 
-    #[ORM\Column(type: 'string', length: 30)]
+    #[ORM\Column(type: "string", length: 30)]
     private string $phone;
 
-    #[ORM\Column(type: 'string', length: 255)]
+    #[ORM\Column(type: "string", length: 255)]
     private string $addressLine1;
 
-    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    #[ORM\Column(type: "string", length: 255, nullable: true)]
     private ?string $addressLine2 = null;
 
-    #[ORM\Column(type: 'string', length: 20)]
+    #[ORM\Column(type: "string", length: 20)]
     private string $postalCode;
 
-    #[ORM\Column(type: 'string', length: 120)]
+    #[ORM\Column(type: "string", length: 120)]
     private string $city;
 
-    #[ORM\Column(type: 'string', length: 2)]
-    private string $countryCode = 'FR';
+    #[ORM\Column(type: "string", length: 2)]
+    private string $countryCode = "FR";
 
-    #[ORM\Column(type: 'boolean')]
+    #[ORM\Column(type: "boolean")]
     private bool $isActive = true;
 
-    #[ORM\Column(type: 'string', length: 100, nullable: true)]
+    #[ORM\Column(type: "string", length: 100, nullable: true)]
     private ?string $staffFunction = null;
 
-    #[ORM\Column(type: 'string', length: 120, nullable: true)]
+    #[ORM\Column(type: "string", length: 120, nullable: true)]
     private ?string $staffSchedule = null;
 
-    #[ORM\Column(type: 'smallint', nullable: true)]
+    #[ORM\Column(type: "smallint", nullable: true)]
     private ?int $demoOpenTaskCount = null;
 
     public function getStaffFunction(): ?string
@@ -84,16 +84,26 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->staffFunction = $function;
     }
 
-    #[ORM\Column(type: 'datetimetz_immutable', nullable: true)]
+    #[ORM\Column(type: "datetimetz_immutable", nullable: true)]
     private ?\DateTimeImmutable $emailVerifiedAt = null;
 
-    #[ORM\Column(type: 'datetimetz_immutable', nullable: true)]
+    #[ORM\Column(type: "datetimetz_immutable", nullable: true)]
     private ?\DateTimeImmutable $lastLoginAt = null;
 
-    #[ORM\Column(type: 'datetimetz_immutable', insertable: false, updatable: false, generated: 'INSERT')]
+    #[ORM\Column(
+        type: "datetimetz_immutable",
+        insertable: false,
+        updatable: false,
+        generated: "INSERT",
+    )]
     private ?\DateTimeImmutable $createdAt = null;
 
-    #[ORM\Column(type: 'datetimetz_immutable', insertable: false, updatable: false, generated: 'ALWAYS')]
+    #[ORM\Column(
+        type: "datetimetz_immutable",
+        insertable: false,
+        updatable: false,
+        generated: "ALWAYS",
+    )]
     private ?\DateTimeImmutable $updatedAt = null;
 
     public function __construct(
@@ -106,8 +116,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         string $addressLine1,
         string $postalCode,
         string $city,
-    )
-    {
+    ) {
         $this->role = $role;
         $this->email = $email;
         $this->passwordHash = $passwordHash;
@@ -249,8 +258,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->emailVerifiedAt;
     }
 
-    public function setEmailVerifiedAt(?\DateTimeImmutable $emailVerifiedAt): void
-    {
+    public function setEmailVerifiedAt(
+        ?\DateTimeImmutable $emailVerifiedAt,
+    ): void {
         $this->emailVerifiedAt = $emailVerifiedAt;
     }
 
@@ -277,9 +287,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function getRoles(): array
     {
         return match ($this->role->getCode()) {
-            'administrator' => ['ROLE_USER', 'ROLE_ADMIN'],
-            'employee' => ['ROLE_USER', 'ROLE_EMPLOYEE'],
-            default => ['ROLE_USER'],
+            "administrator" => ["ROLE_USER", "ROLE_ADMIN"],
+            "employee" => ["ROLE_USER", "ROLE_EMPLOYEE"],
+            default => ["ROLE_USER"],
         };
     }
 
@@ -294,7 +304,5 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     #[\Deprecated]
-    public function eraseCredentials(): void
-    {
-    }
+    public function eraseCredentials(): void {}
 }

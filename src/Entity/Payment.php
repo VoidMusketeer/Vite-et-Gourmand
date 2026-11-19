@@ -7,47 +7,57 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity]
-#[ORM\Table(name: 'payments')]
+#[ORM\Table(name: "payments")]
 class Payment
 {
     #[ORM\Id]
-    #[ORM\GeneratedValue(strategy: 'CUSTOM')]
+    #[ORM\GeneratedValue(strategy: "CUSTOM")]
     #[ORM\CustomIdGenerator(class: \App\Doctrine\UuidGenerator::class)]
-    #[ORM\Column(type: 'guid')]
+    #[ORM\Column(type: "guid")]
     private ?string $id = null;
 
     #[ORM\ManyToOne]
-    #[ORM\JoinColumn(name: 'order_id', nullable: false, onDelete: 'RESTRICT')]
+    #[ORM\JoinColumn(name: "order_id", nullable: false, onDelete: "RESTRICT")]
     private Order $order;
 
-    #[ORM\Column(type: 'string', length: 50)]
+    #[ORM\Column(type: "string", length: 50)]
     private string $provider;
 
-    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    #[ORM\Column(type: "string", length: 255, nullable: true)]
     private ?string $providerReference = null;
 
-    #[ORM\Column(type: 'guid', unique: true)]
+    #[ORM\Column(type: "guid", unique: true)]
     private string $idempotencyKey;
 
-    #[ORM\Column(type: 'bigint')]
+    #[ORM\Column(type: "bigint")]
     private int $amountMinor;
 
-    #[ORM\Column(type: 'string', length: 3)]
-    private string $currency = 'EUR';
+    #[ORM\Column(type: "string", length: 3)]
+    private string $currency = "EUR";
 
-    #[ORM\Column(type: 'string', length: 20)]
-    private string $status = 'pending';
+    #[ORM\Column(type: "string", length: 20)]
+    private string $status = "pending";
 
-    #[ORM\Column(type: 'bigint')]
+    #[ORM\Column(type: "bigint")]
     private int $refundedAmountMinor = 0;
 
-    #[ORM\Column(type: 'datetimetz_immutable', nullable: true)]
+    #[ORM\Column(type: "datetimetz_immutable", nullable: true)]
     private ?\DateTimeImmutable $paidAt = null;
 
-    #[ORM\Column(type: 'datetimetz_immutable', insertable: false, updatable: false, generated: 'INSERT')]
+    #[ORM\Column(
+        type: "datetimetz_immutable",
+        insertable: false,
+        updatable: false,
+        generated: "INSERT",
+    )]
     private ?\DateTimeImmutable $createdAt = null;
 
-    #[ORM\Column(type: 'datetimetz_immutable', insertable: false, updatable: false, generated: 'ALWAYS')]
+    #[ORM\Column(
+        type: "datetimetz_immutable",
+        insertable: false,
+        updatable: false,
+        generated: "ALWAYS",
+    )]
     private ?\DateTimeImmutable $updatedAt = null;
 
     public function __construct(
@@ -55,8 +65,7 @@ class Payment
         string $provider,
         string $idempotencyKey,
         int $amountMinor,
-    )
-    {
+    ) {
         $this->order = $order;
         $this->provider = $provider;
         $this->idempotencyKey = $idempotencyKey;

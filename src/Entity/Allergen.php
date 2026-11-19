@@ -7,18 +7,18 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity]
-#[ORM\Table(name: 'allergens')]
+#[ORM\Table(name: "allergens")]
 class Allergen
 {
     #[ORM\Id]
-    #[ORM\GeneratedValue(strategy: 'IDENTITY')]
-    #[ORM\Column(type: 'smallint')]
+    #[ORM\GeneratedValue(strategy: "IDENTITY")]
+    #[ORM\Column(type: "smallint")]
     private ?int $id = null;
 
-    #[ORM\Column(type: 'string', length: 50, unique: true)]
+    #[ORM\Column(type: "string", length: 50, unique: true)]
     private string $code;
 
-    #[ORM\Column(type: 'string', length: 120, unique: true)]
+    #[ORM\Column(type: "string", length: 120, unique: true)]
     private string $name;
 
     public function __construct(string $code, string $name)

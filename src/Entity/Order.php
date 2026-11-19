@@ -7,83 +7,93 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity]
-#[ORM\Table(name: 'orders')]
+#[ORM\Table(name: "orders")]
 class Order
 {
-    #[ORM\Column(type: 'integer')]
+    #[ORM\Column(type: "integer")]
     private int $stockReserved = 0;
     #[ORM\Id]
-    #[ORM\GeneratedValue(strategy: 'CUSTOM')]
+    #[ORM\GeneratedValue(strategy: "CUSTOM")]
     #[ORM\CustomIdGenerator(class: \App\Doctrine\UuidGenerator::class)]
-    #[ORM\Column(type: 'guid')]
+    #[ORM\Column(type: "guid")]
     private ?string $id = null;
 
-    #[ORM\Column(type: 'string', length: 30, unique: true)]
+    #[ORM\Column(type: "string", length: 30, unique: true)]
     private string $reference;
 
     #[ORM\ManyToOne]
-    #[ORM\JoinColumn(name: 'user_id', nullable: false, onDelete: 'RESTRICT')]
+    #[ORM\JoinColumn(name: "user_id", nullable: false, onDelete: "RESTRICT")]
     private User $user;
 
     #[ORM\ManyToOne]
-    #[ORM\JoinColumn(name: 'current_status_id', nullable: false)]
+    #[ORM\JoinColumn(name: "current_status_id", nullable: false)]
     private OrderStatus $currentStatus;
 
-    #[ORM\Column(type: 'date_immutable')]
+    #[ORM\Column(type: "date_immutable")]
     private \DateTimeImmutable $serviceDate;
 
-    #[ORM\Column(type: 'time_immutable')]
+    #[ORM\Column(type: "time_immutable")]
     private \DateTimeImmutable $deliveryTime;
 
-    #[ORM\Column(type: 'string', length: 255)]
+    #[ORM\Column(type: "string", length: 255)]
     private string $deliveryAddressLine1;
 
-    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    #[ORM\Column(type: "string", length: 255, nullable: true)]
     private ?string $deliveryAddressLine2 = null;
 
-    #[ORM\Column(type: 'string', length: 20)]
+    #[ORM\Column(type: "string", length: 20)]
     private string $deliveryPostalCode;
 
-    #[ORM\Column(type: 'string', length: 120)]
+    #[ORM\Column(type: "string", length: 120)]
     private string $deliveryCity;
 
-    #[ORM\Column(type: 'string', length: 2)]
-    private string $deliveryCountryCode = 'FR';
+    #[ORM\Column(type: "string", length: 2)]
+    private string $deliveryCountryCode = "FR";
 
-    #[ORM\Column(type: 'decimal', precision: 8, scale: 2)]
-    private string $deliveryDistanceKm = '0';
+    #[ORM\Column(type: "decimal", precision: 8, scale: 2)]
+    private string $deliveryDistanceKm = "0";
 
-    #[ORM\Column(type: 'decimal', precision: 10, scale: 2)]
+    #[ORM\Column(type: "decimal", precision: 10, scale: 2)]
     private string $menuSubtotal;
 
-    #[ORM\Column(type: 'decimal', precision: 5, scale: 4)]
-    private string $discountRate = '0';
+    #[ORM\Column(type: "decimal", precision: 5, scale: 4)]
+    private string $discountRate = "0";
 
-    #[ORM\Column(type: 'decimal', precision: 10, scale: 2)]
-    private string $discountAmount = '0';
+    #[ORM\Column(type: "decimal", precision: 10, scale: 2)]
+    private string $discountAmount = "0";
 
-    #[ORM\Column(type: 'decimal', precision: 10, scale: 2)]
-    private string $deliveryFee = '0';
+    #[ORM\Column(type: "decimal", precision: 10, scale: 2)]
+    private string $deliveryFee = "0";
 
-    #[ORM\Column(type: 'decimal', precision: 10, scale: 2)]
+    #[ORM\Column(type: "decimal", precision: 10, scale: 2)]
     private string $totalAmount;
 
-    #[ORM\Column(type: 'text', nullable: true)]
+    #[ORM\Column(type: "text", nullable: true)]
     private ?string $customerNote = null;
 
-    #[ORM\Column(type: 'text', nullable: true)]
+    #[ORM\Column(type: "text", nullable: true)]
     private ?string $cancellationReason = null;
 
-    #[ORM\Column(type: 'string', length: 20, nullable: true)]
+    #[ORM\Column(type: "string", length: 20, nullable: true)]
     private ?string $cancellationContactMethod = null;
 
-    #[ORM\Column(type: 'datetimetz_immutable', nullable: true)]
+    #[ORM\Column(type: "datetimetz_immutable", nullable: true)]
     private ?\DateTimeImmutable $cancelledAt = null;
 
-    #[ORM\Column(type: 'datetimetz_immutable', insertable: false, updatable: false, generated: 'INSERT')]
+    #[ORM\Column(
+        type: "datetimetz_immutable",
+        insertable: false,
+        updatable: false,
+        generated: "INSERT",
+    )]
     private ?\DateTimeImmutable $createdAt = null;
 
-    #[ORM\Column(type: 'datetimetz_immutable', insertable: false, updatable: false, generated: 'ALWAYS')]
+    #[ORM\Column(
+        type: "datetimetz_immutable",
+        insertable: false,
+        updatable: false,
+        generated: "ALWAYS",
+    )]
     private ?\DateTimeImmutable $updatedAt = null;
 
     public function __construct(
@@ -97,8 +107,7 @@ class Order
         string $deliveryCity,
         string $menuSubtotal,
         string $totalAmount,
-    )
-    {
+    ) {
         $this->reference = $reference;
         $this->user = $user;
         $this->currentStatus = $currentStatus;
@@ -301,8 +310,9 @@ class Order
         return $this->cancellationContactMethod;
     }
 
-    public function setCancellationContactMethod(?string $cancellationContactMethod): void
-    {
+    public function setCancellationContactMethod(
+        ?string $cancellationContactMethod,
+    ): void {
         $this->cancellationContactMethod = $cancellationContactMethod;
     }
 

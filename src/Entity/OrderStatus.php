@@ -7,31 +7,27 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity]
-#[ORM\Table(name: 'order_statuses')]
+#[ORM\Table(name: "order_statuses")]
 class OrderStatus
 {
     #[ORM\Id]
-    #[ORM\GeneratedValue(strategy: 'IDENTITY')]
-    #[ORM\Column(type: 'smallint')]
+    #[ORM\GeneratedValue(strategy: "IDENTITY")]
+    #[ORM\Column(type: "smallint")]
     private ?int $id = null;
 
-    #[ORM\Column(type: 'string', length: 40, unique: true)]
+    #[ORM\Column(type: "string", length: 40, unique: true)]
     private string $code;
 
-    #[ORM\Column(type: 'string', length: 100)]
+    #[ORM\Column(type: "string", length: 100)]
     private string $label;
 
-    #[ORM\Column(type: 'smallint')]
+    #[ORM\Column(type: "smallint")]
     private int $displayOrder;
 
-    #[ORM\Column(type: 'boolean')]
+    #[ORM\Column(type: "boolean")]
     private bool $isTerminal = false;
 
-    public function __construct(
-        string $code,
-        string $label,
-        int $displayOrder,
-    )
+    public function __construct(string $code, string $label, int $displayOrder)
     {
         $this->code = $code;
         $this->label = $label;

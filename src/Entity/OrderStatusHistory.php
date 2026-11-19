@@ -7,33 +7,38 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity]
-#[ORM\Table(name: 'order_status_history')]
+#[ORM\Table(name: "order_status_history")]
 class OrderStatusHistory
 {
     #[ORM\Id]
-    #[ORM\GeneratedValue(strategy: 'IDENTITY')]
-    #[ORM\Column(type: 'bigint')]
+    #[ORM\GeneratedValue(strategy: "IDENTITY")]
+    #[ORM\Column(type: "bigint")]
     private ?int $id = null;
 
     #[ORM\ManyToOne]
-    #[ORM\JoinColumn(name: 'order_id', nullable: false, onDelete: 'CASCADE')]
+    #[ORM\JoinColumn(name: "order_id", nullable: false, onDelete: "CASCADE")]
     private Order $order;
 
     #[ORM\ManyToOne]
-    #[ORM\JoinColumn(name: 'status_id', nullable: false)]
+    #[ORM\JoinColumn(name: "status_id", nullable: false)]
     private OrderStatus $status;
 
     #[ORM\ManyToOne]
-    #[ORM\JoinColumn(name: 'changed_by', nullable: true, onDelete: 'SET NULL')]
+    #[ORM\JoinColumn(name: "changed_by", nullable: true, onDelete: "SET NULL")]
     private ?User $changedBy = null;
 
-    #[ORM\Column(type: 'text', nullable: true)]
+    #[ORM\Column(type: "text", nullable: true)]
     private ?string $publicComment = null;
 
-    #[ORM\Column(type: 'text', nullable: true)]
+    #[ORM\Column(type: "text", nullable: true)]
     private ?string $internalComment = null;
 
-    #[ORM\Column(type: 'datetimetz_immutable', insertable: false, updatable: false, generated: 'INSERT')]
+    #[ORM\Column(
+        type: "datetimetz_immutable",
+        insertable: false,
+        updatable: false,
+        generated: "INSERT",
+    )]
     private ?\DateTimeImmutable $createdAt = null;
 
     public function __construct(Order $order, OrderStatus $status)

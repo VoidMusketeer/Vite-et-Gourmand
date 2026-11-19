@@ -12,31 +12,31 @@
  * The "importmap:require" command can be used to add new entries to this file.
  */
 return [
-    'app' => [
-        'path' => './assets/app.js',
-        'entrypoint' => true,
+    "app" => [
+        "path" => "./assets/app.js",
+        "entrypoint" => true,
     ],
-    '@hotwired/stimulus' => [
-        'version' => '3.2.2',
+    "@hotwired/stimulus" => [
+        "version" => "3.2.2",
     ],
-    '@symfony/stimulus-bundle' => [
-        'path' => './vendor/symfony/stimulus-bundle/assets/dist/loader.js',
+    "@symfony/stimulus-bundle" => [
+        "path" => "./vendor/symfony/stimulus-bundle/assets/dist/loader.js",
     ],
-    '@hotwired/turbo' => [
-        'version' => '8.0.23',
+    "@hotwired/turbo" => [
+        "version" => "8.0.23",
     ],
-    'bootstrap' => [
-        'version' => '5.3.8',
+    "bootstrap" => [
+        "version" => "5.3.8",
     ],
-    '@popperjs/core' => [
-        'version' => '2.11.8',
+    "@popperjs/core" => [
+        "version" => "2.11.8",
     ],
-    'bootstrap/dist/css/bootstrap.min.css' => [
-        'version' => '5.3.8',
-        'type' => 'css',
+    "bootstrap/dist/css/bootstrap.min.css" => [
+        "version" => "5.3.8",
+        "type" => "css",
     ],
-    'bootstrap-icons/font/bootstrap-icons.min.css' => [
-        'version' => '1.13.1',
-        'type' => 'css',
+    "bootstrap-icons/font/bootstrap-icons.min.css" => [
+        "version" => "1.13.1",
+        "type" => "css",
     ],
 ];

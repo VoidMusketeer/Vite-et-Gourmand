@@ -9,6 +9,12 @@
         <label>Stock disponible (menus complets pour des groupes)<input name="stock" type="number" min="0" max="1000000" required value="{{ values.stock ?? 0 }}"></label>
         <label>Disponible du<input type="date" name="start_date" value="{{ values.start_date ?? '' }}"></label>
         <label>Au (inclus)<input type="date" name="end_date" value="{{ values.end_date ?? '' }}"></label>
+        {% for field, reference in {'theme_id': {label: 'Thème', options: themes}, 'diet_id': {label: 'Régime', options: diets}} %}
+            <label>{{ reference.label }}<select name="{{ field }}" required>
+                <option value="">Choisir…</option>
+                {% for option in reference.options %}<option value="{{ option.id }}" {{ (values[field] ?? '') == option.id ? 'selected' }}>{{ option.name }}</option>{% endfor %}
+            </select></label>
+        {% endfor %}
         {% for key, label in {'theme': 'ThÃ¨me', 'tag': 'RÃ©gime', 'starter': 'EntrÃ©e', 'main_course': 'Plat', 'dessert': 'Dessert'} %}
             <label>{{ label }}<input name="{{ key }}" maxlength="160" required value="{{ values[key] ?? '' }}"></label>{% endfor %}
         <label>Photo principale (JPG, PNG ou WebP, 5 Mo maximum)<input type="file" accept="image/jpeg,image/png,image/webp" name="photo" {{ id ? '' : 'required' }}></label>

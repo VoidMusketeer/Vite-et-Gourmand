@@ -7,39 +7,44 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity]
-#[ORM\Table(name: 'order_items')]
+#[ORM\Table(name: "order_items")]
 class OrderItem
 {
     #[ORM\Id]
-    #[ORM\GeneratedValue(strategy: 'CUSTOM')]
+    #[ORM\GeneratedValue(strategy: "CUSTOM")]
     #[ORM\CustomIdGenerator(class: \App\Doctrine\UuidGenerator::class)]
-    #[ORM\Column(type: 'guid')]
+    #[ORM\Column(type: "guid")]
     private ?string $id = null;
 
     #[ORM\OneToOne]
-    #[ORM\JoinColumn(name: 'order_id', nullable: false, onDelete: 'CASCADE')]
+    #[ORM\JoinColumn(name: "order_id", nullable: false, onDelete: "CASCADE")]
     private Order $order;
 
     #[ORM\ManyToOne]
-    #[ORM\JoinColumn(name: 'menu_id', nullable: false, onDelete: 'RESTRICT')]
+    #[ORM\JoinColumn(name: "menu_id", nullable: false, onDelete: "RESTRICT")]
     private Menu $menu;
 
-    #[ORM\Column(type: 'string', length: 160)]
+    #[ORM\Column(type: "string", length: 160)]
     private string $menuTitle;
 
-    #[ORM\Column(type: 'integer')]
+    #[ORM\Column(type: "integer")]
     private int $peopleCount;
 
-    #[ORM\Column(type: 'integer')]
+    #[ORM\Column(type: "integer")]
     private int $minimumPeopleSnapshot;
 
-    #[ORM\Column(type: 'decimal', precision: 10, scale: 2)]
+    #[ORM\Column(type: "decimal", precision: 10, scale: 2)]
     private string $unitPricePerPerson;
 
-    #[ORM\Column(type: 'decimal', precision: 10, scale: 2)]
+    #[ORM\Column(type: "decimal", precision: 10, scale: 2)]
     private string $lineTotal;
 
-    #[ORM\Column(type: 'datetimetz_immutable', insertable: false, updatable: false, generated: 'INSERT')]
+    #[ORM\Column(
+        type: "datetimetz_immutable",
+        insertable: false,
+        updatable: false,
+        generated: "INSERT",
+    )]
     private ?\DateTimeImmutable $createdAt = null;
 
     public function __construct(
@@ -48,8 +53,7 @@ class OrderItem
         int $peopleCount,
         string $unitPricePerPerson,
         string $lineTotal,
-    )
-    {
+    ) {
         $this->order = $order;
         $this->menu = $menu;
         $this->menuTitle = $menu->getTitle();

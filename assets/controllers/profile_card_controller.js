@@ -1,8 +1,8 @@
-import { Controller } from '@hotwired/stimulus';
+import { Controller } from "@hotwired/stimulus";
 
 export default class extends Controller {
     preview(event) {
-        if (event.pointerType !== 'mouse' || this.element.open) return;
+        if (event.pointerType !== "mouse" || this.element.open) return;
         this.pinned = false;
         this.element.open = true;
     }
@@ -14,7 +14,8 @@ export default class extends Controller {
     }
 
     leave() {
-        if (!this.pinned && !this.element.contains(document.activeElement)) this.close();
+        if (!this.pinned && !this.element.contains(document.activeElement))
+            this.close();
     }
 
     outside(event) {
@@ -27,7 +28,7 @@ export default class extends Controller {
 
     escape() {
         this.close();
-        this.element.querySelector('summary').focus();
+        this.element.querySelector("summary").focus();
     }
 
     close() {

@@ -1,0 +1,8 @@
+vendor/
+node_modules/
+var/
+public/assets/
+public/bundles/
+public/vendor/
+assets/vendor/
+config/reference.php

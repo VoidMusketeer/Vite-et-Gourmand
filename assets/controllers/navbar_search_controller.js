@@ -1,7 +1,7 @@
-import { Controller } from '@hotwired/stimulus';
+import { Controller } from "@hotwired/stimulus";
 
 export default class extends Controller {
-    static targets = ['input'];
+    static targets = ["input"];
 
     focus() {
         if (this.element.open) this.inputTarget.focus();
@@ -15,6 +15,6 @@ export default class extends Controller {
 
     close() {
         this.element.open = false;
-        this.element.querySelector('summary').focus();
+        this.element.querySelector("summary").focus();
     }
 }

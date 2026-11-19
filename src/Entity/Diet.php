@@ -7,21 +7,21 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity]
-#[ORM\Table(name: 'diets')]
+#[ORM\Table(name: "diets")]
 class Diet
 {
     #[ORM\Id]
-    #[ORM\GeneratedValue(strategy: 'IDENTITY')]
-    #[ORM\Column(type: 'smallint')]
+    #[ORM\GeneratedValue(strategy: "IDENTITY")]
+    #[ORM\Column(type: "smallint")]
     private ?int $id = null;
 
-    #[ORM\Column(type: 'string', length: 80, unique: true)]
+    #[ORM\Column(type: "string", length: 80, unique: true)]
     private string $name;
 
-    #[ORM\Column(type: 'string', length: 100, unique: true)]
+    #[ORM\Column(type: "string", length: 100, unique: true)]
     private string $slug;
 
-    #[ORM\Column(type: 'boolean')]
+    #[ORM\Column(type: "boolean")]
     private bool $isActive = true;
 
     public function __construct(string $name, string $slug)
