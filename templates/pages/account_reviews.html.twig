@@ -1,8 +1,8 @@
 {% extends 'base.html.twig' %}{% block title %}Mon compte · Avis clients{% endblock %}
 {% block body %}<main class="container py-5"><h1>Mon compte</h1><h2>Évaluer mes commandes terminées</h2>
-{% for message in app.flashes('notice') %}<p role="status">{{ message }}</p>{% endfor %}
-{% for order in orders %}<article class="card p-3 mb-3"><h3>Commande {{ order.reference }}</h3>{% if order.review_id %}<p>Avis déjà transmis.</p>{% else %}
-<form method="post" action="{{ path('customer_review_create') }}"><input type="hidden" name="_token" value="{{ csrf_token('customer_review') }}"><input type="hidden" name="order" value="{{ order.id }}">
-<label>Étoiles<select class="form-select" name="rating" required><option value="">Choisir</option>{% for i in 1..5 %}<option value="{{ i }}">{{ i }}/5</option>{% endfor %}</select></label>
-<label class="d-block">Commentaire<textarea class="form-control" name="comment" required maxlength="2000"></textarea></label><button class="btn btn-primary mt-2">Envoyer mon avis</button></form>{% endif %}</article>
-{% else %}<p>Vos commandes terminées apparaîtront ici.</p>{% endfor %}</main>{% endblock %}
+        {% for message in app.flashes('notice') %}<p role="status">{{ message }}</p>{% endfor %}
+        {% for order in orders %}<article class="card p-3 mb-3"><h3>Commande {{ order.reference }}</h3>{% if order.review_id %}<p>Avis déjà transmis.</p>{% else %}
+                    <form method="post" action="{{ path('customer_review_create') }}"><input type="hidden" name="_token" value="{{ csrf_token('customer_review') }}"><input type="hidden" name="order" value="{{ order.id }}">
+                        <label>Étoiles<select class="form-select" name="rating" required><option value="">Choisir</option>{% for i in 1..5 %}<option value="{{ i }}">{{ i }}/5</option>{% endfor %}</select></label>
+                        <label class="d-block">Commentaire<textarea class="form-control" name="comment" required maxlength="2000"></textarea></label><button class="btn btn-primary mt-2">Envoyer mon avis</button></form>{% endif %}</article>
+        {% else %}<p>Vos commandes terminées apparaîtront ici.</p>{% endfor %}</main>{% endblock %}

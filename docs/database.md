@@ -2,9 +2,8 @@
 
 ## What is included
 
-This Symfony scaffold uses PostgreSQL 16. The initial Doctrine migration creates
-22 tables, adapted from the earlier `ECF/Codex help` database in this workspace,
-with payment tracking added. The initial seed contains only reference data;
+This Symfony application uses PostgreSQL 16. The initial Doctrine migration creates
+22 tables, including payment tracking. The initial seed contains only reference data;
 subsequent migrations add administrator and screenshot demonstration accounts.
 
 ## Screenshot account import (17 November 2026)

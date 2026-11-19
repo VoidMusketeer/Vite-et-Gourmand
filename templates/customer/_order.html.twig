@@ -12,7 +12,7 @@
             <div class="customer-menu">
                 {% if order.image %}<img src="{{ asset(order.image) }}" alt="{{ order.menu_title }}" width="144" height="144">{% else %}<span class="customer-menu-placeholder"><i class="bi bi-basket" aria-hidden="true"></i></span>{% endif %}
                 <div><h3>{{ order.menu_title|default('Votre menu') }}</h3><p class="customer-muted">{{ order.people_count }} personnes</p>
-                    <a href="{{ order.slug ? path('app_menu_detail', {id: order.slug}) : path('app_menus') }}" class="customer-button gold pill"><i class="bi bi-arrow-counterclockwise" aria-hidden="true"></i> Commander à nouveau</a>
+                    <a href="{{ order.slug ? path('app_menu_detail', {id : order.slug}) : path('app_menus') }}" class="customer-button gold pill"><i class="bi bi-arrow-counterclockwise" aria-hidden="true"></i> Commander à nouveau</a>
                 </div>
             </div>
         </div>
@@ -26,7 +26,7 @@
             {% endif %}
             {% if order.status == 'completed' %}
                 {% if order.review_id %}<p class="customer-muted">Votre avis a déjà été transmis.</p>{% else %}
-                <button class="customer-button primary pill" data-action="customer-account#open" data-dialog="review-{{ order.id }}"><i class="bi bi-star" aria-hidden="true"></i> Donner mon avis</button>
+                    <button class="customer-button primary pill" data-action="customer-account#open" data-dialog="review-{{ order.id }}"><i class="bi bi-star" aria-hidden="true"></i> Donner mon avis</button>
                 {% endif %}
             {% elseif order.status != 'cancelled' %}
                 <button class="customer-button pill" data-action="customer-account#open" data-dialog="comment-{{ order.id }}"><i class="bi bi-chat-left-text" aria-hidden="true"></i> Laisser un commentaire</button>
@@ -39,24 +39,24 @@
         {% if order.customer_note %}<p><strong>Vos instructions :</strong> {{ order.customer_note }}</p>{% endif %}
         <p>Pour toute question sur la date, le menu ou l’adresse de livraison, <a href="{{ path('app_contact') }}">contactez notre équipe</a> en précisant la référence {{ order.reference }}.</p>
     </section>
-    {% set actions = order.status == 'pending' ? ['edit', 'cancel', 'comment'] : (order.status == 'completed' and not order.review_id ? ['review'] : (order.status not in ['completed','cancelled'] ? ['comment'] : [])) %}
+    {% set actions = order.status == 'pending' ? ['edit', 'cancel', 'comment'] : (order.status == 'completed' and not order.review_id ? ['review'] : (order.status not in ['completed', 'cancelled'] ? ['comment'] : [])) %}
     {% for action in actions %}
-    <dialog id="{{ action }}-{{ order.id }}" class="customer-dialog" aria-labelledby="title-{{ action }}-{{ order.id }}" data-action="click->customer-account#backdrop">
-        <button type="button" class="customer-close" aria-label="Fermer" data-action="customer-account#close">×</button>
-        <h2 id="title-{{ action }}-{{ order.id }}">{{ {edit: 'Modifier la commande', cancel: 'Annuler la commande', comment: 'Laisser un commentaire', review: 'Donner mon avis'}[action] }}</h2>
-        <p>{{ order.reference }} · {{ order.menu_title }}</p>
-        <form method="post" action="{{ demo ? '#' : (action == 'review' ? path('customer_review_create') : path('customer_order_save', {id: order.id})) }}" data-action="submit->customer-account#submit" data-turbo="false">
-            {% if not demo %}<input type="hidden" name="_token" value="{{ csrf_token(action == 'review' ? 'customer_review' : 'customer_order' ~ order.id) }}">{% endif %}
-            <input type="hidden" name="action" value="{{ action }}"><input type="hidden" name="order" value="{{ order.id }}">
-            {% if action == 'edit' %}
-                <label>Heure de livraison<input name="time" type="time" value="{{ order.delivery_time|slice(0,5) }}" required></label>
-                <p class="customer-muted">Pour changer la date, le nombre de personnes ou l’adresse, <a href="{{ path('app_contact') }}">contactez-nous</a>.</p>
-            {% elseif action == 'cancel' %}<p>L’annulation est définitive. Confirmez-la en indiquant votre motif ci-dessous.</p>
-            {% elseif action == 'review' %}<label>Votre note<select name="rating" required><option value="">Choisir une note</option>{% for i in 1..5 %}<option value="{{ i }}">{{ i }} / 5</option>{% endfor %}</select></label>{% endif %}
-            <label>{{ action == 'cancel' ? "Motif de l’annulation" : (action == 'edit' ? 'Instructions de livraison' : 'Votre commentaire') }}<textarea name="comment" rows="4" maxlength="2000" {% if action != 'edit' %}required{% endif %}>{{ action == 'edit' ? order.customer_note : '' }}</textarea></label>
-            {% if demo %}<p class="customer-muted">Démonstration : aucune modification ne sera enregistrée.</p>{% endif %}
-            <div class="customer-dialog-actions"><button type="button" class="customer-button" data-action="customer-account#close">Retour</button><button class="customer-button primary">{{ action == 'cancel' ? "Confirmer l’annulation" : 'Envoyer' }}</button></div>
-        </form>
-    </dialog>
+        <dialog id="{{ action }}-{{ order.id }}" class="customer-dialog" aria-labelledby="title-{{ action }}-{{ order.id }}" data-action="click->customer-account#backdrop">
+            <button type="button" class="customer-close" aria-label="Fermer" data-action="customer-account#close">×</button>
+            <h2 id="title-{{ action }}-{{ order.id }}">{{ {edit: 'Modifier la commande', cancel: 'Annuler la commande', comment: 'Laisser un commentaire', review: 'Donner mon avis'} [action] }}</h2>
+            <p>{{ order.reference }} · {{ order.menu_title }}</p>
+            <form method="post" action="{{ demo ? '#' : (action == 'review' ? path('customer_review_create') : path('customer_order_save', {id : order.id})) }}" data-action="submit->customer-account#submit" data-turbo="false">
+                {% if not demo %}<input type="hidden" name="_token" value="{{ csrf_token(action == 'review' ? 'customer_review' : 'customer_order' ~ order.id) }}">{% endif %}
+                <input type="hidden" name="action" value="{{ action }}"><input type="hidden" name="order" value="{{ order.id }}">
+                {% if action == 'edit' %}
+                    <label>Heure de livraison<input name="time" type="time" value="{{ order.delivery_time|slice(0, 5) }}" required></label>
+                    <p class="customer-muted">Pour changer la date, le nombre de personnes ou l’adresse, <a href="{{ path('app_contact') }}">contactez-nous</a>.</p>
+                {% elseif action == 'cancel' %}<p>L’annulation est définitive. Confirmez-la en indiquant votre motif ci-dessous.</p>
+                {% elseif action == 'review' %}<label>Votre note<select name="rating" required><option value="">Choisir une note</option>{% for i in 1..5 %}<option value="{{ i }}">{{ i }} / 5</option>{% endfor %}</select></label>{% endif %}
+                <label>{{ action == 'cancel' ? "Motif de l’annulation" : (action == 'edit' ? 'Instructions de livraison' : 'Votre commentaire') }}<textarea name="comment" rows="4" maxlength="2000" {% if action != 'edit' %}required{% endif %}>{{ action == 'edit' ? order.customer_note : '' }}</textarea></label>
+                {% if demo %}<p class="customer-muted">Démonstration : aucune modification ne sera enregistrée.</p>{% endif %}
+                <div class="customer-dialog-actions"><button type="button" class="customer-button" data-action="customer-account#close">Retour</button><button class="customer-button primary">{{ action == 'cancel' ? "Confirmer l’annulation" : 'Envoyer' }}</button></div>
+            </form>
+        </dialog>
     {% endfor %}
 </article>

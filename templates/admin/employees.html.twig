@@ -1,34 +1,34 @@
 {% extends 'admin/layout.html.twig' %}{% block heading %}Employés{% endblock %}
 {% block content %}
-<details class="card-form employee-create" open data-controller="responsive-disclosure" data-responsive-disclosure-errors-value="{{ error ? 'true' : 'false' }}">
-<summary data-action="click->responsive-disclosure#toggle"><h2>Ajouter un employé</h2></summary>
-<form class="fields" method="post" data-turbo="false">
-<input type="hidden" name="_token" value="{{ csrf_token('employee') }}">
-<label>Prénom<input name="first" maxlength="100" required></label><label>Nom<input name="last" maxlength="100" required></label>
-<label>E-mail professionnel<input type="email" name="email" required></label><label>Fonction<select name="job">{% for position in positions %}<option value="{{ position.name }}">{{ position.name }}</option>{% endfor %}</select></label>
-<label>Mot de passe initial<input type="password" name="password" autocomplete="new-password" minlength="12" maxlength="72" required></label><div><button class="primary">Créer le compte employé</button></div></form></details>
-<section data-controller="employee-filter employee-editor" data-action="employee-editor:updated->employee-filter#filter" aria-label="Liste des employés">
-<div class="fields employee-filters">
-<label>Rechercher par nom<input type="search" placeholder="Prénom ou nom" autocomplete="off" data-employee-filter-target="search" data-action="input->employee-filter#filter"></label>
-<label>Filtrer par rôle<select data-employee-filter-target="role" data-action="change->employee-filter#filter"><option value="">Tous les rôles</option>{% for position in positions %}<option value="{{ position.name }}">{{ position.name }}</option>{% endfor %}</select></label>
-</div>
-<p class="employee-filter-count" role="status" aria-live="polite" data-employee-filter-target="count">{{ employees|length }} employé(s)</p>
-<div class="panel">{% for person in employees %}<div class="entry employee-row" data-employee-filter-target="row" data-employee-id="{{ person.id }}" data-name="{{ person.first_name }} {{ person.last_name }}" data-role="{{ person.staff_function }}"><b>{{ person.first_name }} {{ person.last_name }}</b><span>{{ person.email }}</span><div><strong>{{ person.staff_function }}</strong><p>{{ person.department }}</p><div class="employee-description"><p>{{ person.responsibilities }}</p><p>{{ person.service_context }}</p></div>{% if person.staff_schedule %}<p>{{ person.staff_schedule }}</p>{% endif %}</div><div class="employee-actions"><mark>{{ person.is_active ? 'Actif' : 'Désactivé' }}</mark>
-<a class="button" data-action="employee-editor#open" aria-haspopup="dialog" href="{{ path('admin_employee_edit',{id:person.id}) }}">Modifier</a>
-<form method="post" action="{{ path('admin_employee_active',{id:person.id}) }}">
-<input type="hidden" name="_token" value="{{ csrf_token('employee_active' ~ person.id) }}">
-<button name="active" value="{{ person.is_active ? '0' : '1' }}"><span class="employee-action-desktop">{{ person.is_active ? 'Désactiver le compte' : 'Réactiver le compte' }}</span><span class="employee-action-mobile">{{ person.is_active ? 'Désactiver' : 'Réactiver' }}</span></button></form>
-{% if person.notification_id and not person.sent_at %}<p>Notification en attente</p>
-<form method="post" action="{{ path('admin_employee_notify',{id:person.id}) }}"><input type="hidden" name="_token" value="{{ csrf_token('employee_notify' ~ person.id) }}"><button>Relancer la notification</button></form>
-{% elseif person.sent_at %}<p>Notification envoyée</p>{% endif %}
-</div></div>{% else %}<p class="entry">Aucun employé enregistré.</p>{% endfor %}</div>
-<p hidden data-employee-filter-target="empty">Aucun employé ne correspond à votre recherche.</p>
-<p role="status" data-employee-editor-target="notice"></p>
-<dialog class="employee-edit-dialog" data-employee-editor-target="dialog" aria-labelledby="employee-edit-title" data-action="close->employee-editor#closed cancel->employee-editor#cancel">
-<button type="button" class="close-dialog" aria-label="Fermer" data-action="employee-editor#close">×</button>
-<h2 id="employee-edit-title">Modifier un employé</h2>
-<p role="alert" data-employee-editor-target="error"></p>
-<div data-employee-editor-target="content"></div>
-</dialog>
-</section>
+    <details class="card-form employee-create" open data-controller="responsive-disclosure" data-responsive-disclosure-errors-value="{{ error ? 'true' : 'false' }}">
+        <summary data-action="click->responsive-disclosure#toggle"><h2>Ajouter un employé</h2></summary>
+        <form class="fields" method="post" data-turbo="false">
+            <input type="hidden" name="_token" value="{{ csrf_token('employee') }}">
+            <label>Prénom<input name="first" maxlength="100" required></label><label>Nom<input name="last" maxlength="100" required></label>
+            <label>E-mail professionnel<input type="email" name="email" required></label><label>Fonction<select name="job">{% for position in positions %}<option value="{{ position.name }}">{{ position.name }}</option>{% endfor %}</select></label>
+            <label>Mot de passe initial<input type="password" name="password" autocomplete="new-password" minlength="12" maxlength="72" required></label><div><button class="primary">Créer le compte employé</button></div></form></details>
+    <section data-controller="employee-filter employee-editor" data-action="employee-editor:updated->employee-filter#filter" aria-label="Liste des employés">
+        <div class="fields employee-filters">
+            <label>Rechercher par nom<input type="search" placeholder="Prénom ou nom" autocomplete="off" data-employee-filter-target="search" data-action="input->employee-filter#filter"></label>
+            <label>Filtrer par rôle<select data-employee-filter-target="role" data-action="change->employee-filter#filter"><option value="">Tous les rôles</option>{% for position in positions %}<option value="{{ position.name }}">{{ position.name }}</option>{% endfor %}</select></label>
+        </div>
+        <p class="employee-filter-count" role="status" aria-live="polite" data-employee-filter-target="count">{{ employees|length }} employé(s)</p>
+        <div class="panel">{% for person in employees %}<div class="entry employee-row" data-employee-filter-target="row" data-employee-id="{{ person.id }}" data-name="{{ person.first_name }} {{ person.last_name }}" data-role="{{ person.staff_function }}"><b>{{ person.first_name }} {{ person.last_name }}</b><span>{{ person.email }}</span><div><strong>{{ person.staff_function }}</strong><p>{{ person.department }}</p><div class="employee-description"><p>{{ person.responsibilities }}</p><p>{{ person.service_context }}</p></div>{% if person.staff_schedule %}<p>{{ person.staff_schedule }}</p>{% endif %}</div><div class="employee-actions"><mark>{{ person.is_active ? 'Actif' : 'Désactivé' }}</mark>
+                        <a class="button" data-action="employee-editor#open" aria-haspopup="dialog" href="{{ path('admin_employee_edit', {id: person.id}) }}">Modifier</a>
+                        <form method="post" action="{{ path('admin_employee_active', {id: person.id}) }}">
+                            <input type="hidden" name="_token" value="{{ csrf_token('employee_active' ~ person.id) }}">
+                            <button name="active" value="{{ person.is_active ? '0' : '1' }}"><span class="employee-action-desktop">{{ person.is_active ? 'Désactiver le compte' : 'Réactiver le compte' }}</span><span class="employee-action-mobile">{{ person.is_active ? 'Désactiver' : 'Réactiver' }}</span></button></form>
+                        {% if person.notification_id and not person.sent_at %}<p>Notification en attente</p>
+                            <form method="post" action="{{ path('admin_employee_notify', {id: person.id}) }}"><input type="hidden" name="_token" value="{{ csrf_token('employee_notify' ~ person.id) }}"><button>Relancer la notification</button></form>
+                        {% elseif person.sent_at %}<p>Notification envoyée</p>{% endif %}
+                    </div></div>{% else %}<p class="entry">Aucun employé enregistré.</p>{% endfor %}</div>
+        <p hidden data-employee-filter-target="empty">Aucun employé ne correspond à votre recherche.</p>
+        <p role="status" data-employee-editor-target="notice"></p>
+        <dialog class="employee-edit-dialog" data-employee-editor-target="dialog" aria-labelledby="employee-edit-title" data-action="close->employee-editor#closed cancel->employee-editor#cancel">
+            <button type="button" class="close-dialog" aria-label="Fermer" data-action="employee-editor#close">×</button>
+            <h2 id="employee-edit-title">Modifier un employé</h2>
+            <p role="alert" data-employee-editor-target="error"></p>
+            <div data-employee-editor-target="content"></div>
+        </dialog>
+    </section>
 {% endblock %}

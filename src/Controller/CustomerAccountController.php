@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Employee\EmployeeWorkspace;
+use App\Security\AccountValidation;
 use Doctrine\DBAL\Connection;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -20,13 +21,21 @@ final class CustomerAccountController extends AbstractController
     public function index(string $section, Connection $db): Response
     {
         $user = $this->getUser();
-        $orders = $db->fetchAllAssociative("SELECT o.*, s.code AS status, i.menu_title, i.people_count, m.slug,
+        $orders = $section === 'profile' ? [] : $db->fetchAllAssociative("SELECT o.*, s.code AS status, i.menu_title, i.people_count, m.slug,
             (SELECT url FROM menu_images WHERE menu_id=m.id ORDER BY is_cover DESC,display_order LIMIT 1) AS image,
             r.id AS review_id FROM orders o JOIN order_statuses s ON s.id=o.current_status_id
             LEFT JOIN order_items i ON i.order_id=o.id LEFT JOIN menus m ON m.id=i.menu_id
             LEFT JOIN reviews r ON r.order_id=o.id WHERE o.user_id=? ORDER BY o.service_date DESC", [$user->getId()]);
+        $visibleIds = array_values(array_unique(array_column(array_filter($orders,
+            static fn ($order) => in_array($order['status'], ['completed', 'cancelled'], true) === ($section === 'history')), 'id')));
+        $histories = [];
+        if ($visibleIds) {
+            $rows = $db->executeQuery('SELECT h.order_id,h.created_at,h.public_comment,s.code FROM order_status_history h JOIN order_statuses s ON s.id=h.status_id WHERE h.order_id IN (?) ORDER BY h.created_at,h.id',
+                [$visibleIds], [\Doctrine\DBAL\ArrayParameterType::STRING])->fetchAllAssociative();
+            foreach ($rows as $row) $histories[$row['order_id']][] = $row;
+        }
         foreach ($orders as &$order) {
-            $order['history'] = $db->fetchAllAssociative('SELECT h.created_at,h.public_comment,s.code FROM order_status_history h JOIN order_statuses s ON s.id=h.status_id WHERE h.order_id=? ORDER BY h.created_at,h.id', [$order['id']]);
+            $order['history'] = $histories[$order['id']] ?? [];
         }
         unset($order);
         return $this->page($section, false, $orders, [
@@ -72,31 +81,26 @@ final class CustomerAccountController extends AbstractController
         $user = $this->getUser();
         $field = $p->getString('field');
         try {
-            $required = static function (string $value, int $max): string {
-                $value = trim($value);
-                if ($value === '' || mb_strlen($value) > $max) throw new \DomainException('Veuillez compléter les champs avec des valeurs valides.');
-                return $value;
-            };
             if ($field === 'name') {
-                $first = $required($p->getString('first_name'),100);
-                $last = $required($p->getString('last_name'),100);
+                $first = AccountValidation::required($p->getString('first_name'),100);
+                $last = AccountValidation::required($p->getString('last_name'),100);
                 $user->setFirstName($first); $user->setLastName($last);
             } elseif ($field === 'email') {
-                $email = $required($p->getString('email'),180);
-                if (!filter_var($email,FILTER_VALIDATE_EMAIL)) throw new \DomainException('Adresse e-mail invalide.');
+                $email = AccountValidation::required($p->getString('email'),180);
+                if (!AccountValidation::email($email)) throw new \DomainException('Adresse e-mail invalide.');
                 if (!$hasher->isPasswordValid($user,$p->getString('current_password'))) throw new \DomainException('Le mot de passe actuel est incorrect.');
                 $user->setEmail($email);
             } elseif ($field === 'phone') {
-                $phone = $required($p->getString('phone'),30);
+                $phone = AccountValidation::required($p->getString('phone'),30);
                 if (!preg_match('/^\+?[\d\s().-]{6,30}$/',$phone)) throw new \DomainException('Numéro de téléphone invalide.');
                 $user->setPhone($phone);
             } elseif ($field === 'address') {
-                $address = $required($p->getString('address'),255); $postal = $required($p->getString('postal_code'),20); $city = $required($p->getString('city'),120);
+                $address = AccountValidation::required($p->getString('address'),255); $postal = AccountValidation::required($p->getString('postal_code'),20); $city = AccountValidation::required($p->getString('city'),120);
                 $user->setAddressLine1($address); $user->setPostalCode($postal); $user->setCity($city);
             } elseif ($field === 'password') {
                 if (!$hasher->isPasswordValid($user,$p->getString('current_password'))) throw new \DomainException('Le mot de passe actuel est incorrect.');
                 $password = $p->getString('password');
-                if (mb_strlen($password)<12 || strlen($password)>72 || $password!==$p->getString('confirmation')) throw new \DomainException('Utilisez au moins 12 caractères et une confirmation identique (72 octets maximum).');
+                if (!AccountValidation::password($password, $p->getString('confirmation'))) throw new \DomainException('Utilisez au moins 12 caractères et une confirmation identique (72 octets maximum).');
                 $user->setPasswordHash($hasher->hashPassword($user,$password));
             } else { throw $this->createNotFoundException(); }
             $em->flush();

@@ -1,46 +1,46 @@
 {% extends 'base.html.twig' %}
 {% macro field(label, type, name, placeholder, required = false) %}
-<label>{{ label }}{% if required %} *{% endif %}
-<input type="{{ type }}" name="{{ name }}" placeholder="{{ placeholder }}" {% if required %}required{% endif %} {% if name == 'guests' %}min="1"{% elseif name == 'budget' %}min="0" step=".01"{% endif %}></label>
+    <label>{{ label }}{% if required %} *{% endif %}
+        <input type="{{ type }}" name="{{ name }}" placeholder="{{ placeholder }}" {% if required %}required{% endif %} {% if name == 'guests' %}min="1"{% elseif name == 'budget' %}min="0" step=".01"{% endif %}></label>
 {% endmacro %}
 {% block title %}Contact · Vite & Gourmand{% endblock %}
 {% block body %}
-<main class="contact-page" data-controller="contact">
-  <header class="contact-hero"><div class="contact-wrap">
-    <strong>Julie & José · À votre écoute</strong><h1>Parlons de votre événement</h1>
-    <p>Une question, un repas en famille ou un projet sur mesure ? Prenons le temps d’en parler.</p>
-  </div></header>
-  <div class="contact-wrap contact-layout">
-    <aside>
-      <h2>Un beau repas commence<br> par un échange.</h2>
-      <p>Quelques détails nous permettront de mieux comprendre vos envies : l’occasion, vos convives et ce qui compte pour vous.</p>
-      <dl><dt>⌖　Bordeaux & alentours</dt><dd>Lieu et modalités à préciser selon votre projet.</dd>
-      <dt>✉　Contact direct</dt><dd>Coordonnées à confirmer avant la mise en ligne.</dd></dl>
-      <section><h3>Une question simple ?</h3><p>Pas besoin d’avoir déjà une date ou un nombre d’invités : vous pouvez simplement nous écrire.</p>
-      <a href="#demande" data-action="contact#question">Poser une question →</a></section>
-      <p>À la recherche d’inspiration ?<br><a href="{{ path('app_menus') }}">Explorer nos menus →</a></p>
-    </aside>
-    <form id="demande" class="contact-card" data-action="submit->contact#preview input->contact#clear" onsubmit="return false">
-      <div class="contact-modes">
-        <button type="button" aria-pressed="true" data-contact-target="eventButton" data-action="contact#event">▦　Mon événement</button>
-        <button type="button" aria-pressed="false" data-contact-target="questionButton" data-action="contact#question">♧　Une question</button>
-      </div>
-      <h2 data-contact-target="title">Votre projet, vos envies</h2>
-      <p>Seuls les champs marqués d’un * sont obligatoires.</p>
-      <div class="contact-pair">{{ _self.field('Votre nom','text','name','Prénom et nom',true) }}{{ _self.field('E-mail','email','email','vous@exemple.fr',true) }}</div>
-      <fieldset data-contact-target="details"><legend>Votre événement</legend>
-        <label>Occasion<select name="occasion"><option value="">À préciser</option>{% for occasion in ['Mariage','Anniversaire','Repas en famille','Événement professionnel','Autre'] %}<option>{{ occasion }}</option>{% endfor %}</select></label>
-        <div class="contact-pair">{{ _self.field('Date souhaitée','date','date','') }}{{ _self.field('Nombre d’invités','number','guests','Ex. 20') }}</div>
-        <div class="contact-pair">{{ _self.field('Lieu ou code postal','text','place','Ex. Bordeaux, 33000') }}{{ _self.field('Budget par personne (€)','number','budget','Ex. 35') }}</div>
-        {{ _self.field('Régimes alimentaires et allergies','text','diet','Ex. 2 végétariens, allergie aux noix') }}
-        <small>Les possibilités et précautions seront à confirmer avec l’équipe.</small>
-      </fieldset>
-      <label><span data-contact-target="messageLabel">Parlez-nous de votre projet *</span><textarea name="message" required placeholder="L’occasion, vos envies, les menus qui vous plaisent…">{{ app.request.query.get('menu') ? 'Je souhaite en savoir plus sur le menu ' ~ app.request.query.get('menu') ~ '.' }}</textarea></label>
-      {{ _self.field('Téléphone (facultatif)','tel','phone','Votre numéro') }}
-      <p class="contact-note">ⓘ　Version de démonstration : vous pouvez vérifier votre demande, mais aucun message n’est envoyé ni enregistré.</p>
-      <button class="contact-submit" type="submit">Prévisualiser ma demande　→</button>
-      <output data-contact-target="summary" aria-live="polite"></output>
-    </form>
-  </div>
-</main>
+    <main class="contact-page" data-controller="contact">
+        <header class="contact-hero"><div class="contact-wrap">
+                <strong>Julie & José · À votre écoute</strong><h1>Parlons de votre événement</h1>
+                <p>Une question, un repas en famille ou un projet sur mesure ? Prenons le temps d’en parler.</p>
+            </div></header>
+        <div class="contact-wrap contact-layout">
+            <aside>
+                <h2>Un beau repas commence<br> par un échange.</h2>
+                <p>Quelques détails nous permettront de mieux comprendre vos envies : l’occasion, vos convives et ce qui compte pour vous.</p>
+                <dl><dt>⌖　Bordeaux & alentours</dt><dd>Lieu et modalités à préciser selon votre projet.</dd>
+                    <dt>✉　Contact direct</dt><dd>Coordonnées à confirmer avant la mise en ligne.</dd></dl>
+                <section><h3>Une question simple ?</h3><p>Pas besoin d’avoir déjà une date ou un nombre d’invités : vous pouvez simplement nous écrire.</p>
+                    <a href="#demande" data-action="contact#question">Poser une question →</a></section>
+                <p>À la recherche d’inspiration ?<br><a href="{{ path('app_menus') }}">Explorer nos menus →</a></p>
+            </aside>
+            <form id="demande" class="contact-card" data-action="submit->contact#preview input->contact#clear" onsubmit="return false">
+                <div class="contact-modes">
+                    <button type="button" aria-pressed="true" data-contact-target="eventButton" data-action="contact#event">▦　Mon événement</button>
+                    <button type="button" aria-pressed="false" data-contact-target="questionButton" data-action="contact#question">♧　Une question</button>
+                </div>
+                <h2 data-contact-target="title">Votre projet, vos envies</h2>
+                <p>Seuls les champs marqués d’un * sont obligatoires.</p>
+                <div class="contact-pair">{{ _self.field('Votre nom', 'text', 'name', 'Prénom et nom', true) }}{{ _self.field('E-mail', 'email', 'email', 'vous@exemple.fr', true) }}</div>
+                <fieldset data-contact-target="details"><legend>Votre événement</legend>
+                    <label>Occasion<select name="occasion"><option value="">À préciser</option>{% for occasion in ['Mariage', 'Anniversaire', 'Repas en famille', 'Événement professionnel', 'Autre'] %}<option>{{ occasion }}</option>{% endfor %}</select></label>
+                    <div class="contact-pair">{{ _self.field('Date souhaitée', 'date', 'date', '') }}{{ _self.field('Nombre d’invités', 'number', 'guests', 'Ex. 20') }}</div>
+                    <div class="contact-pair">{{ _self.field('Lieu ou code postal', 'text', 'place', 'Ex. Bordeaux, 33000') }}{{ _self.field('Budget par personne (€)', 'number', 'budget', 'Ex. 35') }}</div>
+                    {{ _self.field('Régimes alimentaires et allergies', 'text', 'diet', 'Ex. 2 végétariens, allergie aux noix') }}
+                    <small>Les possibilités et précautions seront à confirmer avec l’équipe.</small>
+                </fieldset>
+                <label><span data-contact-target="messageLabel">Parlez-nous de votre projet *</span><textarea name="message" required placeholder="L’occasion, vos envies, les menus qui vous plaisent…">{{ app.request.query.get('menu') ? 'Je souhaite en savoir plus sur le menu ' ~ app.request.query.get('menu') ~ '.' }}</textarea></label>
+                {{ _self.field('Téléphone (facultatif)', 'tel', 'phone', 'Votre numéro') }}
+                <p class="contact-note">ⓘ　Version de démonstration : vous pouvez vérifier votre demande, mais aucun message n’est envoyé ni enregistré.</p>
+                <button class="contact-submit" type="submit">Prévisualiser ma demande　→</button>
+                <output data-contact-target="summary" aria-live="polite"></output>
+            </form>
+        </div>
+    </main>
 {% endblock %}

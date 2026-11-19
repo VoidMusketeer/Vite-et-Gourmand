@@ -1,29 +1,32 @@
 {% extends 'base.html.twig' %}
 {% block title %}Menus - Vite & Gourmand{% endblock %}
 {% block body %}
-<main class="menu-page">
-  <section class="reception-banner menu-hero" aria-labelledby="menu-title">
-    <img
-         src="{{ asset('images/menus/banner-chefs.png') }}"
-         alt="" fetchpriority="high"
-         width="1800" height="900">
-    <div class="menu-wrap">
-      <p class="menu-kicker">Menus disponibles</p>
-      <h1 id="menu-title">Le bon menu,<br>à la bonne date</h1>
-    </div>
-  </section>
-  <form class="menu-wrap menu-catalog" action="{{ path('app_menus') }}#catalogue" method="get" id="catalogue" data-controller="menu-filters">
-    {% if search %}<input type="hidden" name="q" value="{{ search }}">{% endif %}
-    {% include 'components/menu-filter.html.twig' %}
-    <section>
-      <div class="menu-toolbar">
-        <div class="menu-results-heading">
-          <h2>{{ menus|length }} menu{{ menus|length > 1 ? 's' }} adapté{{ menus|length > 1 ? 's' }}</h2>
-          <a class="menu-filters-reset" href="{{ path('app_menus') }}#catalogue">Réinitialiser les filtres</a>
-        </div>
-      <label>Trier par <select name="sort" data-action="change->menu-filters#apply"><option value="asc">Prix croissant</option><option value="desc" {{ sort == 'desc' ? 'selected' }}>Prix décroissant</option></select></label></div>
-      <div class="menu-cards">{% for id, menu in menus %}{% include 'components/menu-card.html.twig' with {menu: menu, id: id} only %}{% else %}<p>Aucun menu ne correspond à ces filtres.</p>{% endfor %}</div>
-    </section>
-  </form>
-</main>
+    <main class="menu-page">
+        <section class="reception-banner menu-hero" aria-labelledby="menu-title">
+            <img
+                src="{{ asset('images/menus/banner-chefs.png') }}"
+                alt=""
+                fetchpriority="high"
+                width="1800"
+                height="900"
+            >
+            <div class="menu-wrap">
+                <p class="menu-kicker">Menus disponibles</p>
+                <h1 id="menu-title">Le bon menu,<br>à la bonne date</h1>
+            </div>
+        </section>
+        <form class="menu-wrap menu-catalog" action="{{ path('app_menus') }}#catalogue" method="get" id="catalogue" data-controller="menu-filters">
+            {% if search %}<input type="hidden" name="q" value="{{ search }}">{% endif %}
+            {% include 'components/menu-filter.html.twig' %}
+            <section>
+                <div class="menu-toolbar">
+                    <div class="menu-results-heading">
+                        <h2>{{ menus|length }} menu{{ menus|length > 1 ? 's' }} adapté{{ menus|length > 1 ? 's' }}</h2>
+                        <a class="menu-filters-reset" href="{{ path('app_menus') }}#catalogue">Réinitialiser les filtres</a>
+                    </div>
+                    <label>Trier par <select name="sort" data-action="change->menu-filters#apply"><option value="asc">Prix croissant</option><option value="desc" {{ sort == 'desc' ? 'selected' }}>Prix décroissant</option></select></label></div>
+                <div class="menu-cards">{% for id, menu in menus %}{% include 'components/menu-card.html.twig' with {menu: menu, id: id} only %}{% else %}<p>Aucun menu ne correspond à ces filtres.</p>{% endfor %}</div>
+            </section>
+        </form>
+    </main>
 {% endblock %}

@@ -1,12 +1,12 @@
 {% extends 'admin/layout.html.twig' %}{% block heading %}Bonjour {{ app.user.firstName }}{% endblock %}
 {% block content %}
-<div class="metrics">
-<article>À traiter<strong>{{ pending|length }} demandes</strong>Commandes en attente</article>
-<article>Catalogue<strong>{{ counts.menus }} menus</strong>Disponibles en ligne</article>
-<article>Retours clients<strong>{{ counts.reviews }} avis</strong>En attente de publication</article>
-</div>
-<h2>Demandes nécessitant une action</h2>
-<div class="panel">{% for order in pending %}<div class="entry"><b>{{ order.reference }}</b><span>{{ order.first_name }} {{ order.last_name }} · {{ order.service_date|date('d/m/Y') }}</span><mark>Nouvelle demande</mark><a class="button" href="{{ path('admin_orders') }}">Voir les commandes</a></div>{% else %}<p class="entry">Aucune commande en attente.</p>{% endfor %}</div>
-<h2>Avis nécessitant une validation</h2>
-<div class="panel"><div class="entry"><span>{{ counts.reviews }} avis à examiner avant leur publication sur l’accueil.</span><a class="button" href="{{ path('admin_reviews') }}">Examiner les avis</a></div></div>
+    <div class="metrics">
+        <article>À traiter<strong>{{ pending|length }} demandes</strong>Commandes en attente</article>
+        <article>Catalogue<strong>{{ counts.menus }} menus</strong>Disponibles en ligne</article>
+        <article>Retours clients<strong>{{ counts.reviews }} avis</strong>En attente de publication</article>
+    </div>
+    <h2>Demandes nécessitant une action</h2>
+    <div class="panel">{% for order in pending %}<div class="entry"><b>{{ order.reference }}</b><span>{{ order.first_name }} {{ order.last_name }} · {{ order.service_date|date('d/m/Y') }}</span><mark>Nouvelle demande</mark><a class="button" href="{{ path('admin_orders') }}">Voir les commandes</a></div>{% else %}<p class="entry">Aucune commande en attente.</p>{% endfor %}</div>
+    <h2>Avis nécessitant une validation</h2>
+    <div class="panel"><div class="entry"><span>{{ counts.reviews }} avis à examiner avant leur publication sur l’accueil.</span><a class="button" href="{{ path('admin_reviews') }}">Examiner les avis</a></div></div>
 {% endblock %}

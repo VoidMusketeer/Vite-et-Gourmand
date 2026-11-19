@@ -3,45 +3,45 @@
 {% block title %}{{ titles[section] }} — Vite & Gourmand{% endblock %}
 {% block stylesheets %}<link rel="stylesheet" href="{{ asset('styles/customer.css') }}">{% endblock %}
 {% block body %}
-<main class="customer-space" data-controller="customer-account" data-customer-account-demo-value="{{ demo ? 'true' : 'false' }}">
-    <aside class="customer-sidebar">
-        <h2>Mon espace client</h2>
-        <nav aria-label="Espace client">
-        {% for key, title in titles %}
-            <a href="{{ demo ? path('customer_demo_section', {section: key}) : path('customer_' ~ (key == 'orders' ? 'orders' : (key == 'history' ? 'history' : 'profile'))) }}" {{ section == key ? 'aria-current="page"' : '' }}>{{ title }}</a>
-        {% endfor %}
-        </nav>
-    </aside>
-    <section class="customer-content" aria-labelledby="customer-title">
-        {% if demo %}<p class="customer-banner">Mode démonstration : les données affichées sont des exemples et rien n'est enregistré.</p>{% endif %}
-        {% for message in app.flashes('notice') %}<p class="customer-banner" role="status">{{ message }}</p>{% endfor %}
-        <p class="customer-feedback" role="status" data-customer-account-target="feedback" hidden></p>
-        <header class="customer-heading">
-            <div><p>Bonjour {{ profile.first_name }}</p><h1 id="customer-title">{{ titles[section] }}</h1></div>
-            {% if section != 'profile' %}<a class="customer-button primary" href="{{ path('app_menus') }}">Commander un menu</a>{% endif %}
-        </header>
-        {% if section == 'profile' %}
-            {% include 'customer/_profile.html.twig' %}
-        {% else %}
-            {% if reviewOrder %}
-            <div class="customer-banner customer-review-banner">
-                <i class="bi bi-envelope" aria-hidden="true"></i>
-                <p>{% if demo %}<strong>E-mail envoyé (aperçu) :</strong> {% endif %}Votre commande #{{ reviewOrder.reference }} est terminée. Donnez votre avis depuis la commande.</p>
-                <a class="customer-button primary pill" href="{{ (demo ? path('customer_demo_section', {section: 'history'}) : path('customer_history')) ~ '#order-' ~ reviewOrder.id }}">Donner mon avis</a>
-            </div>
+    <main class="customer-space" data-controller="customer-account" data-customer-account-demo-value="{{ demo ? 'true' : 'false' }}">
+        <aside class="customer-sidebar">
+            <h2>Mon espace client</h2>
+            <nav aria-label="Espace client">
+                {% for key, title in titles %}
+                    <a href="{{ demo ? path('customer_demo_section', {section : key}) : path('customer_' ~ (key == 'orders' ? 'orders' : (key == 'history' ? 'history' : 'profile'))) }}" {{ section == key ? 'aria-current="page"' : '' }}>{{ title }}</a>
+                {% endfor %}
+            </nav>
+        </aside>
+        <section class="customer-content" aria-labelledby="customer-title">
+            {% if demo %}<p class="customer-banner">Mode démonstration : les données affichées sont des exemples et rien n'est enregistré.</p>{% endif %}
+            {% for message in app.flashes('notice') %}<p class="customer-banner" role="status">{{ message }}</p>{% endfor %}
+            <p class="customer-feedback" role="status" data-customer-account-target="feedback" hidden></p>
+            <header class="customer-heading">
+                <div><p>Bonjour {{ profile.first_name }}</p><h1 id="customer-title">{{ titles[section] }}</h1></div>
+                {% if section != 'profile' %}<a class="customer-button primary" href="{{ path('app_menus') }}">Commander un menu</a>{% endif %}
+            </header>
+            {% if section == 'profile' %}
+                {% include 'customer/_profile.html.twig' %}
+            {% else %}
+                {% if reviewOrder %}
+                    <div class="customer-banner customer-review-banner">
+                        <i class="bi bi-envelope" aria-hidden="true"></i>
+                        <p>{% if demo %}<strong>E-mail envoyé (aperçu) :</strong> {% endif %}Votre commande #{{ reviewOrder.reference }} est terminée. Donnez votre avis depuis la commande.</p>
+                        <a class="customer-button primary pill" href="{{ (demo ? path('customer_demo_section', {section : 'history'}) : path('customer_history')) ~ '#order-' ~ reviewOrder.id }}">Donner mon avis</a>
+                    </div>
+                {% endif %}
+                <div class="customer-toolbar">
+                    <p><strong><span data-customer-account-target="count">{{ orders|length }}</span> commande(s)</strong> {{ section == 'history' ? 'terminée(s) ou annulée(s)' : 'en cours' }}</p>
+                    <label class="customer-search"><i class="bi bi-search" aria-hidden="true"></i><input type="search" aria-label="Rechercher une commande" placeholder="Rechercher (menu, n° de commande)" data-action="input->customer-account#search"></label>
+                </div>
+                <div class="customer-orders">
+                    {% for order in orders %}{% include 'customer/_order.html.twig' %}{% endfor %}
+                </div>
+                <div class="customer-empty" data-customer-account-target="empty" {% if orders|length %}hidden{% endif %}>
+                    <i class="bi bi-basket" aria-hidden="true"></i><h2>Aucune commande à afficher</h2><p>Vos commandes apparaîtront ici. Vous pouvez aussi essayer une autre recherche.</p>
+                    <a href="{{ path('app_menus') }}" class="customer-button primary">Découvrir nos menus</a>
+                </div>
             {% endif %}
-            <div class="customer-toolbar">
-                <p><strong><span data-customer-account-target="count">{{ orders|length }}</span> commande(s)</strong> {{ section == 'history' ? 'terminée(s) ou annulée(s)' : 'en cours' }}</p>
-                <label class="customer-search"><i class="bi bi-search" aria-hidden="true"></i><input type="search" aria-label="Rechercher une commande" placeholder="Rechercher (menu, n° de commande)" data-action="input->customer-account#search"></label>
-            </div>
-            <div class="customer-orders">
-            {% for order in orders %}{% include 'customer/_order.html.twig' %}{% endfor %}
-            </div>
-            <div class="customer-empty" data-customer-account-target="empty" {% if orders|length %}hidden{% endif %}>
-                <i class="bi bi-basket" aria-hidden="true"></i><h2>Aucune commande à afficher</h2><p>Vos commandes apparaîtront ici. Vous pouvez aussi essayer une autre recherche.</p>
-                <a href="{{ path('app_menus') }}" class="customer-button primary">Découvrir nos menus</a>
-            </div>
-        {% endif %}
-    </section>
-</main>
+        </section>
+    </main>
 {% endblock %}

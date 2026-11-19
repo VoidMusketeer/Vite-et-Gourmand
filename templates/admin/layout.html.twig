@@ -2,17 +2,17 @@
 {% block title %}{{ block('heading') }} · Administration{% endblock %}
 {% block stylesheets %}<link rel="stylesheet" href="{{ asset('styles/workspace-navigation.css') }}"><link rel="stylesheet" href="{{ asset('styles/admin.css') }}">{% endblock %}
 {% block body %}
-<main class="vg-admin admin-live"><aside><h2>Administrateur</h2>{% set currentLabel = 'Tableau de bord' %}{% set workspaceNavigation %}<nav aria-label="Administration">
-{% for route,label in {'app_admin':'Tableau de bord','admin_orders':'Commandes','admin_menus':'Menus','admin_employees':'Employés','admin_reviews':'Avis clients','admin_statistics':'Statistiques','app_employee':'Espace employé'} %}
-{% if route == app.request.attributes.get('_route') or (route == 'admin_employees' and app.request.attributes.get('_route') starts with 'admin_employee_') or (route == 'admin_menus' and app.request.attributes.get('_route') starts with 'admin_menu_') %}{% set currentLabel = label %}{% endif %}
-<a href="{{ path(route) }}" {% if route == app.request.attributes.get('_route') or (route == 'admin_employees' and app.request.attributes.get('_route') starts with 'admin_employee_') or (route == 'admin_menus' and app.request.attributes.get('_route') starts with 'admin_menu_') %}aria-current="page"{% endif %}>{{ label }}</a>
-{% endfor %}
-<form action="{{ path('app_logout') }}" method="post"><input type="hidden" name="_csrf_token" value="{{ csrf_token('logout') }}"><button>Déconnexion</button></form></nav>{% endset %}
-{% include 'components/workspace_navigation.html.twig' with {navigation: workspaceNavigation, currentLabel: currentLabel} %}</aside>
-{% set route = app.request.attributes.get('_route') %}
-<section class="admin-content"><small>{{ {'app_admin':'Tableau de bord','admin_orders':'Suivi opérationnel','admin_menus':'Catalogue','admin_menu_new':'Présentation','admin_menu_edit':'Présentation','admin_employees':'Équipe et responsabilités','admin_reviews':'Retours clients'}[route] ?? 'Administration' }}</small>
-<header><h1>{% block heading %}{% endblock %}</h1>{% if route in ['app_admin','admin_menus'] %}<a class="primary" href="{{ path('admin_menu_new') }}">＋ Créer un menu</a>{% endif %}</header>
-{% for message in app.flashes('success') %}<p role="status">{{ message }}</p>{% endfor %}
-{% for message in app.flashes('error') %}<p role="alert">{{ message }}</p>{% endfor %}
-{% if error|default(null) %}<p role="alert">{{ error }}</p>{% endif %}
-{% block content %}{% endblock %}</section></main>{% endblock %}
+    <main class="vg-admin admin-live"><aside><h2>Administrateur</h2>{% set currentLabel = 'Tableau de bord' %}{% set workspaceNavigation %}<nav aria-label="Administration">
+                    {% for route, label in {'app_admin': 'Tableau de bord', 'admin_orders': 'Commandes', 'admin_menus': 'Menus', 'admin_employees': 'Employés', 'admin_reviews': 'Avis clients', 'admin_statistics': 'Statistiques', 'app_employee': 'Espace employé'} %}
+                        {% if route == app.request.attributes.get('_route') or (route == 'admin_employees' and app.request.attributes.get('_route') starts with 'admin_employee_') or (route == 'admin_menus' and app.request.attributes.get('_route') starts with 'admin_menu_') %}{% set currentLabel = label %}{% endif %}
+                        <a href="{{ path(route) }}" {% if route == app.request.attributes.get('_route') or (route == 'admin_employees' and app.request.attributes.get('_route') starts with 'admin_employee_') or (route == 'admin_menus' and app.request.attributes.get('_route') starts with 'admin_menu_') %}aria-current="page"{% endif %}>{{ label }}</a>
+                    {% endfor %}
+                    <form action="{{ path('app_logout') }}" method="post"><input type="hidden" name="_csrf_token" value="{{ csrf_token('logout') }}"><button>Déconnexion</button></form></nav>{% endset %}
+            {% include 'components/workspace_navigation.html.twig' with {navigation: workspaceNavigation, currentLabel: currentLabel} %}</aside>
+        {% set route = app.request.attributes.get('_route') %}
+        <section class="admin-content"><small>{{ {'app_admin': 'Tableau de bord', 'admin_orders': 'Suivi opérationnel', 'admin_menus': 'Catalogue', 'admin_menu_new': 'Présentation', 'admin_menu_edit': 'Présentation', 'admin_employees': 'Équipe et responsabilités', 'admin_reviews': 'Retours clients'} [route] ?? 'Administration' }}</small>
+            <header><h1>{% block heading %}{% endblock %}</h1>{% if route in ['app_admin', 'admin_menus'] %}<a class="primary" href="{{ path('admin_menu_new') }}">＋ Créer un menu</a>{% endif %}</header>
+            {% for message in app.flashes('success') %}<p role="status">{{ message }}</p>{% endfor %}
+            {% for message in app.flashes('error') %}<p role="alert">{{ message }}</p>{% endfor %}
+            {% if error|default(null) %}<p role="alert">{{ error }}</p>{% endif %}
+            {% block content %}{% endblock %}</section></main>{% endblock %}

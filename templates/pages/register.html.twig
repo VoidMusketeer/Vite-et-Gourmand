@@ -2,17 +2,17 @@
 {% block title %}Créer votre compte — Vite & Gourmand{% endblock %}
 {% block stylesheets %}<link rel="stylesheet" href="{{ asset('styles/register.css') }}">{% endblock %}
 {% block body %}
-<main class="register-page">
-    <header class="register-heading">
-        <span>ESPACE PERSONNEL</span>
-        <h1>Créer votre compte</h1>
-        <p>Vos réceptions commencent ici. Retrouvez vos commandes et vos coordonnées en un seul endroit.</p>
-    </header>
-    <div class="register-layout">
-        <form class="register-card" method="post" action="{{ path('app_register') }}" data-turbo="false" data-controller="registration">
-            <p class="register-required">Les champs marqués d’un * sont obligatoires.</p>
-            {% if errors %}<div class="register-errors" role="alert"><strong>Vérifiez les informations suivantes :</strong><ul>{% for field, error in errors %}<li><a href="#register-{{ field }}">{{ error }}</a></li>{% endfor %}</ul></div>{% endif %}
-            {% set groups = [
+    <main class="register-page">
+        <header class="register-heading">
+            <span>ESPACE PERSONNEL</span>
+            <h1>Créer votre compte</h1>
+            <p>Vos réceptions commencent ici. Retrouvez vos commandes et vos coordonnées en un seul endroit.</p>
+        </header>
+        <div class="register-layout">
+            <form class="register-card" method="post" action="{{ path('app_register') }}" data-turbo="false" data-controller="registration">
+                <p class="register-required">Les champs marqués d’un * sont obligatoires.</p>
+                {% if errors %}<div class="register-errors" role="alert"><strong>Vérifiez les informations suivantes :</strong><ul>{% for field, error in errors %}<li><a href="#register-{{ field }}">{{ error }}</a></li>{% endfor %}</ul></div>{% endif %}
+                {% set groups = [
                 {title: 'Vos coordonnées', fields: [
                     ['firstName', 'Prénom', 'text', 'given-name', 100], ['lastName', 'Nom', 'text', 'family-name', 100],
                     ['email', 'Adresse e-mail', 'email', 'email', 254], ['phone', 'Téléphone mobile', 'tel', 'tel', 30]
@@ -23,43 +23,43 @@
                     ['postalCode', 'Code postal', 'text', 'postal-code', 20], ['city', 'Ville', 'text', 'address-level2', 120]
                 ]}
             ] %}
-            {% for group in groups %}
-                <fieldset><legend>{{ group.title }}</legend><div class="register-fields">
-                {% for field in group.fields %}
-                    {% set name = field[0] %}
-                    <div class="register-field {{ name in ['addressLine1', 'addressLine2'] ? 'register-wide' : '' }}">
-                        <label for="register-{{ name }}">{{ field[1] }}{{ name != 'addressLine2' ? ' *' : ' (facultatif)' }}</label>
-                        <input id="register-{{ name }}" name="{{ name }}" type="{{ field[2] }}" autocomplete="{{ field[3] }}" maxlength="{{ field[4] }}" value="{{ values[name]|default('') }}" {{ name != 'addressLine2' ? 'required' : '' }} {% if errors[name] is defined %}aria-invalid="true" aria-describedby="error-{{ name }}"{% endif %}>
-                        {% if errors[name] is defined %}<small class="register-error" id="error-{{ name }}">{{ errors[name] }}</small>{% endif %}
-                    </div>
+                {% for group in groups %}
+                    <fieldset><legend>{{ group.title }}</legend><div class="register-fields">
+                            {% for field in group.fields %}
+                                {% set name = field[0] %}
+                                <div class="register-field {{ name in ['addressLine1', 'addressLine2'] ? 'register-wide' : '' }}">
+                                    <label for="register-{{ name }}">{{ field[1] }}{{ name != 'addressLine2' ? ' *' : ' (facultatif)' }}</label>
+                                    <input id="register-{{ name }}" name="{{ name }}" type="{{ field[2] }}" autocomplete="{{ field[3] }}" maxlength="{{ field[4] }}" value="{{ values[name]|default('') }}" {{ name != 'addressLine2' ? 'required' : '' }} {% if errors[name] is defined %}aria-invalid="true" aria-describedby="error-{{ name }}"{% endif %}>
+                                    {% if errors[name] is defined %}<small class="register-error" id="error-{{ name }}">{{ errors[name] }}</small>{% endif %}
+                                </div>
+                            {% endfor %}
+                        </div></fieldset>
                 {% endfor %}
-                </div></fieldset>
-            {% endfor %}
-            <fieldset><legend>Votre mot de passe</legend>
-                <label for="register-password">Mot de passe *</label>
-                <div class="register-password"><input id="register-password" name="password" type="password" autocomplete="new-password" required minlength="10" maxlength="72" aria-describedby="password-help {{ errors.password is defined ? 'error-password' : '' }}" data-registration-target="password" data-action="input->registration#validate" {{ errors.password is defined ? 'aria-invalid="true"' : '' }}><button type="button" aria-controls="register-password" aria-pressed="false" data-action="registration#toggle">Afficher</button></div>
-                <p class="register-help" id="password-help">10 caractères minimum, avec une majuscule, une minuscule, un chiffre et un caractère spécial.</p>
-                {% if errors.password is defined %}<small class="register-error" id="error-password">{{ errors.password }}</small>{% endif %}
-                <label for="register-confirmation">Confirmer le mot de passe *</label>
-                <input id="register-confirmation" name="confirmation" type="password" autocomplete="new-password" required minlength="10" maxlength="72" data-registration-target="confirmation" data-action="input->registration#validate" {% if errors.confirmation is defined %}aria-invalid="true" aria-describedby="error-confirmation"{% endif %}>
-                {% if errors.confirmation is defined %}<small class="register-error" id="error-confirmation">{{ errors.confirmation }}</small>{% endif %}
-            </fieldset>
-            <label class="register-consent" for="register-terms"><input id="register-terms" name="terms" type="checkbox" value="1" required><span>J’accepte les <a href="{{ path('app_terms') }}" target="_blank" rel="noopener">conditions générales</a> et la <a href="{{ path('app_privacy') }}" target="_blank" rel="noopener">politique de confidentialité</a>. *</span></label>
-            {% if errors.terms is defined %}<p class="register-error">{{ errors.terms }}</p>{% endif %}
-            <input type="hidden" name="_token" value="{{ csrf_token('registration') }}">
-            <button class="register-submit" type="submit">Créer mon compte <span aria-hidden="true">→</span></button>
-            <p class="register-login">Déjà un compte ? <a href="{{ path('app_login') }}">Se connecter</a></p>
-        </form>
-        <aside class="register-aside">
-            <h2>Avec votre compte</h2>
-            <div class="register-benefits">
-                <div><span class="register-icon" aria-hidden="true">01</span><div><h3>Vos commandes, simplement</h3><p>Retrouvez le détail et le suivi de vos commandes.</p></div></div>
-                <div><span class="register-icon" aria-hidden="true">02</span><div><h3>Vos coordonnées à portée de main</h3><p>Consultez et modifiez vos informations depuis votre espace personnel.</p></div></div>
-                <div><span class="register-icon" aria-hidden="true">03</span><div><h3>Bienvenue à notre table</h3><p>Un e-mail de bienvenue est envoyé automatiquement après votre inscription.</p></div></div>
-            </div>
-            <section class="register-security"><h3>Un espace qui vous appartient</h3><p>Votre compte utilisateur est créé automatiquement. Votre mot de passe est protégé et aucune donnée bancaire n’est demandée à l’inscription.</p></section>
-            <p class="register-signature">Le plaisir de recevoir,<br><em>on s’occupe du reste.</em></p>
-        </aside>
-    </div>
-</main>
+                <fieldset><legend>Votre mot de passe</legend>
+                    <label for="register-password">Mot de passe *</label>
+                    <div class="register-password"><input id="register-password" name="password" type="password" autocomplete="new-password" required minlength="10" maxlength="72" aria-describedby="password-help {{ errors.password is defined ? 'error-password' : '' }}" data-registration-target="password" data-action="input->registration#validate" {{ errors.password is defined ? 'aria-invalid="true"' : '' }}><button type="button" aria-controls="register-password" aria-pressed="false" data-action="registration#toggle">Afficher</button></div>
+                    <p class="register-help" id="password-help">10 caractères minimum, avec une majuscule, une minuscule, un chiffre et un caractère spécial.</p>
+                    {% if errors.password is defined %}<small class="register-error" id="error-password">{{ errors.password }}</small>{% endif %}
+                    <label for="register-confirmation">Confirmer le mot de passe *</label>
+                    <input id="register-confirmation" name="confirmation" type="password" autocomplete="new-password" required minlength="10" maxlength="72" data-registration-target="confirmation" data-action="input->registration#validate" {% if errors.confirmation is defined %}aria-invalid="true" aria-describedby="error-confirmation"{% endif %}>
+                    {% if errors.confirmation is defined %}<small class="register-error" id="error-confirmation">{{ errors.confirmation }}</small>{% endif %}
+                </fieldset>
+                <label class="register-consent" for="register-terms"><input id="register-terms" name="terms" type="checkbox" value="1" required><span>J’accepte les <a href="{{ path('app_terms') }}" target="_blank" rel="noopener">conditions générales</a> et la <a href="{{ path('app_privacy') }}" target="_blank" rel="noopener">politique de confidentialité</a>. *</span></label>
+                {% if errors.terms is defined %}<p class="register-error">{{ errors.terms }}</p>{% endif %}
+                <input type="hidden" name="_token" value="{{ csrf_token('registration') }}">
+                <button class="register-submit" type="submit">Créer mon compte <span aria-hidden="true">→</span></button>
+                <p class="register-login">Déjà un compte ? <a href="{{ path('app_login') }}">Se connecter</a></p>
+            </form>
+            <aside class="register-aside">
+                <h2>Avec votre compte</h2>
+                <div class="register-benefits">
+                    <div><span class="register-icon" aria-hidden="true">01</span><div><h3>Vos commandes, simplement</h3><p>Retrouvez le détail et le suivi de vos commandes.</p></div></div>
+                    <div><span class="register-icon" aria-hidden="true">02</span><div><h3>Vos coordonnées à portée de main</h3><p>Consultez et modifiez vos informations depuis votre espace personnel.</p></div></div>
+                    <div><span class="register-icon" aria-hidden="true">03</span><div><h3>Bienvenue à notre table</h3><p>Un e-mail de bienvenue est envoyé automatiquement après votre inscription.</p></div></div>
+                </div>
+                <section class="register-security"><h3>Un espace qui vous appartient</h3><p>Votre compte utilisateur est créé automatiquement. Votre mot de passe est protégé et aucune donnée bancaire n’est demandée à l’inscription.</p></section>
+                <p class="register-signature">Le plaisir de recevoir,<br><em>on s’occupe du reste.</em></p>
+            </aside>
+        </div>
+    </main>
 {% endblock %}

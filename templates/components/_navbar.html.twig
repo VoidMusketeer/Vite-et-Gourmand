@@ -1,4 +1,3 @@
-{# Current route replaces the old $page variable. #}
 {% set currentRoute = app.request.attributes.get('_route') %}
 
 {# Choose the profile destination using Symfony security roles. #}
@@ -24,14 +23,14 @@
     </nav>
 {% endset %}
 {% set authAction %}
-        {% if app.user %}
-            <form method="post" action="{{ path('app_logout') }}">
-                <input type="hidden" name="_csrf_token" value="{{ csrf_token('logout') }}">
-                <button class="vg-auth">Déconnexion</button>
-            </form>
-        {% else %}
-            <a class="vg-auth" href="{{ path('app_login') }}">Connexion</a>
-        {% endif %}
+    {% if app.user %}
+        <form method="post" action="{{ path('app_logout') }}">
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token('logout') }}">
+            <button class="vg-auth">Déconnexion</button>
+        </form>
+    {% else %}
+        <a class="vg-auth" href="{{ path('app_login') }}">Connexion</a>
+    {% endif %}
 {% endset %}
 
 {% set accountLabel %}
@@ -56,40 +55,44 @@
             <i class="bi bi-basket" aria-hidden="true"></i>
         </a>
         <div class="vg-desktop-auth">{{ accountLabel }}</div>
-        <details class="vg-account-card" name="vg-header-panel" data-controller="profile-card"
-                 data-action="pointerenter->profile-card#preview pointerleave->profile-card#leave click@document->profile-card#outside keydown.esc->profile-card#escape focusout->profile-card#blur turbo:before-cache@document->profile-card#close">
-          <summary class="vg-profile" aria-label="{{ app.user ? 'Profil de ' ~ firstName : 'Mon profil' }}" data-action="click->profile-card#toggle">
-            {% if app.user %}
-            <span class="vg-initials" aria-hidden="true">{{ initials }}</span>
-            {% else %}
-            <svg viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="11" r="6"/><ellipse cx="16" cy="30" rx="13" ry="11"/></svg>
-            {% endif %}
-          </summary>
-          <div class="vg-account-panel">
-            {% if app.user %}
-                {% set fullName = (app.user.firstName|default('') ~ ' ' ~ app.user.lastName|default(''))|trim %}
-                <strong>{{ fullName ?: app.user.userIdentifier }}</strong>
-                <small>{{ profileRoute == 'app_admin' ? 'Administrateur' : (profileRoute == 'app_employee' ? 'Employé' : 'Client') }} · {{ app.user.isActive is defined ? (app.user.isActive ? 'Compte actif' : 'Compte inactif') : 'Connecté' }}</small>
-                <div class="vg-account-logout">{{ authAction }}</div>
-                {% if profileRoute == 'app_admin' %}
-                    {% set accountLinks = {'app_admin':'Tableau de bord','admin_orders':'Commandes','admin_menus':'Menus','admin_employees':'Employés','admin_reviews':'Avis clients','admin_statistics':'Statistiques','app_employee':'Espace employé'} %}
-                {% elseif profileRoute == 'app_employee' %}
-                    {% set accountLinks = {'app_employee':'Tableau de bord','employee_orders':'Commandes','employee_schedule':'Emploi du temps','employee_menus':'Menus','employee_dishes':'Plats','employee_hours':'Horaires','employee_reviews':'Avis clients','employee_account':'Mon compte'} %}
+        <details
+            class="vg-account-card"
+            name="vg-header-panel"
+            data-controller="profile-card"
+            data-action="pointerenter->profile-card#preview pointerleave->profile-card#leave click@document->profile-card#outside keydown.esc->profile-card#escape focusout->profile-card#blur turbo:before-cache@document->profile-card#close"
+        >
+            <summary class="vg-profile" aria-label="{{ app.user ? 'Profil de ' ~ firstName : 'Mon profil' }}" data-action="click->profile-card#toggle">
+                {% if app.user %}
+                    <span class="vg-initials" aria-hidden="true">{{ initials }}</span>
                 {% else %}
-                    {% set accountLinks = {'customer_orders':'Mes commandes','customer_history':'Historique de commandes','customer_profile':'Mon compte'} %}
+                    <svg viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="11" r="6"/><ellipse cx="16" cy="30" rx="13" ry="11"/></svg>
                 {% endif %}
-                <nav class="vg-account-links" aria-label="Raccourcis de mon espace">
-                    {% for route, label in accountLinks %}
-                        <a href="{{ path(route) }}"{% if currentRoute == route %} aria-current="page"{% endif %}>{{ label }}</a>
-                    {% endfor %}
-                </nav>
-            {% else %}
-                <strong>Invité</strong>
-                <small>Non connecté</small>
-            {% endif %}
-            <a href="{{ path('app_basket') }}">Mon panier</a>
-            {% if not app.user %}{{ authAction }}{% endif %}
-          </div>
+            </summary>
+            <div class="vg-account-panel">
+                {% if app.user %}
+                    {% set fullName = (app.user.firstName|default('') ~ ' ' ~ app.user.lastName|default(''))|trim %}
+                    <strong>{{ fullName ?: app.user.userIdentifier }}</strong>
+                    <small>{{ profileRoute == 'app_admin' ? 'Administrateur' : (profileRoute == 'app_employee' ? 'Employé' : 'Client') }} · {{ app.user.isActive is defined ? (app.user.isActive ? 'Compte actif' : 'Compte inactif') : 'Connecté' }}</small>
+                    <div class="vg-account-logout">{{ authAction }}</div>
+                    {% if profileRoute == 'app_admin' %}
+                        {% set accountLinks = {'app_admin': 'Tableau de bord', 'admin_orders': 'Commandes', 'admin_menus': 'Menus', 'admin_employees': 'Employés', 'admin_reviews': 'Avis clients', 'admin_statistics': 'Statistiques', 'app_employee': 'Espace employé'} %}
+                    {% elseif profileRoute == 'app_employee' %}
+                        {% set accountLinks = {'app_employee': 'Tableau de bord', 'employee_orders': 'Commandes', 'employee_schedule': 'Emploi du temps', 'employee_menus': 'Menus', 'employee_dishes': 'Plats', 'employee_hours': 'Horaires', 'employee_reviews': 'Avis clients', 'employee_account': 'Mon compte'} %}
+                    {% else %}
+                        {% set accountLinks = {'customer_orders': 'Mes commandes', 'customer_history': 'Historique de commandes', 'customer_profile': 'Mon compte'} %}
+                    {% endif %}
+                    <nav class="vg-account-links" aria-label="Raccourcis de mon espace">
+                        {% for route, label in accountLinks %}
+                            <a href="{{ path(route) }}"{% if currentRoute == route %} aria-current="page"{% endif %}>{{ label }}</a>
+                        {% endfor %}
+                    </nav>
+                {% else %}
+                    <strong>Invité</strong>
+                    <small>Non connecté</small>
+                {% endif %}
+                <a href="{{ path('app_basket') }}">Mon panier</a>
+                {% if not app.user %}{{ authAction }}{% endif %}
+            </div>
         </details>
     </div>
 </div>

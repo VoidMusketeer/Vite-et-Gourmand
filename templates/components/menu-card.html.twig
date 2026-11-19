@@ -1,23 +1,23 @@
 <article class="menu-card">
-  <div class="menu-photo">
-    <img src="{{ asset(menu.image) }}" alt="" width="944" height="704" loading="lazy">
-    <span class="menu-tag">{{ menu.tag }}</span>
-  </div>
-  <div class="menu-card-body">
-    <p class="menu-stock{{ menu.stock <= 0 ? ' menu-stock--empty' }}">
-      {% if menu.stock > 0 %}
-        {{ menu.stock }} menu{{ menu.stock > 1 ? 's' }} complet{{ menu.stock > 1 ? 's' }} restant{{ menu.stock > 1 ? 's' }}
-      {% else %}
-        Épuisé
-      {% endif %}
-    </p>
-    <p class="menu-season">● {{ menu.season }}</p>
-    <h3>{{ menu.name }}</h3>
-    <p>{{ menu.description }}</p>
-    <small>Min. {{ menu.min }} pers. · Délai {{ menu.hours }} h · {{ menu.service }}</small>
-    <div class="menu-card-actions">
-      <div><strong>{{ menu.price }} €</strong> / pers.</div>
-      <a href="{{ path('app_menu_detail', {id: id}) }}" aria-label="Voir le détail du menu {{ menu.name }}">Voir le détail →</a>
+    <div class="menu-photo">
+        <img src="{{ asset(menu.image) }}" alt="" width="944" height="704" loading="lazy">
+        <span class="menu-tag">{{ menu.tag }}</span>
     </div>
-  </div>
+    <div class="menu-card-body">
+        <p class="menu-stock{{ menu.stock <= 0 ? ' menu-stock--empty' }}">
+            {% if menu.stock > 0 %}
+                {{ menu.stock }} menu{{ menu.stock > 1 ? 's' }} complet{{ menu.stock > 1 ? 's' }} restant{{ menu.stock > 1 ? 's' }}
+            {% else %}
+                Épuisé
+            {% endif %}
+        </p>
+        <p class="menu-season">● {{ menu.season }}</p>
+        <h3>{{ menu.name }}</h3>
+        <p>{{ menu.description }}</p>
+        <small>Min. {{ menu.min }} pers. · Délai {{ menu.hours }} h · {{ menu.service }}</small>
+        <div class="menu-card-actions">
+            <div><strong>{{ menu.price }} €</strong> / pers.</div>
+            <a href="{{ path('app_menu_detail', {id: id}) }}" aria-label="Voir le détail du menu {{ menu.name }}">Voir le détail →</a>
+        </div>
+    </div>
 </article>

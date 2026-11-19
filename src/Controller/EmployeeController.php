@@ -3,6 +3,7 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use App\Employee\EmployeeWorkspace;
+use App\Security\AccountValidation;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use Doctrine\ORM\EntityManagerInterface;
@@ -49,7 +50,11 @@ final class EmployeeController extends AbstractController
         $search=trim($request->query->getString('q')); $date=$request->query->getString('date'); $status=$request->query->getString('status');
         if ($date!=='') $this->date($date);
         if ($status!=='' && !isset(EmployeeWorkspace::STATUSES[$status])) throw $this->createNotFoundException();
-        return $this->view('orders',compact('search','date','status')+['orders'=>$this->workspace->orders($search,$date,$status)]);
+        $page = max(1, min(1000000, $request->query->getInt('page', 1)));
+        $orders = $this->workspace->orders($search,$date,$status,$page);
+        $hasNext = count($orders) > 50;
+        $orders = array_slice($orders, 0, 50);
+        return $this->view('orders',compact('search','date','status','orders','page','hasNext'));
     }
 
     #[Route('/planning',name:'employee_schedule',methods:['GET'])]
@@ -125,13 +130,13 @@ final class EmployeeController extends AbstractController
             $this->token($request,'employee_account'); $type=$request->request->getString('action');
             if ($type==='profile') {
                 foreach (array_keys($values) as $key) $values[$key]=trim($request->request->getString($key));
-                if (!$values['first'] || !$values['last'] || mb_strlen($values['first'])>100 || mb_strlen($values['last'])>100 || strlen($values['email'])>254 || !filter_var($values['email'],FILTER_VALIDATE_EMAIL) || ($values['phone']!=='' && !preg_match('/^[+0-9 ().-]{6,30}$/',$values['phone']))) $error='Vérifiez votre nom, votre e-mail et votre téléphone.';
+                if (!$values['first'] || !$values['last'] || mb_strlen($values['first'])>100 || mb_strlen($values['last'])>100 || strlen($values['email'])>254 || !AccountValidation::email($values['email']) || ($values['phone']!=='' && !preg_match('/^[+0-9 ().-]{6,30}$/',$values['phone']))) $error='Vérifiez votre nom, votre e-mail et votre téléphone.';
                 elseif ($values['email']!==$user->getEmail() && !$hasher->isPasswordValid($user,$request->request->getString('current_password'))) $error='Le mot de passe actuel est nécessaire pour changer l’e-mail.';
                 else { $user->setFirstName($values['first']); $user->setLastName($values['last']); $user->setEmail($values['email']); $user->setPhone($values['phone']); }
             } elseif ($type==='password') {
                 $password=$request->request->getString('password');
                 if (!$hasher->isPasswordValid($user,$request->request->getString('current_password'))) $error='Mot de passe actuel incorrect.';
-                elseif (strlen($password)<12 || strlen($password)>72 || $password!==$request->request->getString('confirmation')) $error='Utilisez 12 à 72 octets et une confirmation identique.';
+                elseif (!AccountValidation::password($password, $request->request->getString('confirmation'), minimumInBytes: true)) $error='Utilisez 12 à 72 octets et une confirmation identique.';
                 else $user->setPasswordHash($hasher->hashPassword($user,$password));
             } else throw $this->createAccessDeniedException();
             if (!$error) {

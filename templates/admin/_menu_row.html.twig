@@ -1,16 +1,16 @@
 <div class="entry admin-menu-row">
-{% if menu.image %}<img src="{{ asset(menu.image) }}" alt="" loading="lazy">{% endif %}
-<span><b class="admin-menu-name">{{ menu.title }}</b><br>{{ menu.price }} €/pers. · dès {{ menu.minimum_people }} personnes<br><mark>{{ {'published':'En ligne','draft':'Brouillon','unpublished':'Désactivé','archived':'Archivé'}[menu.publication_status] }}</mark></span>
-<form method="post" action="{{ path('admin_menu_manage',{id:menu.id}) }}" class="menu-stock-form">
-<input type="hidden" name="_token" value="{{ csrf_token('manage_menu' ~ menu.id) }}">
-<input type="hidden" name="original_stock" value="{{ menu.available_stock }}">
-<label>Menus complets restants<input aria-label="Stock de {{ menu.title }}" type="number" name="stock" min="0" max="1000000" value="{{ menu.available_stock }}" required></label>
-<button name="action" value="stock">Enregistrer le stock</button>
-</form>
-<div class="menu-management-actions">
-<a class="button" href="{{ path('admin_menu_edit',{id:menu.id}) }}">Modifier</a>
-<form method="post" action="{{ path('admin_menu_manage',{id:menu.id}) }}">
-<input type="hidden" name="_token" value="{{ csrf_token('manage_menu' ~ menu.id) }}">
-{% if menu.is_old %}<button name="action" value="restore">Réutiliser ce menu</button>
-{% else %}<button name="action" value="disable">Désactiver</button><button name="action" value="archive">Archiver</button>{% endif %}
-</form></div></div>
+    {% if menu.image %}<img src="{{ asset(menu.image) }}" alt="" loading="lazy">{% endif %}
+    <span><b class="admin-menu-name">{{ menu.title }}</b><br>{{ menu.price }} €/pers. · dès {{ menu.minimum_people }} personnes<br><mark>{{ {'published': 'En ligne', 'draft': 'Brouillon', 'unpublished': 'Désactivé', 'archived': 'Archivé'} [menu.publication_status] }}</mark></span>
+    <form method="post" action="{{ path('admin_menu_manage', {id: menu.id}) }}" class="menu-stock-form">
+        <input type="hidden" name="_token" value="{{ csrf_token('manage_menu' ~ menu.id) }}">
+        <input type="hidden" name="original_stock" value="{{ menu.available_stock }}">
+        <label>Menus complets restants<input aria-label="Stock de {{ menu.title }}" type="number" name="stock" min="0" max="1000000" value="{{ menu.available_stock }}" required></label>
+        <button name="action" value="stock">Enregistrer le stock</button>
+    </form>
+    <div class="menu-management-actions">
+        <a class="button" href="{{ path('admin_menu_edit', {id: menu.id}) }}">Modifier</a>
+        <form method="post" action="{{ path('admin_menu_manage', {id: menu.id}) }}">
+            <input type="hidden" name="_token" value="{{ csrf_token('manage_menu' ~ menu.id) }}">
+            {% if menu.is_old %}<button name="action" value="restore">Réutiliser ce menu</button>
+            {% else %}<button name="action" value="disable">Désactiver</button><button name="action" value="archive">Archiver</button>{% endif %}
+        </form></div></div>

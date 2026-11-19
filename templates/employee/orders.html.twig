@@ -1,7 +1,8 @@
 {% extends 'employee/layout.html.twig' %}
 {% block heading %}Commandes{% endblock %}
 {% block content %}<p class="employee-subtitle">Retrouvez les commandes de l’équipe et leur avancement.</p>
-<form class="employee-filters" method="get"><label>Rechercher<input type="search" name="q" value="{{ search }}" placeholder="N° de commande, client ou menu"></label><label>Date de service<input type="date" name="date" value="{{ date }}"></label><label>Statut<select name="status"><option value="">Tous les statuts</option>{% for code,label in statuses %}<option value="{{ code }}" {% if status == code %}selected{% endif %}>{{ label }}</option>{% endfor %}</select></label><button class="employee-button primary">Filtrer</button><a href="{{ path('employee_orders') }}">Réinitialiser</a></form>
-<p class="employee-muted">{{ orders|length }} commande{{ orders|length == 1 ? '' : 's' }} · classées par date de livraison</p>
-{% for order in orders %}{% include 'employee/_card.html.twig' %}{% else %}<section class="employee-empty"><h2>Aucune commande trouvée</h2><p>{{ search or date or status ? 'Essayez une autre date ou retirez les filtres.' : 'Aucune commande n’est encore enregistrée dans la base de données.' }}</p></section>{% endfor %}
+    <form class="employee-filters" method="get"><label>Rechercher<input type="search" name="q" value="{{ search }}" placeholder="N° de commande, client ou menu"></label><label>Date de service<input type="date" name="date" value="{{ date }}"></label><label>Statut<select name="status"><option value="">Tous les statuts</option>{% for code, label in statuses %}<option value="{{ code }}" {% if status == code %}selected{% endif %}>{{ label }}</option>{% endfor %}</select></label><button class="employee-button primary">Filtrer</button><a href="{{ path('employee_orders') }}">Réinitialiser</a></form>
+    <p class="employee-muted">{{ orders|length }} commande{{ orders|length == 1 ? '' : 's' }} sur cette page · classées par date de livraison</p>
+    {% for order in orders %}{% include 'employee/_card.html.twig' %}{% else %}<section class="employee-empty"><h2>Aucune commande trouvée</h2><p>{{ search or date or status ? 'Essayez une autre date ou retirez les filtres.' : 'Aucune commande n’est encore enregistrée dans la base de données.' }}</p></section>{% endfor %}
+    {% include 'components/pagination.html.twig' %}
 {% endblock %}

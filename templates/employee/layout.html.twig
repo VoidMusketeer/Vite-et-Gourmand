@@ -2,19 +2,19 @@
 {% block title %}{{ block('heading') }} · Espace employé{% endblock %}
 {% block stylesheets %}<link rel="stylesheet" href="{{ asset('styles/workspace-navigation.css') }}"><link rel="stylesheet" href="{{ asset('styles/employee.css') }}">{% endblock %}
 {% block header %}
-<a class="employee-skip" href="#employee-main">Aller au contenu</a>
-{{ parent() }}
+    <a class="employee-skip" href="#employee-main">Aller au contenu</a>
+    {{ parent() }}
 {% endblock %}
 {% block body %}
-<div class="employee-shell"><aside><p class="eyebrow">MON ESPACE</p>{% set currentLabel = 'Tableau de bord' %}{% set workspaceNavigation %}<nav aria-label="Espace employé">
-{% set current=app.request.attributes.get('_route') %}
-{% for route,label in {'app_employee':'Tableau de bord','employee_orders':'Commandes','employee_schedule':'Emploi du temps','employee_menus':'Menus','employee_dishes':'Plats','employee_hours':'Horaires','employee_reviews':'Avis clients','employee_account':'Mon compte'} %}
-{% if current == route or (route == 'employee_orders' and current == 'employee_order') or (route == 'employee_menus' and current == 'employee_menu_edit') or (route == 'employee_dishes' and current == 'employee_dish_edit') %}{% set currentLabel = label %}{% endif %}
-<a href="{{ path(route) }}" {% if current == route or (route == 'employee_orders' and current == 'employee_order') or (route == 'employee_menus' and current == 'employee_menu_edit') or (route == 'employee_dishes' and current == 'employee_dish_edit') %}aria-current="page"{% endif %}>{{ label }}</a>
-{% endfor %}{% if is_granted('ROLE_ADMIN') %}<a href="{{ path('app_admin') }}">Administration</a>{% endif %}</nav>{% endset %}
-{% include 'components/workspace_navigation.html.twig' with {navigation: workspaceNavigation, currentLabel: currentLabel} %}<div class="employee-aside-note"><strong>{{ app.user.staffFunction ?: 'Équipe' }}</strong><p>{{ app.user.staffSchedule ?: 'Horaires non renseignés' }}</p></div></aside>
-<main id="employee-main" class="employee-main"><p class="eyebrow">VITE & GOURMAND · ÉQUIPE</p><h1>{% block heading %}{% endblock %}</h1>
-{% for type in ['success','error'] %}{% for message in app.flashes(type) %}<p class="employee-notice {{ type }}" role="{{ type == 'error' ? 'alert' : 'status' }}">{{ message }}</p>{% endfor %}{% endfor %}
-{% if error|default(null) %}<p class="employee-notice error" role="alert">{{ error }}</p>{% endif %}
-{% block content %}{% endblock %}</main></div>
+    <div class="employee-shell"><aside><p class="eyebrow">MON ESPACE</p>{% set currentLabel = 'Tableau de bord' %}{% set workspaceNavigation %}<nav aria-label="Espace employé">
+                    {% set current = app.request.attributes.get('_route') %}
+                    {% for route, label in {'app_employee': 'Tableau de bord', 'employee_orders': 'Commandes', 'employee_schedule': 'Emploi du temps', 'employee_menus': 'Menus', 'employee_dishes': 'Plats', 'employee_hours': 'Horaires', 'employee_reviews': 'Avis clients', 'employee_account': 'Mon compte'} %}
+                        {% if current == route or (route == 'employee_orders' and current == 'employee_order') or (route == 'employee_menus' and current == 'employee_menu_edit') or (route == 'employee_dishes' and current == 'employee_dish_edit') %}{% set currentLabel = label %}{% endif %}
+                        <a href="{{ path(route) }}" {% if current == route or (route == 'employee_orders' and current == 'employee_order') or (route == 'employee_menus' and current == 'employee_menu_edit') or (route == 'employee_dishes' and current == 'employee_dish_edit') %}aria-current="page"{% endif %}>{{ label }}</a>
+                    {% endfor %}{% if is_granted('ROLE_ADMIN') %}<a href="{{ path('app_admin') }}">Administration</a>{% endif %}</nav>{% endset %}
+            {% include 'components/workspace_navigation.html.twig' with {navigation: workspaceNavigation, currentLabel: currentLabel} %}<div class="employee-aside-note"><strong>{{ app.user.staffFunction ?: 'Équipe' }}</strong><p>{{ app.user.staffSchedule ?: 'Horaires non renseignés' }}</p></div></aside>
+        <main id="employee-main" class="employee-main"><p class="eyebrow">VITE & GOURMAND · ÉQUIPE</p><h1>{% block heading %}{% endblock %}</h1>
+            {% for type in ['success', 'error'] %}{% for message in app.flashes(type) %}<p class="employee-notice {{ type }}" role="{{ type == 'error' ? 'alert' : 'status' }}">{{ message }}</p>{% endfor %}{% endfor %}
+            {% if error|default(null) %}<p class="employee-notice error" role="alert">{{ error }}</p>{% endif %}
+            {% block content %}{% endblock %}</main></div>
 {% endblock %}

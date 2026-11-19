@@ -2,20 +2,28 @@
     <div class="testimonial-inner">
         <p class="testimonial-eyebrow">Ils nous font confiance</p>
         <h2>Avis clients validés</h2>
-        <div class="testimonial-slider" data-controller="review-rotation"
-             data-action="visibilitychange@document->review-rotation#schedule">
+        <div
+            class="testimonial-slider"
+            data-controller="review-rotation"
+            data-action="visibilitychange@document->review-rotation#schedule"
+        >
             <div class="testimonial-stage">
                 {% for slot in reviews|slice(0, 3) %}
                     {% set slotIndex = loop.index0 %}
-                    <article class="testimonial-card" data-review-rotation-target="card"
-                            data-action="click->review-rotation#next">
+                    <article
+                        class="testimonial-card"
+                        data-review-rotation-target="card"
+                        data-action="click->review-rotation#next"
+                    >
                         {% for review in reviews %}
-                            <span class="testimonial-review {{ loop.index0 == slotIndex ? 'is-active' : '' }}"
-                                  aria-hidden="{{ loop.index0 == slotIndex ? 'false' : 'true' }}">
+                            <span
+                                class="testimonial-review {{ loop.index0 == slotIndex ? 'is-active' : '' }}"
+                                aria-hidden="{{ loop.index0 == slotIndex ? 'false' : 'true' }}"
+                            >
                                 <button type="button" class="testimonial-advance" aria-label="Lire les avis suivants">
-                                <span class="testimonial-stars" aria-label="{{ review.rating }} sur 5">{% for i in 1..review.rating %}★{% endfor %}</span>
-                                <span class="testimonial-comment">« {{ review.comment }} »</span>
-                                <span class="testimonial-author">{{ review.first_name }}</span>
+                                    <span class="testimonial-stars" aria-label="{{ review.rating }} sur 5">{% for i in 1..review.rating %}★{% endfor %}</span>
+                                    <span class="testimonial-comment">« {{ review.comment }} »</span>
+                                    <span class="testimonial-author">{{ review.first_name }}</span>
                                 </button>
                                 <button type="button" class="testimonial-expand-label" data-action="click->review-rotation#expand:stop" aria-expanded="false"><span class="read-more">Lire la suite</span><span class="read-less">Réduire</span></button>
                             </span>

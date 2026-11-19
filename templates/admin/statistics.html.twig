@@ -1,19 +1,19 @@
 {% extends 'admin/layout.html.twig' %}
 {% block heading %}Statistiques et chiffre d’affaires{% endblock %}
 {% block content %}
-<form class="fields card-form" method="get">
-<label>Menu<select name="menu"><option value="">Tous les menus</option>{% for item in menus %}<option value="{{ item.id }}" {{ menu == item.id ? 'selected' }}>{{ item.title }}</option>{% endfor %}</select></label>
-<label>Prestations du<input type="date" name="from" value="{{ from }}"></label>
-<label>Au (inclus)<input type="date" name="until" value="{{ until }}"></label>
-<div><button class="primary">Appliquer</button> <a href="{{ path('admin_statistics') }}">Réinitialiser</a></div></form>
-{% if not error %}
-<div class="metrics"><article>Commandes hors annulations<strong>{{ totalOrders }}</strong>Période sélectionnée</article><article>Chiffre d’affaires menus<strong>{{ (totalRevenue / 100)|number_format(2, ',', ' ') }} €</strong>Commandes terminées</article></div>
-<h2>Comparer les commandes par menu</h2>
-<div class="panel admin-chart" role="img" aria-label="Nombre de commandes par menu. Les valeurs figurent aussi dans le tableau ci-dessous.">
-{% for row in rows %}<div class="admin-chart-row"><span>{{ row.title }}</span><div class="admin-chart-track"><div class="admin-chart-bar" style="width:{{ maxOrders ? row.orders / maxOrders * 100 : 0 }}%"></div></div><b>{{ row.orders }}</b></div>{% else %}<p>Aucun menu à afficher.</p>{% endfor %}
-</div>
-<p>Le chiffre d’affaires correspond aux menus des commandes terminées, après réduction et hors frais de livraison. La période porte sur la date de prestation.</p>
-<div class="admin-stat-table"><table><caption>Commandes et chiffre d’affaires par menu</caption><thead><tr><th>Menu</th><th>Commandes</th><th>Terminées</th><th>Chiffre d’affaires</th></tr></thead><tbody>
-{% for row in rows %}<tr><th scope="row">{{ row.title }}</th><td>{{ row.orders }}</td><td>{{ row.completed }}</td><td>{{ (row.revenueCents / 100)|number_format(2, ',', ' ') }} €</td></tr>{% else %}<tr><td colspan="4">Aucun résultat.</td></tr>{% endfor %}
-</tbody></table></div>{% endif %}
+    <form class="fields card-form" method="get">
+        <label>Menu<select name="menu"><option value="">Tous les menus</option>{% for item in menus %}<option value="{{ item.id }}" {{ menu == item.id ? 'selected' }}>{{ item.title }}</option>{% endfor %}</select></label>
+        <label>Prestations du<input type="date" name="from" value="{{ from }}"></label>
+        <label>Au (inclus)<input type="date" name="until" value="{{ until }}"></label>
+        <div><button class="primary">Appliquer</button> <a href="{{ path('admin_statistics') }}">Réinitialiser</a></div></form>
+    {% if not error %}
+        <div class="metrics"><article>Commandes hors annulations<strong>{{ totalOrders }}</strong>Période sélectionnée</article><article>Chiffre d’affaires menus<strong>{{ (totalRevenue / 100)|number_format(2, ',', ' ') }} €</strong>Commandes terminées</article></div>
+        <h2>Comparer les commandes par menu</h2>
+        <div class="panel admin-chart" role="img" aria-label="Nombre de commandes par menu. Les valeurs figurent aussi dans le tableau ci-dessous.">
+            {% for row in rows %}<div class="admin-chart-row"><span>{{ row.title }}</span><div class="admin-chart-track"><div class="admin-chart-bar" style="width:{{ maxOrders ? row.orders / maxOrders * 100 : 0 }}%"></div></div><b>{{ row.orders }}</b></div>{% else %}<p>Aucun menu à afficher.</p>{% endfor %}
+        </div>
+        <p>Le chiffre d’affaires correspond aux menus des commandes terminées, après réduction et hors frais de livraison. La période porte sur la date de prestation.</p>
+        <div class="admin-stat-table"><table><caption>Commandes et chiffre d’affaires par menu</caption><thead><tr><th>Menu</th><th>Commandes</th><th>Terminées</th><th>Chiffre d’affaires</th></tr></thead><tbody>
+                    {% for row in rows %}<tr><th scope="row">{{ row.title }}</th><td>{{ row.orders }}</td><td>{{ row.completed }}</td><td>{{ (row.revenueCents / 100)|number_format(2, ',', ' ') }} €</td></tr>{% else %}<tr><td colspan="4">Aucun résultat.</td></tr>{% endfor %}
+                </tbody></table></div>{% endif %}
 {% endblock %}

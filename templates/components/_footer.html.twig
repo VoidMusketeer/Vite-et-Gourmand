@@ -10,9 +10,9 @@
                 {% set hours = business_hours.all %}
                 {% set groups = [] %}
                 {% set current = null %}
-                {% for day,label in {1:'Lundi',2:'Mardi',3:'Mercredi',4:'Jeudi',5:'Vendredi',6:'Samedi',7:'Dimanche'} %}
+                {% for day, label in {1: 'Lundi', 2: 'Mardi', 3: 'Mercredi', 4: 'Jeudi', 5: 'Vendredi', 6: 'Samedi', 7: 'Dimanche'} %}
                     {% set hour = hours[day] ?? null %}
-                    {% set schedule = not hour ? 'Non renseigné' : (hour.is_closed ? 'Fermé' : hour.opens_at|slice(0,5) ~ '–' ~ hour.closes_at|slice(0,5)) %}
+                    {% set schedule = not hour ? 'Non renseigné' : (hour.is_closed ? 'Fermé' : hour.opens_at|slice(0, 5) ~ '–' ~ hour.closes_at|slice(0, 5)) %}
                     {% if current and current.schedule == schedule %}
                         {% set current = current|merge({last: label}) %}
                     {% else %}

@@ -16,14 +16,17 @@ final class EmployeeWorkspace
         return $this->db->fetchAssociative('SELECT p.* FROM users u JOIN staff_positions p ON p.name=u.staff_function WHERE u.id=?', [$id]) ?: [];
     }
 
-    public function orders(string $search='', string $date='', string $status=''): array
+    public function orders(string $search='', string $date='', string $status='', ?int $page=null): array
     {
         $sql = 'SELECT o.*, s.code AS status, u.first_name, u.last_name, u.phone, u.email, i.menu_title, i.people_count, i.menu_id FROM orders o JOIN order_statuses s ON s.id=o.current_status_id JOIN users u ON u.id=o.user_id LEFT JOIN order_items i ON i.order_id=o.id WHERE 1=1';
         $params=[];
         if ($search!=='') { $sql.=" AND (o.reference ILIKE ? OR concat_ws(' ',u.first_name,u.last_name) ILIKE ? OR u.email ILIKE ? OR i.menu_title ILIKE ?)"; $params=array_fill(0,4,'%'.$search.'%'); }
         if ($date!=='') { $sql.=' AND o.service_date=?'; $params[]=$date; }
         if ($status!=='') { $sql.=' AND s.code=?'; $params[]=$status; }
-        return $this->db->fetchAllAssociative($sql.' ORDER BY o.service_date,o.delivery_time,o.reference', $params);
+        $sql .= ' ORDER BY o.service_date,o.delivery_time,o.reference,i.id';
+        // Fetch one extra row to detect the next page without a separate count query.
+        if ($page !== null) $sql .= ' LIMIT 51 OFFSET '.((max(1, min(1000000, $page)) - 1) * 50);
+        return $this->db->fetchAllAssociative($sql, $params);
     }
 
     public function order(string $id): array|false

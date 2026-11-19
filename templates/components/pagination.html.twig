@@ -1,0 +1,7 @@
+{% if page > 1 or hasNext %}
+    <nav aria-label="Pagination des commandes" class="d-flex align-items-center gap-3 my-3">
+        {% if page > 1 %}<a href="{{ path(app.request.attributes.get('_route'), app.request.query.all|merge({page: page - 1})) }}" rel="prev">← Précédente</a>{% endif %}
+        <span aria-current="page">Page {{ page }}</span>
+        {% if hasNext %}<a href="{{ path(app.request.attributes.get('_route'), app.request.query.all|merge({page: page + 1})) }}" rel="next">Suivante →</a>{% endif %}
+    </nav>
+{% endif %}

@@ -38,29 +38,16 @@ final class NavigationController extends AbstractController
         $search = trim($query->getString('q'));
         $sort = $query->getString('sort') === 'desc' ? 'desc' : 'asc';
 
-        $catalog = $this->catalog->all();
-        $priceLimit = (int) ceil(max([60, ...array_column($catalog,'price')]));
+        $options = $this->catalog->filterOptions();
+        $priceLimit = $options['priceLimit'];
         $maxPrice = max(0,min($priceLimit,(int)$query->getString('price',(string)$priceLimit)));
-        $menus = array_filter($catalog, static function (array $menu) use (
-            $guests, $themes, $diets, $legacyTag, $day, $date, $maxPrice, $search
-        ): bool {
-            return (!$guests || $guests >= $menu['min'])
-                && $menu['price'] <= $maxPrice
-                && (!$themes || in_array($menu['theme'], $themes, true))
-                && (!$diets || in_array($menu['tag'], $diets, true))
-                && ($legacyTag === 'Tous' || $menu['tag'] === $legacyTag)
-                && (!$day || !$menu['start'] || ($day >= $menu['start'] && $day <= $menu['end']))
-                && (!$date || ((!$menu['first_date'] || $date >= $menu['first_date']) && (!$menu['last_date'] || $date <= $menu['last_date'])))
-                && ($search === '' || mb_stripos($menu['name'].' '.$menu['tag'].' '.$menu['theme'], $search) !== false);
-        });
-        uasort($menus, static fn ($a, $b) => $sort === 'desc'
-            ? $b['price'] <=> $a['price'] : $a['price'] <=> $b['price']);
+        $menus = $this->catalog->all(filters: compact('guests', 'themes', 'diets', 'legacyTag', 'day', 'date', 'maxPrice', 'search', 'sort'));
 
         return $this->render('pages/menus.html.twig', [
             'menus' => $menus, 'guests' => $guests,
             'themes' => $themes, 'diets' => $diets, 'date' => $date, 'price' => $maxPrice,
             'sort' => $sort, 'search' => $search, 'legacyTag' => $legacyTag,
-            'themeOptions' => array_unique(array_column($catalog, 'theme')), 'priceLimit' => $priceLimit,
+            'themeOptions' => $options['themes'], 'priceLimit' => $priceLimit,
         ]);
     }
 

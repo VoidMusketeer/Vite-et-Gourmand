@@ -28,9 +28,13 @@ final class AdminController extends AbstractController
     }
 
     #[Route('/commandes', name:'admin_orders', methods:['GET'])]
-    public function orders(): Response
+    public function orders(Request $request): Response
     {
-        return $this->render('admin/orders.html.twig',['orders'=>$this->db->fetchAllAssociative('SELECT o.reference,o.service_date,u.first_name,u.last_name,s.label FROM orders o JOIN users u ON u.id=o.user_id JOIN order_statuses s ON s.id=o.current_status_id ORDER BY o.service_date DESC')]);
+        $page = max(1, min(1000000, $request->query->getInt('page', 1)));
+        $orders = $this->db->fetchAllAssociative('SELECT o.reference,o.service_date,u.first_name,u.last_name,s.label FROM orders o JOIN users u ON u.id=o.user_id JOIN order_statuses s ON s.id=o.current_status_id ORDER BY o.service_date DESC,o.id LIMIT 51 OFFSET '.(($page - 1) * 50));
+        $hasNext = count($orders) > 50;
+        $orders = array_slice($orders, 0, 50);
+        return $this->render('admin/orders.html.twig',compact('orders','page','hasNext'));
     }
 
     #[Route('/menus', name:'admin_menus', methods:['GET'])]

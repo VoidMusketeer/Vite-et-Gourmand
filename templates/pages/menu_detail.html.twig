@@ -2,61 +2,61 @@
 {% block title %}{{ menu.name }} · Vite & Gourmand{% endblock %}
 {% block stylesheets %}<link rel="stylesheet" href="{{ asset('styles/menu-sheet.css') }}">{% endblock %}
 {% block body %}
-{% set entry = app.session.get('basket', {})[id] ?? null %}
-{% set guests = entry.guests ?? (entry is iterable ? menu.min : entry ?? menu.min) %}
-<main class="sheet" data-controller="menu-sheet" data-menu-sheet-price-value="{{ menu.price }}" data-menu-sheet-start-value="{{ menu.start }}" data-menu-sheet-end-value="{{ menu.end }}">
-  <div class="sheet-wrap">
-    <a class="sheet-back" href="{{ path('app_menus') }}#catalogue">← Tous les menus</a>
-    <div class="sheet-layout">
-      <section aria-label="Photos du menu">
-        <img class="sheet-cover" src="{{ app.request.basePath ~ '/' ~ menu.image }}" alt="{{ menu.images[0].alt }}" data-menu-sheet-target="cover">
-        <div class="sheet-thumbs">
-          {% for photo in menu.images %}
-            <button type="button" aria-label="Afficher {{ photo.alt }}" aria-pressed="{{ loop.first ? 'true' : 'false' }}" data-action="menu-sheet#show" data-menu-sheet-target="thumb"><img src="{{ app.request.basePath ~ '/' ~ photo.url }}" alt="{{ photo.alt }}"></button>
-          {% endfor %}
+    {% set entry = app.session.get('basket', {})[id] ?? null %}
+    {% set guests = entry.guests ?? (entry is iterable ? menu.min : entry ?? menu.min) %}
+    <main class="sheet" data-controller="menu-sheet" data-menu-sheet-price-value="{{ menu.price }}" data-menu-sheet-start-value="{{ menu.start }}" data-menu-sheet-end-value="{{ menu.end }}">
+        <div class="sheet-wrap">
+            <a class="sheet-back" href="{{ path('app_menus') }}#catalogue">← Tous les menus</a>
+            <div class="sheet-layout">
+                <section aria-label="Photos du menu">
+                    <img class="sheet-cover" src="{{ app.request.basePath ~ '/' ~ menu.image }}" alt="{{ menu.images[0].alt }}" data-menu-sheet-target="cover">
+                    <div class="sheet-thumbs">
+                        {% for photo in menu.images %}
+                            <button type="button" aria-label="Afficher {{ photo.alt }}" aria-pressed="{{ loop.first ? 'true' : 'false' }}" data-action="menu-sheet#show" data-menu-sheet-target="thumb"><img src="{{ app.request.basePath ~ '/' ~ photo.url }}" alt="{{ photo.alt }}"></button>
+                        {% endfor %}
+                    </div>
+                </section>
+                <section>
+                    <div class="sheet-tags"><span>{{ menu.season }}</span><b data-tag="{{ menu.tag }}">{{ menu.tag }}</b></div>
+                    <h1>{{ menu.name }}</h1>
+                    <p class="sheet-description">{{ menu.description }}</p>
+                    <p class="sheet-price"><strong>{{ menu.price }} €</strong> par personne</p>
+                    <div class="sheet-service"><div><i class="bi bi-calendar-event"></i> Minimum {{ menu.min }} personnes · commande {{ menu.hours }} h à l’avance</div><div><i class="bi bi-truck"></i> Retrait à Bordeaux ou livraison selon votre adresse</div></div>
+                    <form class="sheet-form" method="post" action="{{ path('app_basket_item', {id: id}) }}" data-action="input->menu-sheet#update submit->menu-sheet#requireAccount">
+                        <input type="hidden" name="_token" value="{{ csrf_token('basket') }}">
+                        <div class="sheet-fields">
+                            <label>Date souhaitée<input type="date" required min="{{ earliest }}" {% if menu.last_date %}max="{{ menu.last_date }}"{% endif %} name="date" value="{{ entry.date ?? '' }}" data-menu-sheet-target="date"></label>
+                            <label>Nombre de personnes<input type="number" name="guests" min="{{ menu.min }}" max="9999" value="{{ guests }}" required data-menu-sheet-target="guests"></label>
+                        </div>
+                        {% for option in menu.options %}
+                            <label class="sheet-option"><input type="checkbox" name="options[]" value="{{ option.name }}" data-price="{{ option.price }}" data-menu-sheet-target="option" {{ option.name in (entry.options ?? []) ? 'checked' }}>{{ option.name }}<span>{{ option.price ? '+' ~ option.price|number_format(2, ',', ' ') ~ ' € / pers.' : 'Inclus' }}</span></label>
+                        {% endfor %}
+                        <div class="sheet-total">Total estimé <output data-menu-sheet-target="total">{{ (menu.price * guests)|number_format(2, ',', ' ') }} €</output></div>
+                        <small>Hors frais de livraison éventuels.</small>
+                        <p>{{ menu.stock }} menu{{ menu.stock > 1 ? "s" }} complet{{ menu.stock > 1 ? "s" }} pour un groupe disponible{{ menu.stock > 1 ? "s" }}</p>
+                        <button class="sheet-add" data-action="click->menu-sheet#requireAccount" {{ menu.stock <= 0 ? 'disabled' }}><i class="bi bi-basket"></i> {{ menu.stock <= 0 ? 'Stock insuffisant' : 'Ajouter au panier' }}</button>
+                        <small class="sheet-note">Aucun paiement à cette étape. Disponibilité à confirmer avec Julie ou José.</small>
+                    </form>
+                </section>
+            </div>
         </div>
-      </section>
-      <section>
-        <div class="sheet-tags"><span>{{ menu.season }}</span><b data-tag="{{ menu.tag }}">{{ menu.tag }}</b></div>
-        <h1>{{ menu.name }}</h1>
-        <p class="sheet-description">{{ menu.description }}</p>
-        <p class="sheet-price"><strong>{{ menu.price }} €</strong> par personne</p>
-        <div class="sheet-service"><div><i class="bi bi-calendar-event"></i> Minimum {{ menu.min }} personnes · commande {{ menu.hours }} h à l’avance</div><div><i class="bi bi-truck"></i> Retrait à Bordeaux ou livraison selon votre adresse</div></div>
-        <form class="sheet-form" method="post" action="{{ path('app_basket_item', {id: id}) }}" data-action="input->menu-sheet#update submit->menu-sheet#requireAccount">
-          <input type="hidden" name="_token" value="{{ csrf_token('basket') }}">
-          <div class="sheet-fields">
-            <label>Date souhaitée<input type="date" required min="{{ earliest }}" {% if menu.last_date %}max="{{ menu.last_date }}"{% endif %} name="date" value="{{ entry.date ?? '' }}" data-menu-sheet-target="date"></label>
-            <label>Nombre de personnes<input type="number" name="guests" min="{{ menu.min }}" max="9999" value="{{ guests }}" required data-menu-sheet-target="guests"></label>
-          </div>
-          {% for option in menu.options %}
-            <label class="sheet-option"><input type="checkbox" name="options[]" value="{{ option.name }}" data-price="{{ option.price }}" data-menu-sheet-target="option" {{ option.name in (entry.options ?? []) ? 'checked' }}>{{ option.name }}<span>{{ option.price ? '+' ~ option.price|number_format(2, ',', ' ') ~ ' € / pers.' : 'Inclus' }}</span></label>
-          {% endfor %}
-          <div class="sheet-total">Total estimé <output data-menu-sheet-target="total">{{ (menu.price * guests)|number_format(2, ',', ' ') }} €</output></div>
-          <small>Hors frais de livraison éventuels.</small>
-          <p>{{ menu.stock }} menu{{ menu.stock > 1 ? "s" }} complet{{ menu.stock > 1 ? "s" }} pour un groupe disponible{{ menu.stock > 1 ? "s" }}</p>
-          <button class="sheet-add" data-action="click->menu-sheet#requireAccount" {{ menu.stock <= 0 ? 'disabled' }}><i class="bi bi-basket"></i> {{ menu.stock <= 0 ? 'Stock insuffisant' : 'Ajouter au panier' }}</button>
-          <small class="sheet-note">Aucun paiement à cette étape. Disponibilité à confirmer avec Julie ou José.</small>
-        </form>
-      </section>
-    </div>
-  </div>
-  <section class="sheet-details"><div class="sheet-wrap sheet-cards">
-    <article><h2>Composition</h2>{% for dish in menu.dishes %}<strong>{{ ['Entrée','Plat','Dessert'][loop.index0] }}</strong><p>{{ dish }}</p>{% endfor %}</article>
-    <article><h2>Options</h2>{% for option in menu.options %}<div class="sheet-option">{{ option.name }}<span>{{ option.price ? '+' ~ option.price|number_format(2, ',', ' ') ~ ' €' : 'Inclus' }}</span></div>{% endfor %}</article>
-    <article><h2>Allergènes et service</h2><div class="sheet-allergens">{% for allergen in menu.allergens %}<span>{{ allergen }}</span>{% endfor %}</div><p>{{ menu.conditions }}</p></article>
-  </div></section>
-  {% if not app.user %}
-    <dialog class="sheet-auth" data-menu-sheet-target="authDialog" aria-labelledby="sheet-auth-title" aria-describedby="sheet-auth-description">
-      <header><h2 id="sheet-auth-title"><i class="bi bi-lock" aria-hidden="true"></i> Connexion requise</h2><button type="button" class="sheet-auth-close" data-action="menu-sheet#closeAccount" aria-label="Fermer">×</button></header>
-      <div class="sheet-auth-body">
-        <i class="bi bi-person-circle sheet-auth-icon" aria-hidden="true"></i>
-        <h3>Connectez-vous pour commander</h3>
-        <p id="sheet-auth-description">Créez un compte ou connectez-vous pour ajouter ce menu à votre panier.</p>
-        <a class="sheet-add" href="{{ path('app_login') }}"><i class="bi bi-box-arrow-in-right" aria-hidden="true"></i> Se connecter</a>
-        <a class="sheet-add" href="{{ path('app_register') }}"><i class="bi bi-person-plus" aria-hidden="true"></i> Créer un compte</a>
-        <button type="button" class="sheet-auth-cancel" data-action="menu-sheet#closeAccount">Continuer à consulter le menu</button>
-      </div>
-    </dialog>
-  {% endif %}
-</main>
+        <section class="sheet-details"><div class="sheet-wrap sheet-cards">
+                <article><h2>Composition</h2>{% for dish in menu.dishes %}<strong>{{ ['Entrée', 'Plat', 'Dessert'][loop.index0] }}</strong><p>{{ dish }}</p>{% endfor %}</article>
+                <article><h2>Options</h2>{% for option in menu.options %}<div class="sheet-option">{{ option.name }}<span>{{ option.price ? '+' ~ option.price|number_format(2, ',', ' ') ~ ' €' : 'Inclus' }}</span></div>{% endfor %}</article>
+                <article><h2>Allergènes et service</h2><div class="sheet-allergens">{% for allergen in menu.allergens %}<span>{{ allergen }}</span>{% endfor %}</div><p>{{ menu.conditions }}</p></article>
+            </div></section>
+        {% if not app.user %}
+            <dialog class="sheet-auth" data-menu-sheet-target="authDialog" aria-labelledby="sheet-auth-title" aria-describedby="sheet-auth-description">
+                <header><h2 id="sheet-auth-title"><i class="bi bi-lock" aria-hidden="true"></i> Connexion requise</h2><button type="button" class="sheet-auth-close" data-action="menu-sheet#closeAccount" aria-label="Fermer">×</button></header>
+                <div class="sheet-auth-body">
+                    <i class="bi bi-person-circle sheet-auth-icon" aria-hidden="true"></i>
+                    <h3>Connectez-vous pour commander</h3>
+                    <p id="sheet-auth-description">Créez un compte ou connectez-vous pour ajouter ce menu à votre panier.</p>
+                    <a class="sheet-add" href="{{ path('app_login') }}"><i class="bi bi-box-arrow-in-right" aria-hidden="true"></i> Se connecter</a>
+                    <a class="sheet-add" href="{{ path('app_register') }}"><i class="bi bi-person-plus" aria-hidden="true"></i> Créer un compte</a>
+                    <button type="button" class="sheet-auth-cancel" data-action="menu-sheet#closeAccount">Continuer à consulter le menu</button>
+                </div>
+            </dialog>
+        {% endif %}
+    </main>
 {% endblock %}
