@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ title }} — Vite & Gourmand{% endblock %}
+
+{% block body %}
+    <main class="container py-4">
+        <h1>{{ title }}</h1>
+        <p>Cette page est en cours de construction.</p>
+        {% if app.request.attributes.get('_route') == 'app_menus' and app.request.query.get('q', '') %}
+            <p>Recherche demandée : {{ app.request.query.get('q') }}</p>
+            <p>La recherche dans le catalogue sera disponible prochainement.</p>
+        {% endif %}
+    </main>
+{% endblock %}

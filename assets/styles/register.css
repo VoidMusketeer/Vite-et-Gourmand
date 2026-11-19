@@ -1,0 +1,41 @@
+.register-page { max-width: 1120px; margin: auto; padding: 3.5rem 1.5rem 4rem; color: #392629; }
+.register-heading { margin-bottom: 2rem; }
+.register-heading > span { color: #791c32; letter-spacing: .22em; font-size: .75rem; font-weight: 700; }
+.register-heading h1, .register-aside h2, .register-signature { font-family: 'Cormorant Garamond', Georgia, serif; color: #511526; }
+.register-heading h1 { font-size: clamp(2.4rem, 5vw, 3.3rem); margin: .5rem 0; }
+.register-heading p, .register-help, .register-required { color: #755d55; }
+.register-layout { display: grid; grid-template-columns: 1.35fr 1fr; gap: 2.5rem; align-items: start; }
+.register-card, .register-benefits { background: #fffcf8; border: 1px solid #e8d9ce; border-radius: 1.25rem; box-shadow: 0 18px 35px -24px #69463870; padding: 1.75rem; }
+.register-required { font-size: .8rem; margin-bottom: 1.5rem; }
+.register-card fieldset { margin: 0 0 1.6rem; min-width: 0; }
+.register-card legend { font-size: 1.05rem; font-weight: 650; border-bottom: 1px solid #ecdfd4; padding-bottom: .65rem; margin-bottom: 1rem; float: none; width: 100%; }
+.register-fields { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }
+.register-wide { grid-column: 1 / -1; }
+.register-card label { display: block; font-size: .875rem; font-weight: 550; margin-bottom: .4rem; }
+.register-card input:not([type=checkbox]):not([type=hidden]) { width: 100%; min-height: 2.9rem; border: 1px solid #dbc8bc; border-radius: .6rem; background: #fffdfa; padding: .65rem .8rem; color: #392629; }
+.register-card input:focus-visible, .register-page button:focus-visible, .register-page a:focus-visible { outline: 2px solid #791c32; outline-offset: 3px; }
+.register-card input[aria-invalid=true] { border-color: #a42336; }
+.register-password { position: relative; }
+.register-password input { padding-right: 5.2rem !important; }
+.register-password button { position: absolute; right: .4rem; top: .3rem; bottom: .3rem; border: 0; border-radius: .3rem; background: transparent; color: #791c32; font-size: .8rem; }
+.register-help { font-size: .78rem; line-height: 1.6; margin: .45rem 0 1rem; }
+.register-card .register-consent { display: flex; align-items: flex-start; gap: .65rem; font-size: .8rem; line-height: 1.7; font-weight: 400; }
+.register-consent input { margin-top: .25rem; width: 1rem; height: 1rem; flex-shrink: 0; accent-color: #511526; }
+.register-page a { color: #791c32; text-underline-offset: 3px; }
+.register-submit { display: flex; justify-content: space-between; align-items: center; width: 100%; margin-top: 1.3rem; border: 0; border-radius: .6rem; padding: .9rem 1.2rem; background: #511526; color: white; font-weight: 600; }
+.register-submit:hover { background: #731c35; }
+.register-login { text-align: center; font-size: .85rem; margin: 1.2rem 0 0; }
+.register-aside h2 { font-size: 2rem; margin: .25rem 0 1.25rem; }
+.register-benefits > div { display: flex; gap: 1rem; padding: 1.2rem 0; border-bottom: 1px solid #ecdfd4; }
+.register-benefits > div:first-child { padding-top: 0; }
+.register-benefits > div:last-child { border: 0; padding-bottom: 0; }
+.register-icon { font-family: Georgia, serif; color: #98702e; background: #f7ecd6; border-radius: 50%; width: 2.3rem; height: 2.3rem; flex-shrink: 0; display: grid; place-items: center; font-size: .8rem; }
+.register-aside h3 { font-family: inherit; font-size: .95rem; font-weight: 650; line-height: 1.5; }
+.register-aside p { font-size: .875rem; color: #755d55; line-height: 1.7; margin-bottom: 0; }
+.register-security { background: #f7e8c5; border-radius: 1rem; padding: 1.5rem; margin-top: 1.5rem; }
+.register-aside .register-signature { text-align: center; font-size: 1.8rem; line-height: 1.25; margin: 2.2rem 0; }
+.register-error { display: block; color: #a42336; font-size: .8rem; margin: .4rem 0; }
+.register-errors { border-left: 3px solid #a42336; padding: 1rem; background: #fff0ed; margin-bottom: 1.5rem; font-size: .85rem; }
+.register-errors ul { margin: .5rem 0 0; padding-left: 1.2rem; }
+@media (max-width: 800px) { .register-layout { grid-template-columns: 1fr; gap: 2rem; } .register-page { padding-top: 2rem; } }
+@media (max-width: 480px) { .register-page { padding-inline: 1rem; } .register-card, .register-benefits { padding: 1.2rem; } .register-fields { grid-template-columns: 1fr; } }

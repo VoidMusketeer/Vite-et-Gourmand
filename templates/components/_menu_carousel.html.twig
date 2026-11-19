@@ -1,0 +1,26 @@
+<div class="home-menu-carousel" data-controller="menu-carousel" data-menu-carousel
+     data-action="pointerdown->menu-carousel#dragStart pointermove->menu-carousel#dragMove pointerup->menu-carousel#dragEnd pointercancel->menu-carousel#dragCancel lostpointercapture->menu-carousel#dragCancel dragstart->menu-carousel#preventNativeDrag click->menu-carousel#guardClick:capture"
+     role="region" aria-label="Menus à la une">
+    <div class="home-menu-track" data-menu-track data-menu-carousel-target="track">
+        {% for id, menu in menus %}
+            <a class="home-menu-card" href="{{ path('app_menu_detail', {id: id}) }}"
+               data-menu-card data-menu-carousel-target="card"
+               data-action="click->menu-carousel#select keydown->menu-carousel#key"
+               aria-label="Découvrir {{ menu.name }}">
+                {% if menu.image %}
+                    <img src="{{ asset(menu.image) }}" alt="{{ menu.images[0].alt|default('') }}" width="944" height="704" loading="lazy">
+                {% endif %}
+                <div class="home-menu-content">
+                    <span class="home-menu-tag">{{ menu.tag|default(menu.theme|default('Menu')) }}</span>
+                    <h3>{{ menu.name }}</h3>
+                    <p>À partir de {{ menu.min }} personnes</p>
+                    <p><strong>{{ menu.price|number_format(2, ',', ' ') }} €</strong> / pers.</p>
+                    <span class="home-menu-detail">Voir le détail →</span>
+                </div>
+            </a>
+        {% else %}
+            <p>Nos menus seront disponibles prochainement.</p>
+        {% endfor %}
+    </div>
+
+</div>

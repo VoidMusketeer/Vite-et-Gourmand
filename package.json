@@ -1,0 +1,14 @@
+{
+  "name": "vite-et-gourmand",
+  "private": true,
+  "scripts": {
+    "build:css": "sass --no-source-map --style=expanded assets/styles/app.scss assets/styles/app.css",
+    "watch:css": "sass --watch --no-source-map assets/styles/app.scss:assets/styles/app.css"
+  },
+  "devDependencies": {
+    "sass": "^1.105.1"
+  },
+  "dependencies": {
+    "mongodb": "^7.9.0"
+  }
+}

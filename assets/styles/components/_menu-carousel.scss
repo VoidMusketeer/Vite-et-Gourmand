@@ -1,0 +1,44 @@
+.home-menu-carousel {
+    touch-action: pan-y pinch-zoom;
+    .home-menu-track { transition: translate .4s ease; }
+    &.is-ready .home-menu-card { cursor: grab; user-select: none; }
+    &.is-dragging {
+        .home-menu-track { transition: none; }
+        .home-menu-card { cursor: grabbing; }
+    }
+    margin-top: 2rem;
+    overflow: hidden;
+    padding: .5rem;
+    .home-menu-track { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.5rem; }
+    .home-menu-card {
+        display: block; min-width: 0; border: 1px solid #e6dace; border-radius: 1rem;
+        background: #fffcf8; color: #35231f; text-decoration: none; overflow: hidden;
+        box-shadow: 0 8px 20px #45132212;
+        img { display: block; width: 100%; aspect-ratio: 4 / 3; height: auto; object-fit: cover; }
+        &:focus-visible { outline: 3px solid #8b3247; outline-offset: 3px; }
+    }
+    .home-menu-content { padding: 1.4rem; }
+    .home-menu-tag { display: inline-block; padding: .2rem .75rem; border-radius: 2rem; color: #fffaf0; background: #5b0b21; font-size: .8rem; }
+    h3 { margin: 1rem 0 .35rem; font: 600 1.7rem/1.2 'Cormorant Garamond', Georgia, serif; color: #5b0b21; }
+    p { margin: .5rem 0; }
+    .home-menu-detail { display: inline-block; margin-top: .5rem; color: #5b0b21; }
+    .home-menu-controls { display: flex; justify-content: center; align-items: center; gap: 1rem; margin-top: .75rem; }
+    button { width: 44px; height: 44px; border-radius: 50%; border: 1px solid #5b0b21; background: #fffaf0; color: #5b0b21; cursor: pointer; }
+    button:focus-visible { outline: 3px solid #8b3247; outline-offset: 3px; }
+    &.is-ready {
+        .home-menu-track { display: block; position: relative; }
+        .home-menu-card {
+            position: absolute; top: 50%; left: 50%; width: 30%;
+            transform: translate(calc(-50% + var(--offset) * 113%), -50%);
+            transition: transform .4s ease, opacity .4s ease, visibility 0s;
+            opacity: .7;
+            &.is-active { transform: translate(-50%, -50%); opacity: 1; z-index: 2; border-color: #5b0b21; }
+            &.is-outside { opacity: 0; visibility: hidden; pointer-events: none; transition-delay: 0s, 0s, .4s; }
+        }
+    }
+    @media (max-width: 767.98px) {
+        &.is-ready .home-menu-card { width: 76%; }
+        &.is-ready .home-menu-card.is-active { transform: translate(-50%, -50%); }
+    }
+    @media (prefers-reduced-motion: reduce) { &.is-ready .home-menu-card, .home-menu-track { transition: none; } }
+}

@@ -1,0 +1,402 @@
+$wine: #541426;
+$cream: #faf6ee;
+$card: #fdfaf6;
+$line: #e6d9cc;
+.menu-page {
+    color: $wine;
+    background: $cream;
+    font-family: Inter, sans-serif;
+    h1,
+    h2,
+    h3 {
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-weight: 600;
+        line-height: 1.08;
+        margin: 0;
+    }
+    h1 {
+        font-size: clamp(2.8rem, 5vw, 4rem);
+    }
+    h2 {
+        font-size: clamp(1.8rem, 3vw, 2.5rem);
+    }
+    h3 {
+        font-size: 1.65rem;
+        margin: 0.65rem 0;
+    }
+    button,
+    select,
+    input,
+    textarea {
+        border-radius: 0.55rem;
+        font: inherit;
+    }
+    select,
+    input,
+    textarea {
+        padding: 0.75rem;
+        border: 1px solid $line;
+        background: $card;
+        color: #392620;
+    }
+    button {
+        padding: 0.82rem 1.8rem;
+        background: $wine;
+        color: white;
+        border: 0;
+        font-weight: 600;
+    }
+    a {
+        color: $wine;
+    }
+}
+.menu-wrap {
+    width: min(100% - 3rem, 86rem);
+    margin-inline: auto;
+}
+.menu-hero {
+    > img {
+        object-position: center center;
+    }
+
+    .menu-kicker {
+        color: inherit;
+        margin: 0 0 1rem;
+        font-size: 0.92rem;
+    }
+}
+@media (max-width: 767.98px) {
+    .menu-page .menu-hero {
+        padding-block: 1.5rem;
+
+        h1 {
+            font-size: clamp(1.9rem, 6vw, 2.5rem);
+            line-height: 1.08;
+        }
+
+        .menu-kicker {
+            margin-bottom: .5rem;
+            font-size: .75rem;
+            letter-spacing: .18em;
+        }
+    }
+}
+.menu-kicker {
+    margin: 0 0 0.5rem;
+    font-size: 0.92rem;
+    letter-spacing: 0.24em;
+    font-weight: 650;
+    text-transform: uppercase;
+    color: #811a31;
+}
+.menu-filters,
+.menu-card {
+    background: $card;
+    border: 1px solid $line;
+    border-radius: 1.3rem;
+}
+
+.menu-theme-dropdown {
+    border: 1px solid $line;
+    border-radius: 0.55rem;
+    background: $cream;
+
+    summary {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0.85rem;
+        cursor: pointer;
+        list-style: none;
+        color: $wine;
+        font-weight: 600;
+    }
+
+    summary::-webkit-details-marker {
+        display: none;
+    }
+    summary::after {
+        content: "";
+        width: 0.5rem;
+        height: 0.5rem;
+        border-right: 2px solid currentColor;
+        border-bottom: 2px solid currentColor;
+        transform: rotate(45deg);
+    }
+    &[open] summary::after {
+        transform: rotate(225deg);
+    }
+    summary:focus-visible {
+        outline: 2px solid $wine;
+        outline-offset: 3px;
+    }
+    &.menu-theme-dropdown fieldset {
+        padding: 0 0.85rem 0.85rem;
+    }
+}
+
+.menu-catalog {
+    padding-block: 3.75rem;
+    display: grid;
+    grid-template-columns: minmax(14rem, 23.5%) minmax(0, 1fr);
+    gap: clamp(1.5rem, 3vw, 2.5rem);
+    align-items: start;
+}
+.menu-filters,
+.menu-card {
+    box-shadow: 0 1rem 2.5rem -1.6rem #633f37a8;
+}
+.menu-filters {
+    display: grid;
+    gap: 1.6rem;
+    padding: 1.5rem;
+    h2 {
+        font-size: 1.9rem;
+    }
+    .menu-filters-content > label,
+    legend {
+        font-size: 0.85rem;
+        letter-spacing: 0.035em;
+        font-weight: 650;
+        text-transform: uppercase;
+        color: #725e54;
+    }
+    input:not([type="checkbox"]) {
+        width: 100%;
+        display: block;
+        margin-top: 0.45rem;
+        background: $cream;
+    }
+    input {
+        accent-color: $wine;
+    }
+    input[type="range"] {
+        padding: 0;
+    }
+    fieldset {
+        border: 0;
+        margin: 0;
+        padding: 0;
+    }
+    legend {
+        float: none;
+        margin-bottom: 0.35rem;
+    }
+    fieldset label {
+        display: flex;
+        gap: 0.55rem;
+        align-items: center;
+        margin-block: 0.35rem;
+        color: #382720;
+    }
+}
+.menu-toolbar {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 1rem;
+    margin-bottom: 1.8rem;
+    color: #756056;
+    h2 {
+        font-size: 1.85rem;
+    }
+    select {
+        margin-left: 0.35rem;
+    }
+}
+.menu-results-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: .75rem;
+
+    .menu-filters-reset {
+        flex-shrink: 0;
+        max-width: 48%;
+        padding: .55rem .7rem;
+        font-size: .8rem;
+    }
+}
+.menu-cards {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1.2rem;
+}
+.menu-card {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    border-radius: 1rem;
+    color: #725e54;
+}
+.menu-photo {
+    position: relative;
+    img {
+        display: block;
+        width: 100%;
+        height: auto;
+        aspect-ratio: 4/3;
+        object-fit: cover;
+    }
+}
+.menu-tag {
+    position: absolute;
+    inset: 1rem auto auto 1rem;
+    background: #305137;
+    color: white;
+    padding: 0.3rem 0.9rem;
+    border-radius: 2rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+.menu-card-body {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    padding: 1.15rem;
+    h3 {
+        font-size: 1.75rem;
+        color: $wine;
+    }
+    small {
+        margin: 0.35rem 0 1.5rem;
+    }
+}
+.menu-season {
+    color: #315739;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    font-size: 0.83rem;
+    font-weight: 600;
+    margin: 0;
+}
+.menu-card-actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    margin-top: auto;
+    strong {
+        font:
+            600 2rem "Cormorant Garamond",
+            Georgia,
+            serif;
+        color: $wine;
+    }
+    a {
+        background: $wine;
+        color: white;
+        text-decoration: none;
+        padding: 0.75rem 1rem;
+        border-radius: 0.55rem;
+    }
+    a:hover {
+        background: #761d36;
+    }
+}
+@media (max-width: 72rem) {
+    .menu-cards {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+@media (max-width: 56rem) {
+    .menu-catalog {
+        grid-template-columns: 1fr;
+    }
+}
+@media (max-width: 38rem) {
+    .menu-cards {
+        grid-template-columns: 1fr;
+    }
+    .menu-wrap {
+        width: calc(100% - 2rem);
+    }
+}
+
+.menu-stock {
+    align-self: flex-start;
+    margin: 0 0 .75rem;
+    padding: .3rem .65rem;
+    border-radius: 2rem;
+    background: #e8efe5;
+    color: #305137;
+    font-size: .8rem;
+    font-weight: 600;
+
+    &--empty {
+        background: #f4e4e6;
+        color: $wine;
+    }
+}
+
+.menu-filters {
+    display: block;
+}
+.menu-filters-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    list-style: none;
+    font: 600 1.9rem "Cormorant Garamond", Georgia, serif;
+    cursor: pointer;
+
+    &::-webkit-details-marker { display: none; }
+    &:focus-visible { outline: 2px solid $wine; outline-offset: 4px; }
+    span { transition: transform .2s; }
+}
+.menu-filters[open] > summary span { transform: rotate(180deg); }
+.menu-filters-content {
+    display: grid;
+    gap: 1.6rem;
+    padding-top: 1.5rem;
+}
+.menu-filters-reset {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 44px;
+    padding: .75rem 1rem;
+    border: 1px solid $wine;
+    border-radius: .55rem;
+    text-align: center;
+    text-decoration: none;
+    font-weight: 600;
+
+    &:hover { background: #f4e4e6; }
+    &:focus-visible { outline: 2px solid $wine; outline-offset: 3px; }
+}
+@media (min-width: 56.001rem) {
+    .menu-filters-heading { pointer-events: none; }
+    .menu-filters-heading span { display: none; }
+}
+@media (max-width: 56rem) {
+    .menu-catalog { padding-block: 1.5rem; gap: 1.5rem; }
+    .menu-filters { padding: 1rem; border-radius: .85rem; }
+    .menu-filters-heading { font: 600 1.1rem Inter, sans-serif; min-height: 2rem; }
+    .menu-filters-content input:not([type=checkbox]):not([type=range]),
+    .menu-filters-content select,
+    .menu-filters-content button { min-height: 44px; }
+    .menu-filters fieldset label { min-height: 36px; }
+    .menu-filters input[type=checkbox] { width: 1.15rem; height: 1.15rem; }
+}
+@media (max-width: 38rem) {
+    .menu-toolbar { gap: .65rem; margin-bottom: 1rem; }
+    .menu-toolbar h2 { font-size: 1.5rem; }
+    .menu-toolbar label { display: flex; align-items: center; gap: .5rem; font-size: .85rem; }
+    .menu-toolbar select { min-height: 44px; max-width: 100%; margin: 0; }
+    .menu-cards { gap: 1.5rem; }
+    .menu-card { border: 0; background: transparent; box-shadow: none; border-radius: 0; }
+    .menu-photo { overflow: hidden; border-radius: 1rem; }
+    .menu-photo img { aspect-ratio: 2 / 1; }
+    .menu-tag { inset: .65rem auto auto .65rem; font-size: .75rem; padding: .3rem .65rem; }
+    .menu-card-body { padding: .85rem 0 0; }
+    .menu-card-body h3 { font-size: 1.65rem; margin: .4rem 0; }
+    .menu-card-body > p:not(.menu-stock):not(.menu-season) { font-size: .9rem; margin-bottom: .5rem; }
+    .menu-card-body small { font-size: .78rem; line-height: 1.5; margin: .2rem 0 .75rem; }
+    .menu-stock { font-size: .73rem; margin-bottom: .4rem; }
+    .menu-season { font-size: .7rem; }
+    .menu-card-actions { gap: .5rem; }
+    .menu-card-actions strong { font-size: 1.75rem; }
+    .menu-card-actions a { min-height: 44px; font-size: .85rem; display: inline-flex; align-items: center; }
+}

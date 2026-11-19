@@ -1,0 +1,50 @@
+.basket-page {
+    max-width: 1200px; margin: auto; padding: 40px 24px 72px; color: #34211d;
+    font-family: Inter, sans-serif;
+    a { color: #74162b; }
+    h1, h2 { font-family: 'Cormorant Garamond', Georgia, serif; color: #541626; font-weight: 600; }
+    h1 { font-size: clamp(40px, 5vw, 60px); margin: 0; }
+    h2 { font-size: 32px; margin: 0 0 12px; }
+    button, input, a { &:focus-visible { outline: 3px solid #a07824; outline-offset: 4px; } }
+    .basket-back { display: inline-block; margin-bottom: 28px; text-decoration: none; }
+    .basket-heading { display: flex; justify-content: space-between; align-items: center; gap: 20px; margin-bottom: 32px; }
+    .basket-eyebrow { text-transform: uppercase; letter-spacing: .12em; font-size: 13px; font-weight: 600; color: #74162b; margin-bottom: 8px; }
+    .basket-layout { display: grid; grid-template-columns: minmax(0, 2fr) minmax(280px, 1fr); gap: 32px; align-items: start; }
+    .basket-items { display: grid; gap: 24px; }
+    .basket-card { padding: 24px; background: #fffcf8; border: 1px solid #e8d8ca; border-radius: 14px; }
+    .basket-product { display: flex; align-items: start; gap: 18px; margin-bottom: 28px; }
+    .basket-product img { width: 104px; height: 112px; object-fit: cover; border-radius: 10px; }
+    .basket-product > div { flex: 1; }
+    .basket-product h2 a { text-decoration: none; }
+    .basket-product p { margin-bottom: 4px; }
+    .basket-fields { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 10px; }
+    .basket-fields label { font-weight: 500; }
+    .basket-fields input { display: block; width: 100%; min-width: 0; border: 1px solid #d9c7b8; border-radius: 8px; padding: 12px; margin-top: 8px; background: #fbf7ef; color: inherit; }
+    .basket-muted { color: #755f56; font-size: 14px; line-height: 1.6; }
+    fieldset { margin: 24px 0; }
+    legend { font-size: 16px; font-weight: 600; }
+    .basket-option { display: flex; align-items: center; gap: 10px; padding: 9px 0; cursor: pointer; }
+    .basket-option input { width: 20px; height: 20px; flex-shrink: 0; accent-color: #74162b; }
+    .basket-option span:last-child { margin-left: auto; text-align: right; }
+    .basket-link { background: none; border: 0; color: #74162b; text-decoration: underline; min-height: 44px; padding: 8px; }
+    .basket-primary, .basket-secondary { display: inline-flex; align-items: center; justify-content: center; min-height: 46px; padding: 12px 18px; border-radius: 9px; text-align: center; text-decoration: none; font-weight: 500; }
+    .basket-primary { background: #74162b; color: white; border: 1px solid #74162b; }
+    .basket-primary:hover { background: #541626; }
+    .basket-secondary { background: #fffcf8; color: #541626; border: 1px solid #d9c7b8; }
+    .basket-subtotal { display: flex; align-items: center; justify-content: space-between; gap: 16px; border-top: 1px solid #e8d8ca; margin-top: 24px; padding-top: 20px; }
+    .basket-subtotal strong { font: 600 30px 'Cormorant Garamond', Georgia, serif; color: #541626; white-space: nowrap; }
+    .basket-summary { background: #f2e7d6; border-radius: 14px; padding: 26px; }
+    .basket-summary .basket-subtotal { margin-bottom: 16px; }
+    .basket-summary a { display: flex; }
+    .basket-demo { margin: 10px 0 20px; }
+    .basket-saved { margin: 20px 0 0; }
+    .basket-empty { text-align: center; padding: 60px 0 80px; }
+    .basket-empty svg { color: #74162b; margin-bottom: 24px; }
+    .basket-empty h2 { font-size: clamp(30px, 4vw, 42px); }
+    .basket-empty p { color: #755f56; margin: 16px 0 28px; }
+    .basket-notice { display: flex; align-items: center; flex-wrap: wrap; gap: 16px; padding: 12px 20px; border: 1px solid #b4be9c; background: #f1f3e9; border-radius: 8px; margin-bottom: 24px; }
+    @media (max-width: 850px) { .basket-layout { grid-template-columns: 1fr; } }
+    @media (max-width: 520px) { padding: 28px 16px 48px; .basket-fields { grid-template-columns: 1fr; } .basket-card { padding: 18px; } .basket-product { flex-wrap: wrap; } .basket-product img { width: 76px; height: 84px; } .basket-product h2 { font-size: 27px; } .basket-heading { align-items: start; } }
+}
+/* Keep the basket header in document flow so it never covers its content. */
+body:has(.basket-page) .site-header { position: relative; }

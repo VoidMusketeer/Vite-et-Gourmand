@@ -1,0 +1,2 @@
+{% extends 'admin/layout.html.twig' %}{% block heading %}Commandes{% endblock %}
+{% block content %}<div class="panel">{% for row in orders %}<div class="entry"><b>{{ row.reference }}</b><span>{{ row.first_name }} {{ row.last_name }} · {{ row.service_date|date('d/m/Y') }}</span><mark>{{ row.label }}</mark></div>{% else %}<p class="entry">Aucune commande reçue.</p>{% endfor %}</div>{% endblock %}

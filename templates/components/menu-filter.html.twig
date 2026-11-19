@@ -1,0 +1,26 @@
+<details class="menu-filters" open data-menu-filters-target="panel">
+  <summary class="menu-filters-heading">Filtres <span aria-hidden="true">⌄</span></summary>
+  <div class="menu-filters-content">
+  <label>Date de l’événement<input name="date" type="date" value="{{ date }}"></label>
+  <label>Nombre de convives<input name="guests" type="number" min="1" placeholder="Ex. 8" value="{{ guests ?: '' }}"></label>
+  {% for group in [
+    {label: 'Thème', name: 'themes', options: themeOptions, selected: themes},
+    {label: 'Régime alimentaire', name: 'diets', options: ['Végétarien', 'Vegan', 'Sans gluten'], selected: diets}
+  ] %}
+    {% if group.name == 'themes' %}
+      <details class="menu-theme-dropdown" {{ themes|length or legacyTag in themeOptions ? 'open' }}>
+        <summary>Thème{% if themes|length %} ({{ themes|length }}){% endif %}</summary>
+    {% endif %}
+    <fieldset><legend class="{{ group.name == 'themes' ? 'visually-hidden' }}">{{ group.label }}</legend>
+      {% for option in group.options %}
+        <label><input type="checkbox" name="{{ group.name }}[]" value="{{ option }}" {{ option in group.selected or option == legacyTag ? 'checked' }}> {{ option }}</label>
+      {% endfor %}
+    </fieldset>
+    {% if group.name == 'themes' %}</details>{% endif %}
+  {% endfor %}
+  <label>Prix max · <output for="menu-price" data-menu-filters-target="price">{{ price }}</output> € / pers.
+    <input id="menu-price" type="range" min="0" max="{{ priceLimit }}" name="price" value="{{ price }}" data-action="input->menu-filters#showPrice">
+  </label>
+  <button>Appliquer les filtres</button>
+  </div>
+</details>

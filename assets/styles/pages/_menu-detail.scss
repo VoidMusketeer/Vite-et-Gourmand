@@ -1,0 +1,9 @@
+.menu-detail {
+  padding-block: clamp(2rem, 6vw, 6rem);
+  article { display: grid; grid-template-columns: 1.1fr 1fr; align-items: center; overflow: hidden; margin-top: 2rem; background: #fffbf6; border: 1px solid #e6d9cc; border-radius: 1rem; }
+  article img { width: 100%; aspect-ratio: 4/3; object-fit: cover; }
+  article div { padding: clamp(1.5rem, 4vw, 4rem); }
+  h1 { margin-bottom: 1.5rem; }
+  .detail-contact { display: table; margin-top: 2rem; background: #70192e; color: white; padding: .8rem 1.2rem; border-radius: .5rem; }
+  @media (max-width: 44rem) { article { grid-template-columns: 1fr; } }
+}

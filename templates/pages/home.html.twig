@@ -1,0 +1,108 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Vite & Gourmand — Traiteur artisanal à Bordeaux depuis 25 ans{% endblock %}
+{% block body %}
+<main class="vg-home bg-background font-sans text-foreground">
+<section class="reception-banner" aria-labelledby="reception-title">
+    <img src="{{ asset('images/accueil/table-reception.png') }}" alt="" fetchpriority="high">
+    <div class="mx-auto max-w-6xl px-6 reception-copy">
+        <h1 id="reception-title">Des repas d’exception<br>pour vos événements</h1>
+        <p>Depuis 25 ans à Bordeaux, Julie et José créent des menus sur-mesure pour faire de vos moments des souvenirs inoubliables.</p>
+    </div>
+</section>
+<section class="artisan-intro mx-auto grid max-w-6xl items-center gap-12 px-6 py-16 md:grid-cols-2 md:py-24">
+<div class="artisan-copy">
+<div class="artisan-heading">
+<p class="text-xs font-semibold uppercase tracking-[0.3em] text-primary">Traiteur artisanal à Bordeaux</p>
+<h2 class="mt-4 font-display text-5xl font-semibold leading-[1.05] text-wine md:text-6xl">Cuisine maison, pour toutes vos <em class="text-primary">occasions</em>.</h2>
+</div>
+<div class="artisan-description">
+<p class="mt-6 max-w-md text-muted-foreground">Depuis 25 ans, Julie et José mettent leur savoir-faire au service de vos repas familiaux, fêtes et événements professionnels.</p>
+<p class="mt-3 text-sm font-medium">Commande 48 h à l'avance · Retrait ou livraison autour de Bordeaux</p>
+<div class="mt-8 flex flex-wrap gap-3"><a href="{{ path('app_menus') }}" class="rounded-md bg-wine px-6 py-3 text-sm font-medium text-wine-foreground transition hover:opacity-90">Découvrir les menus</a><a href="{{ path('app_contact') }}" class="rounded-md border border-wine px-6 py-3 text-sm font-medium text-wine transition hover:bg-wine hover:text-wine-foreground">Nous contacter</a>
+</div>
+<div class="mt-10 flex gap-10 border-t pt-6">
+<div>
+<p class="font-display text-4xl font-semibold text-primary">25</p>
+<p class="text-xs uppercase tracking-wider text-muted-foreground">ans d'expérience</p>
+</div>
+<div>
+<p class="font-display text-4xl font-semibold text-primary">2</p>
+<p class="text-xs uppercase tracking-wider text-muted-foreground">artisans passionnés</p>
+</div>
+<div>
+<p class="font-display text-4xl font-semibold text-primary">4,9★</p>
+<p class="text-xs uppercase tracking-wider text-muted-foreground">note clients</p>
+</div>
+</div>
+</div>
+</div>
+<div class="artisan-photo relative"><img src="{{ asset('images/accueil/chef.jpg') }}" alt="Chef Vite &amp; Gourmand dressant des canapés" class="aspect-[6/5] w-full rounded-xl object-cover shadow-card" width="1200" height="1008">
+<div class="absolute -bottom-6 -left-6 hidden rounded-lg bg-card p-4 shadow-card md:block">
+<p class="font-display text-lg italic text-wine">« Le goût du fait maison »</p>
+<p class="text-xs text-muted-foreground">Julie &amp; José</p>
+</div>
+</div>
+</section>
+<div class="bg-wine text-wine-foreground">
+<ul class="mx-auto grid max-w-6xl grid-cols-2 gap-4 px-6 py-5 text-sm md:grid-cols-4">
+<li class="flex items-center justify-center gap-2"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check h-4 w-4 text-gold" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg>Produits de saison</li>
+<li class="flex items-center justify-center gap-2"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check h-4 w-4 text-gold" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg>Devis sous 24 h</li>
+<li class="flex items-center justify-center gap-2"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check h-4 w-4 text-gold" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg>Service sur mesure</li>
+<li class="flex items-center justify-center gap-2"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check h-4 w-4 text-gold" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg>Bordeaux &amp; alentours</li>
+</ul>
+</div>
+<section id="menus" class="mx-auto max-w-6xl px-6 py-20">
+<div class="flex flex-wrap items-end justify-between gap-4">
+<div>
+<p class="text-xs font-semibold uppercase tracking-[0.3em] text-primary">En ce moment</p>
+<h2 class="mt-2 font-display text-4xl font-semibold text-wine">Nos menus à la une</h2>
+</div><a href="{{ path('app_menus') }}" class="rounded-md border border-wine px-5 py-2 text-sm font-medium text-wine hover:bg-wine hover:text-wine-foreground">Voir tous les menus →</a>
+</div>
+{% include 'components/_menu_carousel.html.twig' with {menus: menus} only %}
+</section>
+{% include 'components/_testimonial_slider.html.twig' with {reviews: reviews} only %}
+<section id="etapes" class="mx-auto max-w-6xl px-6 py-20">
+<p class="text-xs font-semibold uppercase tracking-[0.3em] text-primary">Simple et rassurant</p>
+<h2 class="mt-2 font-display text-4xl font-semibold text-wine">Votre réception, en trois étapes</h2>
+<div class="mt-10 grid gap-6 md:grid-cols-3">
+<div class="rounded-xl border-t-4 border-gold bg-card p-6 shadow-card">
+<p class="font-display text-3xl font-semibold text-gold">01</p>
+<h3 class="mt-2 font-display text-2xl font-semibold text-wine">Choisissez</h3>
+<p class="mt-2 text-sm text-muted-foreground">Un menu, une date et le nombre d'invités.</p>
+</div>
+<div class="rounded-xl border-t-4 border-gold bg-card p-6 shadow-card">
+<p class="font-display text-3xl font-semibold text-gold">02</p>
+<h3 class="mt-2 font-display text-2xl font-semibold text-wine">Échangeons</h3>
+<p class="mt-2 text-sm text-muted-foreground">Nous ajustons les détails et les options.</p>
+</div>
+<div class="rounded-xl border-t-4 border-gold bg-card p-6 shadow-card">
+<p class="font-display text-3xl font-semibold text-gold">03</p>
+<h3 class="mt-2 font-display text-2xl font-semibold text-wine">Profitez</h3>
+<p class="mt-2 text-sm text-muted-foreground">Notre équipe s'occupe du reste le jour J.</p>
+</div>
+</div>
+<form action="{{ path('app_menus') }}" method="get" class="mt-16 rounded-2xl border bg-card p-6 shadow-card md:p-8">
+<h3 class="font-display text-3xl font-semibold text-wine">Trouvez un menu disponible</h3>
+<div class="mt-6 grid items-end gap-4 md:grid-cols-5">
+<label class="text-xs font-medium text-muted-foreground">Date de l'événement<input name="date" type="date" class="h-11 w-full rounded-md border bg-card px-3 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-ring mt-1">
+</label>
+<label class="text-xs font-medium text-muted-foreground">Invités<input name="guests" type="number" min="1" placeholder="Nombre" class="h-11 w-full rounded-md border bg-card px-3 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-ring mt-1">
+</label>
+<label class="text-xs font-medium text-muted-foreground">Occasion<select name="occasion" class="h-11 w-full rounded-md border bg-card px-3 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-ring mt-1"><option selected="selected">Repas familial</option><option>Noël</option><option>Pâques</option><option>Événement pro</option></select>
+</label>
+<label class="text-xs font-medium text-muted-foreground">Régime<select name="regime" class="h-11 w-full rounded-md border bg-card px-3 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-ring mt-1"><option selected="selected">Tous</option><option>Végétarien</option><option>Sans gluten</option></select>
+</label><button class="h-11 rounded-md bg-wine px-6 text-sm font-medium text-wine-foreground hover:opacity-90">Rechercher</button>
+</div>
+</form>
+</section>
+<section class="bg-sage text-wine-foreground">
+<div class="mx-auto flex max-w-4xl gap-6 px-6 py-16"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-quote h-10 w-10 shrink-0 text-gold" aria-hidden="true"><path d="M16 3a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2 1 1 0 0 1 1 1v1a2 2 0 0 1-2 2 1 1 0 0 0-1 1v2a1 1 0 0 0 1 1 6 6 0 0 0 6-6V5a2 2 0 0 0-2-2z"></path><path d="M5 3a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2 1 1 0 0 1 1 1v1a2 2 0 0 1-2 2 1 1 0 0 0-1 1v2a1 1 0 0 0 1 1 6 6 0 0 0 6-6V5a2 2 0 0 0-2-2z"></path></svg>
+<div>
+<p class="font-display text-3xl italic leading-snug">Une équipe attentive, un menu délicieux et une organisation d'une grande simplicité.</p>
+<p class="mt-4 text-sm opacity-80">Camille &amp; Hugo · Réception à Saint-Émilion</p>
+</div>
+</div>
+</section>
+</main>
+{% endblock %}

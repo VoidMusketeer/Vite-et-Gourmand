@@ -1,0 +1,36 @@
+.story {background:#faf6ee;color:#735d54;font:1rem/1.625 Inter,sans-serif}
+.story-wrap {max-width:72rem;margin:auto;padding-inline:1.5rem}
+.story-intro,.story-team {display:grid;gap:4rem;align-items:center}
+.story-intro {grid-template-columns:.87fr 1fr;padding-block:5rem}
+.story-team {grid-template-columns:1fr 1fr;padding-block:4rem}
+.story figure,.story blockquote,.story-values p,.story-invite p {margin:0}
+.story img {width:100%;height:auto;display:block;border-radius:.625rem}
+.story figure img {box-shadow:0 16px 32px -22px #4c1524}
+.story figcaption {font-size:.75rem;margin-top:.5rem}
+.story figcaption a {color:inherit;text-decoration:underline}
+.story small {display:block;text-transform:uppercase;font-size:.75rem;font-weight:600;color:#80152d}
+.story h1,.story h2,.story blockquote {font-family:'Cormorant Garamond',Georgia,serif;color:#501526;font-weight:600}
+.story h1 {font-size:clamp(2.4rem,4vw,3rem);line-height:1.24;margin:.85rem 0 1.4rem}
+.story blockquote {font-size:1.45rem;font-style:italic;font-weight:500}
+.story-values {background:#f3ebde;border-block:1px solid #e6dccc}
+.story-values .story-wrap {display:grid;grid-template-columns:repeat(3,1fr);gap:2.5rem;padding-block:3rem}
+.story-values i {font-size:1.6rem;color:#80152d}
+.story-values h2 {font-size:1.5rem;margin:1rem 0}
+.story-values p,.story-invite p,.story-team ul,.story-button {font-size:.875rem}
+.story-team h2 {font-size:2.25rem;line-height:1.12;margin:1rem 0 1.4rem}
+.story-team ul {list-style:none;padding:0;margin:1.5rem 0 2rem;color:#32231f}
+.story-team li {position:relative;padding-left:2rem;margin:.5rem 0}
+.story-team li::before {content:'✓';position:absolute;left:0;color:#365a40}
+.story-button {display:inline-block;padding:.45rem 1rem;border:1px solid;border-radius:.5rem;color:#80152d;text-decoration:none;font-weight:500}
+.story-button span {margin-left:.4rem}
+.story-button:hover {background:#80152d;color:white}
+.story-invite {background:#501526;color:#eadada}
+.story-invite .story-wrap {display:flex;gap:1rem;align-items:center;padding-block:2.75rem}
+.story-invite h2 {color:#fff5eb;font-size:1.8rem}
+.story-invite i {color:#e8b745;font-size:2rem}
+.story-invite .story-button {margin-left:auto;background:#e8b745;color:#501526;border-color:transparent;white-space:nowrap}
+@media(max-width:48rem){
+    .story-intro,.story-team,.story-values .story-wrap {grid-template-columns:1fr;gap:1.75rem;padding-block:2.5rem}
+    .story-invite .story-wrap {flex-wrap:wrap}
+    .story-invite .story-button {margin-left:0}
+}

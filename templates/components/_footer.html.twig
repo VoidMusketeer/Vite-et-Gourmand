@@ -1,0 +1,39 @@
+<footer class="site-footer">
+    <div class="footer-grid">
+        <div class="footer-brand">
+            <h2>VITE <span>&amp;</span> GOURMAND</h2>
+            <p>Des réceptions généreuses, pensées à Bordeaux.</p>
+        </div>
+        <div class="footer-hours-section">
+            <h2 class="footer-heading footer-row"><i class="bi bi-clock" aria-hidden="true"></i>Horaires</h2>
+            <dl class="footer-hours">
+                {% set hours = business_hours.all %}
+                {% set groups = [] %}
+                {% set current = null %}
+                {% for day,label in {1:'Lundi',2:'Mardi',3:'Mercredi',4:'Jeudi',5:'Vendredi',6:'Samedi',7:'Dimanche'} %}
+                    {% set hour = hours[day] ?? null %}
+                    {% set schedule = not hour ? 'Non renseigné' : (hour.is_closed ? 'Fermé' : hour.opens_at|slice(0,5) ~ '–' ~ hour.closes_at|slice(0,5)) %}
+                    {% if current and current.schedule == schedule %}
+                        {% set current = current|merge({last: label}) %}
+                    {% else %}
+                        {% if current %}{% set groups = groups|merge([current]) %}{% endif %}
+                        {% set current = {first: label, last: label, schedule: schedule} %}
+                    {% endif %}
+                {% endfor %}
+                {% if current %}{% set groups = groups|merge([current]) %}{% endif %}
+                {% for group in groups %}
+                    <div><dt>{{ group.first }}{% if group.last != group.first %}–{{ group.last }}{% endif %}</dt><dd>{{ group.schedule }}</dd></div>
+                {% endfor %}
+            </dl>
+        </div>
+        <nav class="footer-links" aria-label="Informations">
+            <h2 class="footer-heading">Informations</h2>
+            <address class="footer-row"><i class="bi bi-geo-alt" aria-hidden="true"></i>12 rue des Saveurs, 33000 Bordeaux</address>
+            <a class="footer-row" href="{{ path('app_contact') }}"><i class="bi bi-envelope" aria-hidden="true"></i>Contact</a>
+            <a class="footer-row" href="{{ path('app_privacy') }}"><i class="bi bi-shield-lock" aria-hidden="true"></i>Confidentialité</a>
+            <a class="footer-row" href="{{ path('app_legal') }}"><i class="bi bi-journal-text" aria-hidden="true"></i>Mentions légales</a>
+            <a class="footer-row" href="{{ path('app_terms') }}"><i class="bi bi-file-earmark-text" aria-hidden="true"></i>CGV</a>
+        </nav>
+    </div>
+</footer>
+<div class="toast" role="status"></div>

@@ -1,0 +1,59 @@
+.testimonial-section {
+    background: #eee4d6;
+    padding: 2.5rem 1.5rem;
+    .testimonial-inner { max-width: 69rem; margin-inline: auto; }
+    .testimonial-eyebrow { color: #5b0b21; font-size: .7rem; font-weight: 600; text-transform: uppercase; letter-spacing: .25em; }
+    h2 { margin: .4rem 0 1.2rem; color: #5b0b21; font: 600 2rem/1.2 'Cormorant Garamond', Georgia, serif; }
+    .testimonial-stage { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; }
+    .testimonial-card {
+        display: grid;
+        min-width: 0;
+        margin: 0;
+        padding: 1rem 1.25rem;
+        border: 1px solid transparent;
+        text-align: left;
+        color: inherit;
+        background: #fffaf4;
+        border-radius: .75rem;
+        cursor: pointer;
+        &:hover { border-color: #cbb7b5; }
+        &:focus-visible { outline: 2px solid #5b0b21; outline-offset: 3px; }
+    }
+    .testimonial-review {
+        grid-area: 1 / 1;
+        visibility: hidden;
+        opacity: 0;
+        transition: opacity .3s ease;
+        &.is-active { opacity: 1; visibility: visible; }
+    }
+    .is-changing .testimonial-review { opacity: 0; }
+    .testimonial-stars { display: block; color: #916512; font-size: .9rem; letter-spacing: .15em; }
+    .testimonial-comment { display: block; margin: .5rem 0; font: italic 1.25rem/1.4 'Cormorant Garamond', Georgia, serif; overflow-wrap: anywhere; }
+    .testimonial-author { display: block; color: #79665d; font-size: .8rem; }
+     .testimonial-expand-label { display: none; }
+    @media (max-width: 767.98px) {
+        .testimonial-stage { grid-template-columns: 1fr; }
+        .testimonial-card:nth-child(n + 3) { display: none; }
+        .testimonial-review:not(.is-active) { display: none; }
+        .testimonial-comment { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; }
+        .testimonial-expand-label { display: block; margin-top: .5rem; font-size: .75rem; text-decoration: underline; color: #5b0b21; }
+        .read-less { display: none; }
+        .is-expanded {
+            .testimonial-comment { display: block; }
+            .read-more { display: none; }
+            .read-less { display: inline; }
+        }
+    }
+    @media (prefers-reduced-motion: reduce) { .testimonial-review { transition: none; } }
+}
+
+.testimonial-section {
+    .testimonial-advance {
+        display: block; width: 100%; padding: 0; border: 0;
+        background: transparent; color: inherit; text-align: left; cursor: pointer;
+    }
+    .testimonial-expand-label { padding: .25rem 0; border: 0; background: transparent; cursor: pointer; text-align: left; }
+    .testimonial-advance:focus-visible, .testimonial-expand-label:focus-visible {
+        outline: 2px solid #5b0b21; outline-offset: 3px;
+    }
+}

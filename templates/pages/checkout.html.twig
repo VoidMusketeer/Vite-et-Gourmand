@@ -1,0 +1,60 @@
+{% extends 'base.html.twig' %}
+{% block title %}Votre demande · Vite & Gourmand{% endblock %}
+{% block body %}
+<main class="checkout" data-controller="checkout" data-checkout-total-value="{{ total }}" data-action="turbo:before-cache@document->checkout#reset">
+    <nav aria-label="Étapes de la demande">
+        <ol class="checkout-steps">
+            {% for label in ['Prestation', 'Coordonnées', 'Demande envoyée'] %}
+                <li data-checkout-target="step" {% if loop.first %}aria-current="step"{% endif %}>{{ loop.index }}. {{ label }}</li>
+            {% endfor %}
+        </ol>
+    </nav>
+    <div class="checkout-layout">
+        <div>
+            {% for message in app.flashes('checkout_error') %}<p class="checkout-notice" role="alert">{{ message }}</p>{% endfor %}
+            <section class="checkout-card" data-checkout-target="panel">
+                <h1 tabindex="-1">Votre prestation</h1>
+                <form data-action="submit->checkout#next">
+                    <fieldset><legend>Mode de service</legend>
+                        <div class="checkout-radios">
+                            <label><input type="radio" name="service" value="delivery" checked data-action="change->checkout#service"> Livraison</label>
+                            <label><input type="radio" name="service" value="pickup" data-action="change->checkout#service"> Retrait en boutique</label>
+                        </div>
+                    </fieldset>
+                    <div class="checkout-fields">
+                        <label>Heure souhaitée<input type="time" required name="time"></label>
+                        <label data-checkout-target="delivery">Code postal<input type="text" name="postal" inputmode="numeric" autocomplete="postal-code" pattern="[0-9]{5}" title="Saisissez un code postal à cinq chiffres." required></label>
+                        <label class="checkout-wide" data-checkout-target="delivery">Adresse de livraison<input type="text" name="address" autocomplete="street-address" required maxlength="255"></label>
+                        <label data-checkout-target="delivery">Ville<input type="text" name="city" autocomplete="address-level2" required maxlength="120"></label>
+                        <label class="checkout-wide">Remarques (allergies, accès...)<textarea name="notes" rows="3" maxlength="2000"></textarea></label>
+                    </div>
+                    <div class="checkout-actions"><a class="checkout-back" href="{{ path('app_basket') }}">Retour</a><button class="checkout-primary">Continuer</button></div>
+                </form>
+            </section>
+            <section class="checkout-card" data-checkout-target="panel" hidden>
+                <h1 tabindex="-1">Vos coordonnées</h1>
+                <p class="checkout-muted">Aucun paiement maintenant : Julie et José vérifient la disponibilité, puis vous confirment la commande et les modalités de règlement.</p>
+                <form method="post" action="{{ path('app_checkout_submit') }}" data-action="submit->checkout#submit" data-turbo="false">
+                    <input type="hidden" name="_token" value="{{ csrf_token('checkout') }}">
+                    <input type="hidden" name="submission" value="{{ submission }}">
+                    <div class="checkout-fields">
+                        <label>Prénom et nom<input name="name" autocomplete="name" required maxlength="150" pattern=".*\S.*"></label>
+                        <label>Téléphone<input type="tel" name="phone" autocomplete="tel" required pattern="[+0-9 ().-]{6,25}" title="Saisissez un numéro de téléphone valide."></label>
+                        <label class="checkout-wide">E-mail<input type="email" name="email" autocomplete="email" required maxlength="254"></label>
+                    </div>
+                    <label class="checkout-consent"><input type="checkbox" name="terms" value="1" required> <span>J'accepte les <a href="{{ path('app_terms') }}" target="_blank" rel="noopener">conditions générales de vente</a>.</span></label>
+                    <div class="checkout-actions"><button type="button" class="checkout-back" data-action="checkout#back">Retour</button><button class="checkout-primary">Envoyer ma demande</button></div>
+                </form>
+            </section>
+            <noscript><p>Activez JavaScript pour compléter les étapes de votre commande.</p></noscript>
+        </div>
+        <aside class="checkout-card checkout-summary" aria-label="Récapitulatif">
+            <h2>Récapitulatif</h2>
+            {% for item in items %}<div class="checkout-summary-row"><span>{{ item.name }} · {{ item.guests }} pers.{% if item.date %} ·<br>{{ item.date }}{% endif %}</span><span>{{ item.subtotal|number_format(2, ',', ' ') }} €</span></div>{% endfor %}
+            <div class="checkout-summary-row"><span data-checkout-target="serviceLabel">Livraison</span><span data-checkout-target="fee">15,00 €</span></div>
+            <div class="checkout-summary-row checkout-total" aria-live="polite"><strong>Total estimé</strong><strong data-checkout-target="amount">{{ (total + 15)|number_format(2, ',', ' ') }} €</strong></div>
+            <p class="checkout-muted">Livraison : 15 € par demande. Le règlement sera convenu après confirmation.</p>
+        </aside>
+    </div>
+</main>
+{% endblock %}

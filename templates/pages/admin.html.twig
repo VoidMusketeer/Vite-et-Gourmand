@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+{% block title %}Administration — Vite & Gourmand{% endblock %}
+{% block stylesheets %}<link rel="stylesheet" href="{{ asset('styles/admin.css') }}">{% endblock %}
+{% block body %}
+{% set pages = {'tableau':'Tableau de bord','commandes':'Commandes','menus':'Menus','employes':'Employés','avis':'Avis client'} %}
+<main class="vg-admin" data-controller="admin" data-action="hashchange@window->admin#navigate click->admin#click submit->admin#submit">
+  <aside><h2>Administrateur</h2><nav aria-label="Administration">
+    {% for key,label in pages %}<a href="#{{ key }}" data-tab="{{ key }}">{{ label }}</a>{% endfor %}
+    {% if app.request.attributes.get('_route') == 'app_admin_demo' %}<a href="{{ path('app_login') }}">Déconnexion</a>
+    {% else %}<form action="{{ path('app_logout') }}" method="post"><input type="hidden" name="_csrf_token" value="{{ csrf_token('logout') }}"><button>Déconnexion</button></form>{% endif %}
+  </nav></aside>
+  <div class="admin-content">
+    <p class="admin-notice">Mode démonstration : les données affichées sont des exemples et rien n’est enregistré.</p>
+    <p role="status" data-status></p>
+    <section data-page="tableau">
+      <small>Tableau de bord</small><header><h1>Bonjour Julie</h1><a class="primary" href="#nouveau">＋ Créer un menu</a></header>
+      <div class="metrics">{% for row in [['À traiter','3 demandes','Nouvelles ou incomplètes'],['Prochains jours','7 commandes','82 portions à préparer'],['Menus à vérifier','2 alertes','Une offre expire vendredi']] %}{% set label,value,note = row[0],row[1],row[2] %}<article>{{ label }}<strong {{ loop.first ? 'data-pending' }}>{{ value }}</strong>{{ note }}</article>{% endfor %}</div>
+      <h2>Demandes nécessitant une action</h2><div class="panel" data-orders="pending"></div>
+      <header><h2>Réductions sur les produits</h2><button data-open="discount">＋ Ajouter une réduction</button></header>
+      <div class="panel" data-discounts>{% for row in [['Tous produits','−10 % · 5 personnes au-dessus du minimum','1er juin – 30 sept.','Active'],['Pâques','−10 % · utilisateur inscrit','1er juin – 30 juil.','Expire bientôt'],['PAINOFFERT','Pain artisanal offert dès deux menus','Jusqu’au 26 juil.','Expire bientôt']] %}{% set name,rule,dates,state = row[0],row[1],row[2],row[3] %}<div class="entry"><b>{{ name }}</b><span>{{ rule }}<br>{{ dates }}</span><mark>{{ state }}</mark></div>{% endfor %}</div>
+    </section>
+    <section data-page="commandes" hidden><small>Suivi opérationnel</small><h1>Commandes</h1>
+      <div class="fields"><label>Rechercher<input data-query placeholder="Client ou référence" data-action="input->admin#orders"></label><label>Statut<select data-filter data-action="change->admin#orders"><option value="">Tous les statuts</option>{% for state in ['Nouvelle demande','Information manquante','À confirmer','Confirmée','Livrée'] %}<option>{{ state }}</option>{% endfor %}</select></label></div>
+      <div class="panel" data-orders="all"></div></section>
+    <section data-page="menus" hidden><small>Catalogue</small><header><h1 data-catalog-title>Menus en ligne</h1><a href="#nouveau" class="primary">＋ Créer un menu</a></header><div class="panel" data-catalog></div><div data-drafts></div></section>
+    <section data-page="nouveau" hidden><small>Présentation</small><header><h1 data-editor-title>Nouveau menu</h1><a class="button" href="#menus">Retour aux menus</a></header>
+      <form class="card-form fields" data-form="menu"><label class="wide">Nom du menu<input name="name" required></label><label class="wide">Description courte<textarea name="description" rows="3"></textarea></label>
+      <label>Prix par personne (€)<input name="price" type="number" min="0.01" step="0.01" required></label><label>Minimum de personnes<input name="min" type="number" min="1" required></label>
+      <label>Disponible du<input name="start" type="date"></label><label>Au<input name="end" type="date"></label>
+      {% for name,label in {'starter':'Entrée','main':'Plat','dessert':'Dessert'} %}<label>{{ label }}<input name="{{ name }}"></label>{% endfor %}
+      <label>Photo principale<input name="image" type="file" accept="image/*"></label><div class="wide"><button value="draft" formnovalidate>Enregistrer le brouillon</button> <button class="primary" value="published">Publier le menu</button></div></form></section>
+    <section data-page="employes" hidden><small>Équipe et responsabilités</small><h1>Employés</h1>
+      <div class="metrics"><article>Équipe active<strong data-team-size>2 employés</strong>Exemples</article><article>Tâches ouvertes<strong>6 tâches</strong>Cette semaine</article><article>Charge à surveiller<strong>1 employé</strong>Hugo, 4 tâches</article></div>
+      <div class="panel" data-team></div><form class="card-form fields" data-form="employee"><h2 class="wide">Ajouter un employé</h2><label>Prénom et nom<input name="name" required></label><label>E-mail professionnel<input name="email" type="email" required></label><label>Rôle<select name="role"><option>Cuisine</option><option>Livraison</option></select></label><div><button class="primary">Créer l’accès (démo)</button></div></form></section>
+    <section data-page="avis" hidden><small>Retours clients</small><h1>Avis et commentaires</h1><p>La publication et le masquage sont simulés ici, sans modifier les avis de la page d’accueil.</p>
+      <div class="reviews">{% for row in [['Camille Martin','1045',5,'Une équipe très attentive, les plats étaient délicieux et bien présentés.','En attente'],['Atelier Nova','1036',4,'Très bon cocktail, la livraison a eu quelques minutes de retard.','En attente'],['Sophie R.','1021',5,'Le buffet de mariage a régalé tout le monde !','Publié']] %}{% set name,order,stars,comment,state = row[0],row[1],row[2],row[3],row[4] %}
+      <article><header><mark>{{ state }}</mark><span class="stars" aria-label="{{ stars }} sur 5">{% for i in 1..stars %}★{% endfor %}</span></header><h3>{{ name }}</h3><p>Commande #VG-{{ order }}</p><p>{{ comment }}</p><button class="primary" data-review="Publié" {% if state == 'Publié' %}hidden{% endif %}>Publier</button> <button data-review="Masqué">Masquer</button></article>{% endfor %}</div></section>
+    <dialog data-detail><button type="button" class="close-dialog" aria-label="Fermer" data-close>×</button><h2 data-detail-title></h2><div data-detail-body></div></dialog>
+    <dialog data-discount><button class="close-dialog" data-close aria-label="Fermer">×</button><h2>Configurer une réduction</h2><form class="fields" data-form="discount"><label>Produit concerné<select name="product" data-products></select></label><label>Type<select name="type"><option>Pourcentage</option><option>Montant (€)</option></select></label><label>Valeur<input name="value" type="number" min="0.01" step="0.01" required></label><label>Code promo (facultatif)<input name="code"></label><label>Date de début<input type="date" name="start" required></label><label>Date de fin<input type="date" name="end" required></label><div class="wide"><button type="button" data-close>Annuler</button> <button class="primary">Enregistrer la réduction</button></div></form></dialog>
+  </div>
+</main>
+{% endblock %}

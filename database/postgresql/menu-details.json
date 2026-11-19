@@ -1,0 +1,464 @@
+[
+  {
+    "name": "Buffet du Tournoi",
+    "tag": "Sport",
+    "theme": "Tournoi sportif",
+    "min": 10,
+    "price": 15,
+    "hours": 24,
+    "description": "Sandwichs club, salades de pâtes et fruits frais : un buffet équilibré et pratique pour vos tournois et journées sportives.",
+    "season": "Toute l’année",
+    "start": null,
+    "end": null,
+    "service": "Retrait / livraison",
+    "slug": "buffet-tournoi",
+    "dishes": [
+      "Salade de pâtes aux légumes croquants",
+      "Club sandwich poulet-crudités",
+      "Brochettes de fruits frais"
+    ],
+    "images": [
+      "images/menus/buffet-tournoi/menu-tournoi.jpg",
+      "images/menus/buffet-tournoi/dish-tournoi-salade.jpg",
+      "images/menus/buffet-tournoi/dish-tournoi-club.jpg"
+    ],
+    "allergens": [
+      "Gluten",
+      "Œufs"
+    ],
+    "options": [
+      {
+        "name": "Option végétarienne",
+        "price": 0
+      },
+      {
+        "name": "Barres énergisantes maison",
+        "price": 2
+      },
+      {
+        "name": "Vaisselle compostable",
+        "price": 1.5
+      }
+    ]
+  },
+  {
+    "name": "Buffet Convivial",
+    "tag": "Association",
+    "theme": "Réunion d’association",
+    "min": 10,
+    "price": 18,
+    "hours": 48,
+    "description": "Quiches, salades et plats à partager pour vos assemblées, fêtes de village et repas d’association, sans se ruiner.",
+    "season": "Toute l’année",
+    "start": null,
+    "end": null,
+    "service": "Retrait / livraison",
+    "slug": "buffet-association",
+    "dishes": [
+      "Salades composées et charcuterie locale",
+      "Quiche maison et gratin de saison",
+      "Tarte aux pommes"
+    ],
+    "images": [
+      "images/menus/buffet-association/menu-association.jpg",
+      "images/menus/buffet-association/dish-association-buffet.jpg",
+      "images/menus/buffet-association/dish-association-dessert.jpg"
+    ],
+    "allergens": [
+      "Gluten",
+      "Lait",
+      "Œufs"
+    ],
+    "options": [
+      {
+        "name": "Pain artisanal",
+        "price": 2
+      },
+      {
+        "name": "Option végétarienne",
+        "price": 0
+      },
+      {
+        "name": "Vaisselle compostable",
+        "price": 1.5
+      }
+    ]
+  },
+  {
+    "name": "Menu Halloween",
+    "tag": "Halloween",
+    "theme": "Halloween",
+    "min": 6,
+    "price": 22,
+    "hours": 48,
+    "description": "Courges, champignons et douceurs épicées : un menu ludique et gourmand pour les petits et les grands monstres.",
+    "season": "Du 15 octobre au 5 novembre",
+    "start": "10-15",
+    "end": "11-05",
+    "service": "Retrait / livraison",
+    "slug": "halloween",
+    "dishes": [
+      "Velouté de potiron au lait de coco",
+      "Gratin de courge au comté et thym",
+      "Moelleux chocolat-orange"
+    ],
+    "images": [
+      "images/menus/halloween/menu-halloween.jpg",
+      "images/menus/halloween/dish-halloween-entree.jpg",
+      "images/menus/halloween/dish-halloween-dessert.jpg"
+    ],
+    "allergens": [
+      "Gluten",
+      "Lait",
+      "Œufs"
+    ],
+    "options": [
+      {
+        "name": "Pain artisanal",
+        "price": 2
+      },
+      {
+        "name": "Version enfant",
+        "price": 0
+      },
+      {
+        "name": "Vaisselle compostable",
+        "price": 1.5
+      }
+    ]
+  },
+  {
+    "name": "Jardin Gourmand",
+    "tag": "Végétarien",
+    "theme": "Repas familial",
+    "min": 4,
+    "price": 25,
+    "hours": 24,
+    "description": "Une cuisine végétale colorée et généreuse, pensée autour des légumes du marché.",
+    "season": "Toute l’année",
+    "start": null,
+    "end": null,
+    "service": "Retrait",
+    "slug": "jardin",
+    "dishes": [
+      "Velouté de saison",
+      "Risotto aux légumes rôtis",
+      "Tarte fine aux fruits"
+    ],
+    "images": [
+      "images/menus/jardin/menu-jardin.jpg",
+      "images/menus/jardin/dish-vegetarien-entree.jpg",
+      "images/menus/jardin/dish-vegetarien-plat.jpg"
+    ],
+    "allergens": [
+      "Gluten",
+      "Lait"
+    ],
+    "options": [
+      {
+        "name": "Pain artisanal",
+        "price": 2
+      },
+      {
+        "name": "Vaisselle compostable",
+        "price": 1.5
+      }
+    ]
+  },
+  {
+    "name": "Menu Printemps",
+    "tag": "Pâques",
+    "theme": "Pâques",
+    "min": 6,
+    "price": 26,
+    "hours": 48,
+    "description": "Les premiers légumes du printemps et un agneau de lait, pour un repas de Pâques en famille.",
+    "season": "Du 15 mars au 30 avril",
+    "start": "03-15",
+    "end": "04-30",
+    "service": "Retrait / livraison",
+    "slug": "printemps",
+    "dishes": [
+      "Asperges, œuf mollet et herbes",
+      "Agneau rôti, petits pois et carottes",
+      "Nid de Pâques au chocolat"
+    ],
+    "images": [
+      "images/menus/printemps/menu-paques.jpg",
+      "images/menus/printemps/dish-printemps-entree.jpg",
+      "images/menus/printemps/dish-printemps-plat.jpg"
+    ],
+    "allergens": [
+      "Gluten",
+      "Lait",
+      "Œufs"
+    ],
+    "options": [
+      {
+        "name": "Pain artisanal",
+        "price": 2
+      },
+      {
+        "name": "Vaisselle compostable",
+        "price": 1.5
+      }
+    ]
+  },
+  {
+    "name": "Menu 100% Végétal",
+    "tag": "Vegan",
+    "theme": "Repas familial",
+    "min": 4,
+    "price": 27,
+    "hours": 24,
+    "description": "Un menu entièrement végétal qui régale tous les convives, vegan ou non : légumes rôtis, céréales et sauces crémeuses sans produit animal.",
+    "season": "Toute l’année",
+    "start": null,
+    "end": null,
+    "service": "Retrait",
+    "slug": "vegetal",
+    "dishes": [
+      "Tartare de légumes rôtis et herbes",
+      "Quinoa aux légumes, crème de cajou",
+      "Mousse au chocolat et lait de coco"
+    ],
+    "images": [
+      "images/menus/vegetal/menu-vegan.jpg",
+      "images/menus/vegetal/dish-vegan-entree.jpg",
+      "images/menus/vegetal/dish-vegan-plat.jpg"
+    ],
+    "allergens": [
+      "Gluten",
+      "Fruits à coque"
+    ],
+    "options": [
+      {
+        "name": "Pain artisanal",
+        "price": 2
+      },
+      {
+        "name": "Vaisselle compostable",
+        "price": 1.5
+      }
+    ]
+  },
+  {
+    "name": "Saveurs d’Orient",
+    "tag": "Oriental",
+    "theme": "Repas familial",
+    "min": 6,
+    "price": 29,
+    "hours": 48,
+    "description": "Tajine, couscous et pastilla : les saveurs du Maghreb cuisinées avec les produits du marché, pour un repas parfumé et convivial.",
+    "season": "Toute l’année",
+    "start": null,
+    "end": null,
+    "service": "Retrait / livraison",
+    "slug": "oriental",
+    "dishes": [
+      "Pastilla au poulet et amandes",
+      "Tajine citron-olives et couscous aux légumes",
+      "Cornes de gazelle et thé à la menthe"
+    ],
+    "images": [
+      "images/menus/oriental/menu-oriental.jpg",
+      "images/menus/oriental/dish-oriental-entree.jpg",
+      "images/menus/oriental/dish-oriental-plat.jpg"
+    ],
+    "allergens": [
+      "Gluten",
+      "Fruits à coque",
+      "Sésame"
+    ],
+    "options": [
+      {
+        "name": "Version végétarienne",
+        "price": 0
+      },
+      {
+        "name": "Pain artisanal",
+        "price": 2
+      },
+      {
+        "name": "Vaisselle compostable",
+        "price": 1.5
+      }
+    ]
+  },
+  {
+    "name": "Cocktail d’Entreprise",
+    "tag": "Cocktail",
+    "theme": "Événement pro",
+    "min": 15,
+    "price": 32,
+    "hours": 72,
+    "description": "Canapés, verrines et bouchées chaudes servis en continu : la formule idéale pour vos séminaires, lancements et pots d’entreprise.",
+    "season": "Toute l’année",
+    "start": null,
+    "end": null,
+    "service": "Sur devis",
+    "slug": "cocktail-entreprise",
+    "dishes": [
+      "Verrines et canapés de saison",
+      "Bouchées chaudes et blinis au saumon fumé",
+      "Mignardises assorties"
+    ],
+    "images": [
+      "images/menus/cocktail-entreprise/menu-cocktail.jpg",
+      "images/menus/cocktail-entreprise/dish-cocktail-canapes.jpg",
+      "images/menus/cocktail-entreprise/dish-cocktail-blinis.jpg"
+    ],
+    "allergens": [
+      "Gluten",
+      "Lait",
+      "Œufs",
+      "Poisson"
+    ],
+    "options": [
+      {
+        "name": "Assortiment végétarien",
+        "price": 0
+      },
+      {
+        "name": "Service à l’assiette",
+        "price": 5
+      },
+      {
+        "name": "Vaisselle compostable",
+        "price": 1.5
+      }
+    ]
+  },
+  {
+    "name": "Table de fête",
+    "tag": "Événement",
+    "theme": "Repas familial",
+    "min": 8,
+    "price": 39,
+    "hours": 72,
+    "description": "Un menu de réception raffiné pour vos fêtes, anniversaires et événements professionnels.",
+    "season": "Toute l’année",
+    "start": null,
+    "end": null,
+    "service": "Sur devis",
+    "slug": "fete",
+    "dishes": [
+      "Foie gras maison et chutney",
+      "Volaille rôtie et légumes",
+      "Entremets chocolat"
+    ],
+    "images": [
+      "images/menus/fete/menu-fete.jpg",
+      "images/menus/fete/dish-fete-entree.jpg",
+      "images/menus/fete/dish-fete-plat.jpg"
+    ],
+    "allergens": [
+      "Gluten",
+      "Lait",
+      "Œufs",
+      "Fruits à coque"
+    ],
+    "options": [
+      {
+        "name": "Pain artisanal",
+        "price": 2
+      },
+      {
+        "name": "Alternative végétarienne",
+        "price": 0
+      },
+      {
+        "name": "Vaisselle compostable",
+        "price": 1.5
+      }
+    ]
+  },
+  {
+    "name": "Menu de Noël",
+    "tag": "Noël",
+    "theme": "Noël",
+    "min": 6,
+    "price": 42,
+    "hours": 96,
+    "description": "Foie gras, chapon aux marrons et bûche maison : le repas de Noël traditionnel, préparé comme à la maison, sans le stress.",
+    "season": "Du 1er au 31 décembre",
+    "start": "12-01",
+    "end": "12-31",
+    "service": "Retrait / livraison",
+    "slug": "noel",
+    "dishes": [
+      "Foie gras et chutney de figues",
+      "Chapon rôti aux marrons",
+      "Bûche de Noël chocolat-praliné"
+    ],
+    "images": [
+      "images/menus/noel/menu-noel.jpg",
+      "images/menus/noel/dish-noel-plat.jpg",
+      "images/menus/noel/dish-noel-dessert.jpg"
+    ],
+    "allergens": [
+      "Gluten",
+      "Lait",
+      "Œufs",
+      "Fruits à coque"
+    ],
+    "options": [
+      {
+        "name": "Pain artisanal",
+        "price": 2
+      },
+      {
+        "name": "Alternative végétarienne",
+        "price": 0
+      },
+      {
+        "name": "Vaisselle compostable",
+        "price": 1.5
+      }
+    ]
+  },
+  {
+    "name": "Menu Mariage",
+    "tag": "Mariage",
+    "theme": "Mariage",
+    "min": 20,
+    "price": 45,
+    "hours": 168,
+    "description": "Un menu raffiné pensé pour le plus beau des jours : produits nobles, dressage soigné et service à la hauteur de l’événement.",
+    "season": "Toute l’année",
+    "start": null,
+    "end": null,
+    "service": "Sur devis",
+    "slug": "marriage",
+    "dishes": [
+      "Foie gras mi-cuit et toast brioché",
+      "Magret de canard rôti, légumes de saison",
+      "Pièce montée ou entremets aux fruits"
+    ],
+    "images": [
+      "images/menus/marriage/menu-mariage.jpg",
+      "images/menus/marriage/dish-mariage-plat.jpg",
+      "images/menus/marriage/dish-mariage-dessert.jpg"
+    ],
+    "allergens": [
+      "Gluten",
+      "Lait",
+      "Œufs",
+      "Fruits à coque"
+    ],
+    "options": [
+      {
+        "name": "Alternative végétarienne",
+        "price": 0
+      },
+      {
+        "name": "Fontaine à chocolat",
+        "price": 4
+      },
+      {
+        "name": "Vaisselle compostable",
+        "price": 1.5
+      }
+    ]
+  }
+]

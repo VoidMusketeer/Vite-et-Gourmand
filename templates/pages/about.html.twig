@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+{% block title %}Notre histoire | Vite & Gourmand{% endblock %}
+{% block stylesheets %}<link rel="stylesheet" href="{{ asset('styles/story.css') }}">{% endblock %}
+{% block body %}
+<main class="story">
+    <section class="story-wrap story-intro">
+        <figure>
+            <img src="{{ asset('images/histoire/carreau.jpg') }}" width="726" height="544" alt="Façade en pierre du restaurant Le Carreau à Bordeaux">
+            <figcaption>Photo d’illustration : le Carreau, restaurant rue du Pas-Saint-Georges à Bordeaux — photo de <a href="https://commons.wikimedia.org/wiki/User:Thomon">Thomon</a>, <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>.</figcaption>
+        </figure>
+        <div>
+            <small>Deux personnes, une même envie</small>
+            <h1>25 ans de cuisine généreuse à Bordeaux</h1>
+            <p>Vite &amp; Gourmand, c’est l’entreprise de Julie et José. Depuis 25 ans, nous proposons nos prestations pour tous vos événements : un simple repas, une réunion de famille, Noël ou encore Pâques.</p>
+            <p>Nos menus évoluent au fil des occasions. Autrefois partagés par e-mail avec nos habitués, ils sont aujourd’hui accessibles à toutes et à tous, pour vous permettre de choisir plus facilement le repas qui vous ressemble.</p>
+            <blockquote>« Le plaisir de cuisiner, le bonheur de recevoir. »</blockquote>
+        </div>
+    </section>
+    <section class="story-values" aria-label="Nos valeurs"><div class="story-wrap">
+        {% for value in [
+            ['cup-hot', 'Le goût du fait maison', 'Une cuisine généreuse, pensée pour le plaisir de partager un bon repas.'],
+            ['leaf', 'Des menus qui évoluent', 'Du repas de Pâques aux fêtes de fin d’année, notre carte accompagne vos occasions.'],
+            ['geo-alt', 'Notre ancrage bordelais', 'Une aventure née à Bordeaux, qui se poursuit depuis 25 ans auprès de nos clients.']
+        ] %}
+            <div><i class="bi bi-{{ value[0] }}" aria-hidden="true"></i><h2>{{ value[1] }}</h2><p>{{ value[2] }}</p></div>
+        {% endfor %}
+    </div></section>
+    <section class="story-wrap story-team">
+        <img src="{{ asset('images/histoire/repas.jpg') }}" width="780" height="585" loading="lazy" alt="Côtelettes d’agneau accompagnées de légumes de printemps">
+        <div>
+            <small><i class="bi bi-shield-check" aria-hidden="true"></i> La confiance, au cœur du repas</small>
+            <h2>Une petite équipe.<br>Une vraie attention.</h2>
+            <p>Derrière chaque événement, il y a des attentes différentes. Parlez-nous de votre occasion, du nombre de convives et de vos besoins alimentaires pour préparer ensemble votre projet.</p>
+            <ul><li>Un échange autour de votre événement</li><li>Des besoins alimentaires pris en compte dès le départ</li><li>Des modalités à confirmer ensemble avant la commande</li></ul>
+            <a class="story-button" href="{{ path('app_contact') }}">Parlons de votre événement <span aria-hidden="true">→</span></a>
+        </div>
+    </section>
+    <section class="story-invite"><div class="story-wrap">
+        <i class="bi bi-heart" aria-hidden="true"></i>
+        <div><h2>Et si nous partagions votre prochain moment ?</h2><p>Un repas en famille ou une grande occasion, tout commence par un échange.</p></div>
+        <a class="story-button" href="{{ path('app_contact') }}">Nous contacter <span aria-hidden="true">→</span></a>
+    </div></section>
+</main>
+{% endblock %}

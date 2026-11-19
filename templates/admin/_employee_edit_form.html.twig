@@ -1,0 +1,18 @@
+{% if popup|default(false) and error %}<p role="alert">{{ error }}</p>{% endif %}
+<form class="fields card-form" method="post" action="{{ path('admin_employee_edit',{id:person.id}) }}" data-turbo="false" {% if popup|default(false) %}data-action="submit->employee-editor#save"{% endif %}>
+
+<input type="hidden" name="_token" value="{{ csrf_token('employee_edit' ~ person.id) }}">
+
+<label>Prénom<input name="first_name" maxlength="100" value="{{ person.first_name }}" required></label>
+
+<label>Nom<input name="last_name" maxlength="100" value="{{ person.last_name }}" required></label>
+
+<label>E-mail professionnel<input type="email" name="email" maxlength="180" value="{{ person.email }}" required></label>
+
+<label>Fonction / rôle dans l’équipe<select name="staff_function" required>{% for position in positions %}<option value="{{ position.name }}" {{ position.name == person.staff_function ? 'selected' }}>{{ position.name }}</option>{% endfor %}</select></label>
+
+<label class="wide">Horaires<input name="staff_schedule" maxlength="120" value="{{ person.staff_schedule }}" placeholder="Ex. : lundi – vendredi, 9 h – 17 h"></label>
+
+<div class="wide"><button class="primary">Enregistrer les modifications</button> {% if popup|default(false) %}<button type="button" data-action="employee-editor#close">Annuler</button>{% else %}<a class="button" href="{{ path('admin_employees') }}">Annuler</a>{% endif %}</div>
+
+</form>

@@ -1,0 +1,68 @@
+body:has(.employee-shell){background:#faf6ef;color:#342923;margin:0;font-family:'DM Sans',sans-serif}
+
+
+.employee-header{display:flex;align-items:center;gap:28px;padding:22px max(4%,calc((100% - 1440px)/2));border-top:7px solid #571729;border-bottom:1px solid #e4d6c8;background:#fffaf3;position:static}
+.employee-header a{color:#571729;text-decoration:none}.employee-brand{font:600 32px 'Cormorant Garamond',Georgia,serif;margin-right:auto}.employee-brand em{color:#bd8718}.employee-header span{font-size:14px}.employee-header small{display:block;color:#756159;margin-top:3px}.employee-header button{background:none;border:1px solid #d3b9b5;border-radius:8px;padding:9px 15px;color:#571729}.employee-header form{margin:0}
+.employee-shell{max-width:1520px;margin:auto;display:grid;grid-template-columns:230px minmax(0,1fr);gap:44px;padding:42px 40px 64px;min-height:75vh}.employee-shell aside{border-right:1px solid #e4d6c8;padding-right:24px}.employee-shell nav a{display:block;text-decoration:none}.employee-shell aside nav a{padding:13px 16px;margin-bottom:6px;color:#705c54;border-radius:9px;font-size:17px}.employee-shell aside nav a[aria-current]{background:#efe3d1;color:#571729;font-weight:700}.employee-aside-note{border-top:1px solid #e4d6c8;margin-top:30px;padding-top:20px;font-size:14px;color:#756159}
+.employee-main{min-width:0}.employee-main h1,.employee-main h2{font-family:'Cormorant Garamond',Georgia,serif;color:#571729;font-weight:600}.employee-main h1{font-size:44px;margin:0 0 8px}.employee-main h2{font-size:29px;margin:0 0 12px}.employee-main h3{font-size:18px;margin:0 0 8px}.employee-main a{color:#681b30}.employee-main p{line-height:1.6}.eyebrow{font-size:11px;letter-spacing:1.8px;font-weight:700;color:#806353;margin:0 0 14px}.employee-subtitle{color:#756159;margin-bottom:28px}.employee-muted{color:#756159;font-size:14px}.employee-row{display:flex;justify-content:space-between;align-items:center;gap:18px;flex-wrap:wrap}.employee-row p{margin:6px 0}.employee-card{border:1px solid #e5d8cc;background:#fffdf9;border-radius:16px;padding:25px;margin-bottom:20px;box-shadow:0 15px 28px -27px #60302e}.employee-focus{border:2px solid #d7a638}.employee-metrics{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin:28px 0}.employee-metrics article{border:1px solid #dec7bf;border-radius:14px;background:#fffdf9;padding:20px}.employee-metrics span{color:#756159;font-size:14px}.employee-metrics strong{display:block;font-size:30px;color:#571729;margin-top:6px}.employee-badge{display:inline-block;padding:5px 12px;border-radius:30px;background:#f6e7c1;color:#553f20;font-size:13px;white-space:nowrap}.employee-badge[data-status=completed],.employee-badge[data-status=delivered]{background:#e0ecdf;color:#315336}.employee-badge[data-status=cancelled]{background:#f4dfdd;color:#762c2c}.employee-button{display:inline-block!important;border:1px solid #cba6a6;border-radius:8px;padding:10px 16px;background:#fffdf9;color:#571729;text-decoration:none;font:inherit;font-size:14px;cursor:pointer}.employee-button.primary{background:#641a30;border-color:#641a30;color:white}.employee-button:hover{filter:brightness(.94)}.employee-check{display:flex;gap:12px;align-items:center;margin:14px 0;font-size:15px}.employee-check input{width:19px;height:19px;accent-color:#641a30;flex-shrink:0}.section-heading{margin:28px 0 12px}.employee-empty{text-align:center;padding:48px 24px;border:1px dashed #d6c2b2;border-radius:16px;background:#f5eee4}.employee-empty p{color:#756159}.order-card h3 a{text-decoration:none}.order-card>.employee-row+.employee-row{margin-top:14px;border-top:1px solid #efe6db;padding-top:14px}.employee-filters{display:flex;flex-wrap:wrap;align-items:end;gap:12px;padding:20px;background:#f1e8dc;border-radius:12px;margin-bottom:24px}.employee-filters label:first-child{flex:1;min-width:210px}.employee-main label:not(.employee-check){display:grid;gap:7px;font-size:14px}.employee-main input:not([type=checkbox]),.employee-main select{width:100%;border:1px solid #d9c8ba;background:#fffdf9;border-radius:8px;padding:11px;color:#342923;min-width:0}.employee-days{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:8px;margin:24px 0}.employee-days a{text-align:center;border:1px solid #d8bcb5;border-radius:9px;padding:12px 4px;font-size:13px}.employee-days a strong,.employee-days a small{display:block;margin-top:5px}.employee-days a[aria-current]{background:#571729;color:white}.employee-agenda{display:grid;grid-template-columns:125px 1fr;gap:20px}.employee-agenda>strong{font-size:24px;color:#571729}.employee-agenda small{display:block;font-size:12px;font-weight:400;color:#756159}.employee-agenda a{text-decoration:none}.employee-form,.employee-details{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px;margin-top:20px}.employee-form .full{grid-column:1/-1}.employee-form small{color:#756159}.employee-details dt{font-size:13px;font-weight:400;color:#756159;margin-bottom:6px}.employee-details dd{font-weight:500}.employee-actions{display:flex;gap:10px;flex-wrap:wrap}.employee-dish{border-top:1px solid #eaded2;padding:16px 0 0;margin-top:16px}.employee-note{white-space:pre-wrap}.employee-notice{padding:15px;border:1px solid #a8bca4;border-radius:9px;background:#edf3e8}.employee-notice.error{background:#fae8e4;border-color:#d4a29c}.employee-main summary{cursor:pointer;color:#641a30}.employee-footer{border-top:1px solid #e5d8cc;padding:22px 5%;font-size:14px;color:#756159;display:flex;justify-content:space-between}.employee-skip{position:absolute;left:15px;top:-100px;z-index:100;background:white;padding:12px}.employee-skip:focus{top:8px}.employee-shell :focus-visible,.employee-header :focus-visible{outline:3px solid #ac7811;outline-offset:4px}
+@media(max-width:1000px){.employee-header{flex-wrap:wrap;gap:15px}.employee-brand{flex-basis:100%}.employee-shell{grid-template-columns:180px minmax(0,1fr);gap:24px;padding:25px 20px}.employee-days{grid-template-columns:repeat(4,1fr)}}
+@media(max-width:700px){.employee-shell{display:block;padding:22px 16px}.employee-shell aside{border:0;padding:0}.employee-shell aside>.eyebrow,.employee-aside-note{display:none}.employee-shell aside nav{display:flex;gap:5px;overflow:auto;margin-bottom:24px}.employee-shell aside nav a{font-size:13px;white-space:nowrap;padding:10px}.employee-header{padding:15px 16px;font-size:13px}.employee-header span{margin-right:auto}.employee-main h1{font-size:36px}.employee-metrics{gap:7px}.employee-metrics article{padding:12px}.employee-metrics strong{font-size:23px}.employee-metrics span{font-size:12px}.employee-card{padding:18px}.employee-form,.employee-details{grid-template-columns:1fr}.employee-agenda{grid-template-columns:1fr;gap:10px}.employee-days{grid-template-columns:repeat(4,1fr)}.employee-footer{gap:12px;flex-wrap:wrap}.employee-filters label{width:100%}.employee-row{align-items:flex-start}.employee-badge{white-space:normal}}
+
+@media(max-width:450px){.employee-shell aside nav{display:grid;grid-template-columns:1fr 1fr;overflow:visible}.employee-shell aside nav a{margin:0}.employee-header span{flex-basis:100%}}
+
+.employee-main textarea{width:100%;min-height:90px;border:1px solid #d9c8ba;border-radius:8px;padding:11px;background:#fffdf9;color:#342923}.employee-main fieldset{border:1px solid #e4d6c8;padding:16px;border-radius:9px}.employee-main legend{float:none;width:auto;font-size:18px;padding:0 8px}.employee-delete{margin-top:18px;border-top:1px solid #eaded2;padding-top:15px}.employee-button.danger{border-color:#a52e36;color:#8c2330;background:#fff4f1}
+
+/* Compact mobile order cards with a stable status position. */
+@media (max-width:700px) {
+    .employee-card.order-card { padding:12px 14px; margin-bottom:12px; border-radius:14px; }
+    .order-card .order-card-header { display:grid; grid-template-columns:minmax(0,1fr) auto; gap:5px 10px; align-items:start; }
+    .order-card-header .order-card-identity,
+    .order-card-header h3,
+    .order-card-header h3 a { display:contents; }
+    .order-card-reference { grid-column:1; grid-row:1; align-self:center; font-size:13px; font-weight:600; color:#681b30; overflow-wrap:anywhere; }
+    .order-card .order-card-header > .employee-badge { grid-column:2; grid-row:1; justify-self:end; align-self:start; max-width:130px; padding:4px 9px; font-size:11px; line-height:1.35; text-align:center; }
+    .order-card-separator { display:none; }
+    .order-card-menu { grid-column:1 / -1; grid-row:2; color:#681b30; font-size:15px; line-height:1.3; font-weight:600; overflow-wrap:anywhere; }
+    .order-card .order-card-identity > p { grid-column:1 / -1; grid-row:3; margin:0; font-size:12px; line-height:1.4; }
+    .order-card > .order-card-footer { display:grid; grid-template-columns:minmax(0,1fr) auto; align-items:center; gap:10px; margin-top:9px; padding-top:9px; }
+    .order-card .order-card-footer p { margin:0; font-size:12px; line-height:1.5; overflow-wrap:anywhere; }
+    .order-card .order-card-footer .employee-button { padding:8px; font-size:11px; min-height:44px; align-content:center; text-align:center; max-width:125px; }
+    .order-card-header h3 a:focus-visible .order-card-menu { outline:2px solid #ac7811; outline-offset:2px; border-radius:2px; }
+}
+
+/* Order details: keep operational information visible, fold secondary records. */
+.employee-order-detail .order-disclosure > summary { min-height:44px; align-content:center; font-weight:600; font-size:17px; }
+.employee-order-detail .order-disclosure > summary span { font-size:13px; font-weight:400; color:#756159; margin-left:8px; }
+.employee-order-detail .order-disclosure-content { padding-top:14px; }
+.employee-order-detail .order-empty-line { color:#756159; padding:4px 14px; }
+@media (max-width:700px) {
+    .employee-shell:has(.employee-order-detail) { padding:16px 14px 28px; }
+    .employee-main:has(.employee-order-detail) > .eyebrow { display:none; }
+    .employee-main:has(.employee-order-detail) > h1 { font-size:28px; line-height:1.15; margin:0 0 6px; overflow-wrap:anywhere; }
+    .employee-main .employee-order-detail { font-size:14px; line-height:1.45; }
+    .employee-order-detail .employee-card { padding:14px; margin-bottom:12px; border-radius:12px; box-shadow:0 8px 18px -18px #60302e; }
+    .employee-main .employee-order-detail h2 { font-family:'DM Sans',sans-serif; font-size:18px; line-height:1.3; margin:0 0 8px; }
+    .employee-order-detail p { line-height:1.45; margin:6px 0 10px; }
+    .employee-order-detail p:last-child { margin-bottom:0; }
+    .employee-order-detail .order-back { margin:0 0 12px; }
+    .employee-order-detail .order-back a { display:inline-block; padding:9px 0; min-height:44px; }
+    .employee-order-detail .order-overview > .employee-row { display:grid; grid-template-columns:minmax(0,1fr) auto; gap:10px; align-items:start; }
+    .employee-order-detail .order-overview h2 { margin:0; overflow-wrap:anywhere; }
+    .employee-order-detail .employee-badge { font-size:11px; padding:4px 9px; max-width:115px; text-align:center; }
+    .employee-order-detail .employee-details { gap:10px; margin:12px 0; }
+    .employee-order-detail .employee-details > div { display:grid; grid-template-columns:94px minmax(0,1fr); gap:8px; }
+    .employee-order-detail .employee-details dt { font-size:12px; margin:0; }
+    .employee-order-detail .employee-details dd { margin:0; font-size:14px; line-height:1.45; overflow-wrap:anywhere; }
+    .employee-order-detail .employee-actions { gap:8px; }
+    .employee-order-detail .employee-button { min-height:44px; padding:10px 12px; font-size:13px; text-align:center; align-content:center; }
+    .employee-order-detail .order-overview .employee-actions > a { flex:1; }
+    .employee-order-detail .employee-dish { margin-top:10px; padding-top:10px; }
+    .employee-order-detail .employee-dish strong { font-size:14px; line-height:1.4; }
+    .employee-order-detail .employee-dish p,.employee-order-detail .employee-muted { font-size:13px; }
+    .employee-order-detail .order-disclosure { padding:8px 14px; }
+    .employee-order-detail .order-disclosure > summary { font-size:15px; }
+    .employee-order-detail .order-disclosure-content { padding:4px 0 8px; }
+    .employee-order-detail .employee-form { gap:12px; }
+    .employee-order-detail input:not([type=checkbox]),.employee-order-detail select,.employee-order-detail textarea { font-size:16px; }
+    .employee-order-detail .employee-check { align-items:flex-start; font-size:13px; line-height:1.45; }
+}

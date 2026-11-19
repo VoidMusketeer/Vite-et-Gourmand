@@ -1,0 +1,30 @@
+{% extends 'admin/layout.html.twig' %}
+{% block heading %}Menus ({{ menus|length }}){% endblock %}
+{% block content %}
+<form class="card-form homepage-selection" method="post" action="{{ path('admin_home_selection',{kind:'menus'}) }}">
+<details class="homepage-disclosure">
+<summary><h2>Menus à la une</h2></summary>
+<p>Cochez les menus à afficher sur la page d’accueil. Les menus doivent être publiés pour être sélectionnés.</p>
+<input type="hidden" name="_token" value="{{ csrf_token('home_selection_menus') }}">
+<div class="homepage-choices">
+{% for menu in menus %}
+<label class="homepage-choice">
+<input type="checkbox" name="selected[]" value="{{ menu.id }}" {{ menu.homepage_selected and menu.publication_status == 'published' and menu.has_catalogue ? 'checked' }} {{ menu.publication_status != 'published' or not menu.has_catalogue ? 'disabled' }}>
+<span><strong>{{ menu.title }}</strong>{% if menu.publication_status != 'published' or not menu.has_catalogue %}<br>À publier avant sélection{% endif %}</span>
+</label>
+{% endfor %}
+</div>
+<button class="primary">Enregistrer les menus à la une</button>
+</details>
+</form>
+<div class="panel">{% for menu in menus|filter(menu => not menu.is_old) %}
+{% include 'admin/_menu_row.html.twig' %}
+{% else %}<p class="entry">Aucun menu actif.</p>{% endfor %}</div>
+<details class="card-form homepage-disclosure">
+<summary><h2>Anciens menus et archives</h2></summary>
+<p>Retrouvez les menus archivés, désactivés et ceux dont la disponibilité est terminée. Réutilisez-les pour préparer une nouvelle saison ou un événement.</p>
+{% for menu in menus|filter(menu => menu.is_old) %}
+{% include 'admin/_menu_row.html.twig' %}
+{% else %}<p>Aucun menu archivé.</p>{% endfor %}
+</details>
+{% endblock %}

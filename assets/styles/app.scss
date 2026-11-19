@@ -1,0 +1,25 @@
+@use "components/menu-carousel";
+@use "components/testimonial-slider";
+@use "variables" as *;
+@use "components/navbar";
+
+/*pages styles*/
+@use "pages/home";
+@use "pages/menus";
+@use "pages/contact";
+@use "pages/checkout";
+@use "pages/basket";
+@use "pages/menu-detail";
+@use "components/footer";
+
+/* Generated CSS is loaded by assets/app.js. Edit SCSS sources, not app.css. */
+body {
+    background-color: $body-bg;
+    color: $body-color;
+}
+.promises {
+    background: $primary;
+}
+
+
+

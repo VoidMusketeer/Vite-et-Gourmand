@@ -1,0 +1,30 @@
+{% extends 'admin/layout.html.twig' %}{% block heading %}Avis et commentaires{% endblock %}
+{% block content %}
+<form class="card-form homepage-selection" method="post" action="{{ path('admin_home_selection',{kind:'reviews'}) }}">
+<details class="homepage-disclosure">
+<summary><h2>Témoignages à la une</h2></summary>
+<p>Cochez les avis validés à afficher dans le diaporama de l’accueil.</p>
+<input type="hidden" name="_token" value="{{ csrf_token('home_selection_reviews') }}">
+<div class="homepage-choices">
+{% for review in featured %}
+<div class="homepage-choice homepage-testimonial">
+<label><input type="checkbox" name="selected[]" value="{{ review.id }}" {{ review.homepage_selected ? 'checked' }}>
+<strong>{{ review.first_name }} · {{ review.rating }}/5</strong></label>
+<p class="testimonial-preview">{{ review.comment }}</p>
+<details>
+<summary><span class="expand-label">Lire la suite</span><span class="collapse-label">Réduire</span><span class="visually-hidden"> — avis de {{ review.first_name }}</span></summary>
+<p>{{ review.comment }}</p>
+</details>
+</div>
+{% else %}<p>Aucun avis validé. Validez un avis ci-dessous pour pouvoir le sélectionner.</p>{% endfor %}
+</div><button class="primary">Enregistrer les témoignages à la une</button>
+</details>
+</form>
+<form class="fields card-form" method="get"><h2 class="wide">Filtrer les avis reçus</h2>
+<label>Note<select name="rating"><option value="">Toutes les notes</option>{% for i in 1..5 %}<option value="{{ i }}" {{ rating == i ? 'selected' }}>{{ i }} / 5</option>{% endfor %}</select></label>
+<label>Reçus du<input type="date" name="from" value="{{ from }}"></label><label>Au (inclus)<input type="date" name="until" value="{{ until }}"></label>
+<div><button>Filtrer</button> <a href="{{ path('admin_reviews') }}">Effacer</a></div></form>
+<div class="reviews">{% for review in reviews %}<article><header><mark>{{ {'approved':'Publié','pending':'En attente','rejected':'Masqué'}[review.moderation_status] }}</mark><b>{{ review.rating }} / 5 ★</b></header><h3>{{ review.first_name }}</h3><p>{{ review.reference }} · reçu le {{ review.created_at|date('d/m/Y à H:i','Europe/Paris') }}</p><p>{{ review.comment }}</p>
+<form method="post" action="{{ path('admin_review_moderate',{id:review.id}) }}"><input type="hidden" name="_token" value="{{ csrf_token('review' ~ review.id) }}">
+{% if review.moderation_status != 'approved' %}<button class="primary" name="state" value="approved">Valider l’avis</button>{% endif %}
+{% if review.moderation_status != 'rejected' %}<button name="state" value="rejected">Masquer</button>{% endif %}</form></article>{% else %}<p>Aucun avis pour cette sélection.</p>{% endfor %}</div>{% endblock %}

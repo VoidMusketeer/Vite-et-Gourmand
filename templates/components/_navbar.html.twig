@@ -1,0 +1,104 @@
+{# Current route replaces the old $page variable. #}
+{% set currentRoute = app.request.attributes.get('_route') %}
+
+{# Choose the profile destination using Symfony security roles. #}
+{% set profileRoute = 'app_login' %}
+
+{% if app.user %}
+    {% set firstName = app.user.firstName|trim ?: app.user.userIdentifier %}
+    {% set initials = (firstName|first ~ (app.user.lastName|trim|first))|upper %}
+    {% if is_granted('ROLE_ADMIN') %}
+        {% set profileRoute = 'app_admin' %}
+    {% elseif is_granted('ROLE_EMPLOYEE') %}
+        {% set profileRoute = 'app_employee' %}
+    {% else %}
+        {% set profileRoute = 'app_account' %}
+    {% endif %}
+{% endif %}
+
+{% set pageLinks %}
+    <nav aria-label="Navigation principale" class="vg-page-links">
+        {% for route, label in {app_home: 'Accueil', app_story: 'Notre histoire', app_menus: 'Menus', app_contact: 'Contact'} %}
+            <a href="{{ path(route) }}"{% if route == currentRoute %} aria-current="page"{% endif %}>{{ label }}</a>
+        {% endfor %}
+    </nav>
+{% endset %}
+{% set authAction %}
+        {% if app.user %}
+            <form method="post" action="{{ path('app_logout') }}">
+                <input type="hidden" name="_csrf_token" value="{{ csrf_token('logout') }}">
+                <button class="vg-auth">Déconnexion</button>
+            </form>
+        {% else %}
+            <a class="vg-auth" href="{{ path('app_login') }}">Connexion</a>
+        {% endif %}
+{% endset %}
+
+{% set accountLabel %}
+    {% if app.user %}<a class="vg-greeting" href="{{ path('app_account') }}">Bonjour, {{ firstName }}</a>{% else %}{{ authAction }}{% endif %}
+{% endset %}
+
+<div class="vg-nav">
+    <a class="vg-brand" href="{{ path('app_home') }}" aria-label="Vite & Gourmand — Accueil">
+        <img src="{{ asset('images/branding/logo.png') }}" width="30" height="30" alt="">
+        <span>Vite <em>&amp;</em> Gourmand</span>
+    </a>
+    <div class="vg-desktop-links">{{ pageLinks }}</div>
+    <div class="vg-actions">
+        <details name="vg-header-panel" class="vg-search" data-controller="navbar-search" data-action="toggle->navbar-search#focus keydown.esc->navbar-search#close click@document->navbar-search#outside">
+            <summary aria-label="Recherche de menus"><i class="bi bi-search" aria-hidden="true"></i></summary>
+            <form role="search" action="{{ path('app_menus') }}" method="get">
+                <input data-navbar-search-target="input" name="q" type="search" aria-label="Rechercher un menu" placeholder="Rechercher un menu…" value="{{ app.request.query.get('q', '') }}">
+                <button type="submit" aria-label="Lancer la recherche"><i class="bi bi-search" aria-hidden="true"></i></button>
+            </form>
+        </details>
+        <a class="vg-basket" href="{{ path('app_basket') }}" aria-label="Voir mon panier" title="Mon panier"{% if currentRoute == 'app_basket' %} aria-current="page"{% endif %}>
+            <i class="bi bi-basket" aria-hidden="true"></i>
+        </a>
+        <div class="vg-desktop-auth">{{ accountLabel }}</div>
+        <details class="vg-account-card" name="vg-header-panel" data-controller="profile-card"
+                 data-action="pointerenter->profile-card#preview pointerleave->profile-card#leave click@document->profile-card#outside keydown.esc->profile-card#escape focusout->profile-card#blur turbo:before-cache@document->profile-card#close">
+          <summary class="vg-profile" aria-label="{{ app.user ? 'Profil de ' ~ firstName : 'Mon profil' }}" data-action="click->profile-card#toggle">
+            {% if app.user %}
+            <span class="vg-initials" aria-hidden="true">{{ initials }}</span>
+            {% else %}
+            <svg viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="11" r="6"/><ellipse cx="16" cy="30" rx="13" ry="11"/></svg>
+            {% endif %}
+          </summary>
+          <div class="vg-account-panel">
+            {% if app.user %}
+                {% set fullName = (app.user.firstName|default('') ~ ' ' ~ app.user.lastName|default(''))|trim %}
+                <strong>{{ fullName ?: app.user.userIdentifier }}</strong>
+                <small>{{ profileRoute == 'app_admin' ? 'Administrateur' : (profileRoute == 'app_employee' ? 'Employé' : 'Client') }} · {{ app.user.isActive is defined ? (app.user.isActive ? 'Compte actif' : 'Compte inactif') : 'Connecté' }}</small>
+                <div class="vg-account-logout">{{ authAction }}</div>
+                {% if profileRoute == 'app_admin' %}
+                    {% set accountLinks = {'app_admin':'Tableau de bord','admin_orders':'Commandes','admin_menus':'Menus','admin_employees':'Employés','admin_reviews':'Avis clients','admin_statistics':'Statistiques','app_employee':'Espace employé'} %}
+                {% elseif profileRoute == 'app_employee' %}
+                    {% set accountLinks = {'app_employee':'Tableau de bord','employee_orders':'Commandes','employee_schedule':'Emploi du temps','employee_menus':'Menus','employee_dishes':'Plats','employee_hours':'Horaires','employee_reviews':'Avis clients','employee_account':'Mon compte'} %}
+                {% else %}
+                    {% set accountLinks = {'customer_orders':'Mes commandes','customer_history':'Historique de commandes','customer_profile':'Mon compte'} %}
+                {% endif %}
+                <nav class="vg-account-links" aria-label="Raccourcis de mon espace">
+                    {% for route, label in accountLinks %}
+                        <a href="{{ path(route) }}"{% if currentRoute == route %} aria-current="page"{% endif %}>{{ label }}</a>
+                    {% endfor %}
+                </nav>
+            {% else %}
+                <strong>Invité</strong>
+                <small>Non connecté</small>
+            {% endif %}
+            <a href="{{ path('app_basket') }}">Mon panier</a>
+            {% if not app.user %}{{ authAction }}{% endif %}
+          </div>
+        </details>
+    </div>
+</div>
+<details name="vg-header-panel" class="vg-mobile-menu" data-controller="navbar-menu" data-action="click@document->navbar-menu#outside keydown.esc->navbar-menu#close turbo:before-cache@document->navbar-menu#reset">
+    <summary aria-label="Menu principal" data-action="click->navbar-menu#toggle"><i class="bi bi-list" aria-hidden="true"></i></summary>
+    <div class="vg-menu-reveal" data-navbar-menu-target="reveal">
+        <div class="vg-menu-panel">
+            {{ pageLinks }}
+            {% if not app.user %}{{ authAction }}{% endif %}
+        </div>
+    </div>
+</details>
