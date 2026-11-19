@@ -2,9 +2,15 @@
 
 Application de traiteur développée avec Symfony 7.4 et Twig.
 
+Le **[Manuel d’utilisation](docs\Manuel d’utilisation de Vite et Gourmand.pdf)** présente l’application et donner des identifiants afin de réaliser les différents parcours possibles.
+
+La **[documentation technique](docs/documentation-technique.md)** présente l’architecture, les données, les règles métier, l’installation, les vérifications et le déploiement de l’application.
+
+Les **[diagrammes de conception](docs/diagrammes-conception.md)** présentent le modèle de classes métier, les cas d’utilisation et la séquence de validation d’une commande.
+
 ## Design et maquettes
 
-Les ressources de conception sont regroupées dans le dossier **[design/](design/README.md)** :
+Les ressources de conception sont regroupées dans le dossier **[design/]** :
 
 - [Maquettes des écrans](design/maquettes/)
 - [Charte graphique](design/charte-graphique.pdf)
@@ -93,21 +99,17 @@ php bin/console messenger:consume async -vv
 
 Consulter les e-mails locaux dans [Mailpit](http://127.0.0.1:8025).
 
-## Comptes de démonstration (facultatif)
+## Tester les accès
 
-Cette commande crée ou réinitialise les trois comptes suivants. À utiliser uniquement en local.
+Se connecter sur [/connexion](http://127.0.0.1:8000/connexion) avec les comptes de test existants dans la base :
 
-```sh
-php bin/console app:accounts:easy-access
-```
+| Profil         | Nom             | Identifiant                 | Mot de passe            |
+| -------------- | --------------- | --------------------------- | ----------------------- |
+| Administrateur | José            | `joseV&G@gmail.com`         | `JoseV&Gtraiteur12345!` |
+| Employé        | Antoine Laurent | `antoine.laurent@gmail.com` | `AntoineEmploye12345!`  |
+| Client         | Alice Bernard   | `alice@gmail.com`           | `alicebernard12345!`    |
 
-| Profil | Identifiant | Mot de passe |
-| --- | --- | --- |
-| Administrateur | `admin@gmail.com` | `AdminAcount12345!` |
-| Employé | `employe@gmail.com` | `EmployeAcount12345!` |
-| Client | `client@gmail.com` | `ClientAcount12345!` |
-
-Se connecter sur [/connexion](http://127.0.0.1:8000/connexion) ou créer un compte sur [/inscription](http://127.0.0.1:8000/inscription).
+Pour tester la création d’un compte client, utiliser [/inscription](http://127.0.0.1:8000/inscription).
 
 ## Arrêter l’application
 

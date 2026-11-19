@@ -3,7 +3,7 @@
 {% block stylesheets %}<link rel="stylesheet" href="{{ asset('styles/workspace-navigation.css') }}"><link rel="stylesheet" href="{{ asset('styles/admin.css') }}">{% endblock %}
 {% block body %}
     <main class="vg-admin admin-live"><aside><h2>Administrateur</h2>{% set currentLabel = 'Tableau de bord' %}{% set workspaceNavigation %}<nav aria-label="Administration">
-                    {% for route, label in {'app_admin': 'Tableau de bord', 'admin_orders': 'Commandes', 'admin_menus': 'Menus', 'admin_employees': 'Employés', 'admin_reviews': 'Avis clients', 'admin_statistics': 'Statistiques', 'app_employee': 'Espace employé'} %}
+                    {% for route, label in {'app_admin': 'Tableau de bord', 'admin_orders': 'Commandes', 'admin_menus': 'Menus', 'admin_employees': 'Employés', 'admin_reviews': 'Avis clients', 'admin_statistics': 'Statistiques'} %}
                         {% if route == app.request.attributes.get('_route') or (route == 'admin_employees' and app.request.attributes.get('_route') starts with 'admin_employee_') or (route == 'admin_menus' and app.request.attributes.get('_route') starts with 'admin_menu_') %}{% set currentLabel = label %}{% endif %}
                         <a href="{{ path(route) }}" {% if route == app.request.attributes.get('_route') or (route == 'admin_employees' and app.request.attributes.get('_route') starts with 'admin_employee_') or (route == 'admin_menus' and app.request.attributes.get('_route') starts with 'admin_menu_') %}aria-current="page"{% endif %}>{{ label }}</a>
                     {% endfor %}
